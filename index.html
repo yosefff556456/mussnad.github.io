@@ -28,8 +28,8 @@
           results.data.forEach(function(row) {
             var lat = parseFloat(row.Latitude);
             var lng = parseFloat(row.Longitude);
-            var name = row.Name;
-            var description = row.Description;
+            var name = row.Row_ID;
+            var description = row.Object_ID;
 
             L.marker([lat, lng])
               .addTo(map)
