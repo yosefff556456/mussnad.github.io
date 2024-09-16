@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>خريطة باستخدام بيانات CSV</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    #map { height: 600px; }
-  </style>
+    <title>Leaflet Map with CSV Data</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        #map { height: 500px; }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // إعداد خريطة Leaflet
-      var map = L.map('map').setView([0, 0], 2);
-      
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+    <div id="map"></div>
+    
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([0, 0], 2); // You can change the starting view
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        }).addTo(map);
 
-      // جلب وتحليل بيانات CSV
-      Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vSNShhbeI8Eek5DcbbFML0N4Cb07qyzzJ9M0SNDHEy_qBapiLmrE79pKA3THfOeel51y93p1nU-gLlM/pub?output=csv', {
+ // URL of the CSV file
+    var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSNShhbeI8Eek5DcbbFML0N4Cb07qyzzJ9M0SNDHEy_qBapiLmrE79pKA3THfOeel51y93p1nU-gLlM/pub?output=csv';
+    
+    // Parse the CSV using PapaParse
+    Papa.parse(csvUrl, {
         download: true,
         header: true,
         complete: function(results) {
-          results.data.forEach(function(row) {
-            var lat = parseFloat(row.Latitude);
-            var lng = parseFloat(row.Longitude);
-            var name = row.Row_ID;
-            var description = row.Object_ID;
+            // CSV Data
+            var data = results.data;
 
-            L.marker([lat, lng])
-              .addTo(map)
-              .bindPopup('<b>' + name + '</b><br>' + description);
-          });
+            // Use the first three rows as an example
+            var firstThreeRows = data.slice(0, 3);
+
+            // Loop through these rows and add markers to the map
+            firstThreeRows.forEach(function(row) {
+                var lat = parseFloat(row['Latitude']); // assuming column is 'Latitude'
+                var lng = parseFloat(row['Longitude']); // assuming column is 'Longitude'
+                var label = row['Label']; // assuming column is 'Label'
+                
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    // Add marker to the map
+                    L.marker([lat, lng])
+                        .addTo(map)
+                        .bindPopup(`<b>${label}</b>`);
+                }
+            });
         }
-      });
     });
-  </script>
+
+      
+    </script>
 </body>
 </html>
