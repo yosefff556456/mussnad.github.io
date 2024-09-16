@@ -21,7 +21,7 @@
             maxZoom: 18
         }).addTo(map);
 
- // URL of the CSV file
+// URL of the CSV file
     var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSNShhbeI8Eek5DcbbFML0N4Cb07qyzzJ9M0SNDHEy_qBapiLmrE79pKA3THfOeel51y93p1nU-gLlM/pub?output=csv';
     
     // Parse the CSV using PapaParse
@@ -39,13 +39,13 @@
             firstThreeRows.forEach(function(row) {
                 var lat = parseFloat(row['Latitude']); // assuming column is 'Latitude'
                 var lng = parseFloat(row['Longitude']); // assuming column is 'Longitude'
-                var label = row['Label']; // assuming column is 'Label'
+                var objectId = row['Object_ID']; // now using 'Object_ID' column
                 
                 if (!isNaN(lat) && !isNaN(lng)) {
                     // Add marker to the map
                     L.marker([lat, lng])
                         .addTo(map)
-                        .bindPopup(`<b>${label}</b>`);
+                        .bindPopup(`<b>Object ID: ${objectId}</b>`);
                 }
             });
         }
