@@ -25,15 +25,20 @@
         download: true,
         header: true,
         complete: function(results) {
-          results.data.forEach(function(row) {
-            var lat = parseFloat(row.D);
-            var lng = parseFloat(row.E);
-            var name = row.B;
-            var description = row.F;
+          results.data.forEach(function(row, index) {
+            // Skip rows before the desired starting point
+            if (index < 5) return; // Change 5 to the row number you want to start from
+            
+            var lat = parseFloat(row.D); // Adjust column if needed
+            var lng = parseFloat(row.E); // Adjust column if needed
+            var name = row.B; // Adjust column if needed
+            var description = row.F; // Adjust column if needed
 
-            L.marker([lat, lng])
-              .addTo(map)
-              .bindPopup('<b>' + name + '</b><br>' + description);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              L.marker([lat, lng])
+                .addTo(map)
+                .bindPopup('<b>' + name + '</b><br>' + description);
+            }
           });
         }
       });
@@ -41,4 +46,3 @@
   </script>
 </body>
 </html>
-
