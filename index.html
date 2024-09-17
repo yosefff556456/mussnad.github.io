@@ -25,16 +25,14 @@
         download: true,
         header: true,
         complete: function(results) {
-          results.data.forEach(function(row, index) {
-            // Skip rows before the desired starting point
-            if (index < 5) return; // Change 5 to the row number you want to start from
-            
-            var lat = parseFloat(row.D); // Adjust column if needed
-            var lng = parseFloat(row.E); // Adjust column if needed
-            var name = row.B; // Adjust column if needed
-            var description = row.F; // Adjust column if needed
+          results.data.forEach(function(row) {
+            // Check if the Name column starts with "A"
+            if (row.color && row.color.startsWith("b")) {
+              var lat = parseFloat(row.lat);
+              var lng = parseFloat(row.lon);
+              var name = row.name;
+              var description = row.description;
 
-            if (!isNaN(lat) && !isNaN(lng)) {
               L.marker([lat, lng])
                 .addTo(map)
                 .bindPopup('<b>' + name + '</b><br>' + description);
