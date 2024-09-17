@@ -27,11 +27,11 @@
         complete: function(results) {
           results.data.forEach(function(row) {
             // Check if the color column starts with "b"
-            if (row.Y_New && row.Y_New.startsWith("J")) {
-              var lat = parseFloat(row.Latitude);
-              var lng = parseFloat(row.Longitude);
-              var name = row.Object_ID;
-              var description = row.Object_ID;
+            if (row.W && row.W.startsWith("J")) {
+              var lat = parseFloat(row.D);
+              var lng = parseFloat(row.E);
+              var name = row.B;
+              var description = row.B;
 
               L.marker([lat, lng])
                 .addTo(map)
