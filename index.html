@@ -21,17 +21,17 @@
       }).addTo(map);
 
       // جلب وتحليل بيانات CSV
-      Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vRN-Su5KVUPzn1_-HiNAvbjgl8kM0k0CnzeZSThcIvQe714lMcU_WAOqBEiTuRlQx-P9Nv3kiCmMx4Z/pub?output=csv', {
+      Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQkgSfWBjfL7TIboCoVsKFl7rRcHBaI7KhJcOhGEJcnEsnIAoj8m5geb0lSSsQLK0LeQq7lfipVmQb9/pub?output=csv', {
         download: true,
         header: true,
         complete: function(results) {
           results.data.forEach(function(row) {
-            // Check if the color column starts with "b"
-            if (row.W && row.W.startsWith("J")) {
-              var lat = parseFloat(row.D);
-              var lng = parseFloat(row.E);
-              var name = row.B;
-              var description = row.B;
+            // Check if the color column starts with "J"
+            if (row.Y_New && row.Y_New.startsWith("J")) {
+              var lat = parseFloat(row.Latitude);
+              var lng = parseFloat(row.Longitude);
+              var name = row.Object_ID;
+              var description = row.Object_ID;
 
               L.marker([lat, lng])
                 .addTo(map)
