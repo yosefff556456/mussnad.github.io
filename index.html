@@ -26,10 +26,10 @@
         header: true,
         complete: function(results) {
           results.data.forEach(function(row) {
-            var lat = parseFloat(row.Latitude);
-            var lng = parseFloat(row.Longitude);
-            var name = row.Name;
-            var description = row.Description;
+            var lat = parseFloat(row.D);
+            var lng = parseFloat(row.E);
+            var name = row.B;
+            var description = row.F;
 
             L.marker([lat, lng])
               .addTo(map)
