@@ -25,19 +25,33 @@
         download: true,
         header: true,
         complete: function(results) {
+          var markers = {};
+
           results.data.forEach(function(row) {
-            // Check if the color column starts with "J"
             if (row.Y_New && row.Y_New.startsWith("J")) {
               var lat = parseFloat(row.Latitude);
               var lng = parseFloat(row.Longitude);
               var name = row.Object_ID;
               var description = row.FTDNA_Y_Haplotree;
+              var key = lat.toFixed(5) + ',' + lng.toFixed(5);
 
-              L.marker([lat, lng])
-                .addTo(map)
-                .bindPopup('<b>' + name + '</b><br>' + description);
+              if (!markers[key]) {
+                markers[key] = [];
+              }
+              markers[key].push({ name: name, description: description });
             }
           });
+
+          for (var key in markers) {
+            var position = key.split(',').map(Number);
+            var content = markers[key].map(function(marker) {
+              return '<b>' + marker.name + '</b><br>' + marker.description;
+            }).join('<br><br>');
+
+            L.marker(position)
+              .addTo(map)
+              .bindPopup(content);
+          }
         }
       });
     });
