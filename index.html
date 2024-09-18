@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map with Multiple Google Sheets Data</title>
+    <title>Leaflet Map with Lat/Lon Popup</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #map {
@@ -45,14 +45,16 @@
                     let lat2 = parseFloat(columns[2]); // Assuming second latitude column
                     let lon2 = parseFloat(columns[3]); // Assuming second longitude column
 
-                    // Add first set of markers to the map
+                    // Add first set of markers to the map with popup showing lat/lon
                     if (!isNaN(lat1) && !isNaN(lon1)) {
-                        L.marker([lat1, lon1]).addTo(map);
+                        L.marker([lat1, lon1]).addTo(map)
+                            .bindPopup(`Lat: ${lat1}, Lon: ${lon1}`);
                     }
 
-                    // Add second set of markers to the map
+                    // Add second set of markers to the map with popup showing lat/lon
                     if (!isNaN(lat2) && !isNaN(lon2)) {
-                        L.marker([lat2, lon2]).addTo(map);
+                        L.marker([lat2, lon2]).addTo(map)
+                            .bindPopup(`Lat: ${lat2}, Lon: ${lon2}`);
                     }
                 });
             });
