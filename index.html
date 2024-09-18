@@ -1,95 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>خريطة باستخدام بيانات CSV</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <style>
-    #map { height: 600px; }
-    .leaflet-popup-content-wrapper {
-      background: #f9f9f9;
-      border-radius: 8px;
-      padding: 10px;
-      font-family: Arial, sans-serif;
-    }
-    .leaflet-popup-content {
-      margin: 0;
-      font-size: 14px;
-    }
-    .popup-title {
-      font-weight: bold;
-      color: #333;
-    }
-    .popup-description {
-      color: #666;
-    }
-    .popup-image {
-      width: 100px;
-      height: auto;
-      display: block;
-      margin-bottom: 10px;
-    }
-    .leaflet-popup-tip {
-      background: #f9f9f9;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with Multiple Google Sheets Data</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-  <div id="map"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Initialize the Leaflet map
-      var map = L.map('map').setView([0, 0], 2);
-      
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
 
-      // Define custom icon
-      var customIcon = L.icon({
-        iconUrl: 'https://example.com/path/to/your/custom-icon.png', // Update with your icon URL
-        iconSize: [32, 32], // Size of the icon
-        iconAnchor: [16, 32], // Anchor point of the icon
-        popupAnchor: [0, -32] // Anchor point of the popup
-      });
+    <div id="map"></div>
 
-      // Fetch and parse CSV data
-      Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vQkgSfWBjfL7TIboCoVsKFl7rRcHBaI7KhJcOhGEJcnEsnIAoj8m5geb0lSSsQLK0LeQq7lfipVmQb9/pub?output=csv', {
-        download: true,
-        header: true,
-        complete: function(results) {
-          var markers = {};
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the Leaflet map
+        var map = L.map('map').setView([0, 0], 2);
 
-          results.data.forEach(function(row) {
-            if (row.Y_New && row.Y_New.startsWith("J")) {
-              var lat = parseFloat(row.Latitude);
-              var lng = parseFloat(row.Longitude);
-              var name = row.Object_ID;
-              var description = row.FTDNA_Y_Haplotree;
-              var key = lat.toFixed(5) + ',' + lng.toFixed(5);
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-              if (!markers[key]) {
-                markers[key] = [];
-              }
-              markers[key].push({ name: name, description: description });
-            }
-          });
+        // Your Google Sheets CSV link
+        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2SFM3KiTjI-9t15yOmIuJfJ12cfycaUbPHWAWSbbj28FTYWdKwBd2EkryXLyCRufyX-7AdYASiBlK/pub?output=csv";
 
-          for (var key in markers) {
-            var position = key.split(',').map(Number);
-            var content = markers[key].map(function(marker) {
-              return '<div class="popup-title">' + marker.name + '</div>' +
-                     '<div class="popup-description">' + marker.description + '</div>';
-            }).join('<br><br>');
+        // Fetch the CSV data
+        fetch(sheetURL)
+            .then(response => response.text())
+            .then(data => {
+                // Parse CSV data
+                let rows = data.split("\n").slice(1); // Remove header row
+                rows.forEach(row => {
+                    let columns = row.split(",");
 
-            L.marker(position, { icon: customIcon })
-              .addTo(map)
-              .bindPopup(content);
-          }
-        }
-      });
-    });
-  </script>
+                    // First set of lat/lon
+                    let lat1 = parseFloat(columns[0]); // Assuming first latitude column
+                    let lon1 = parseFloat(columns[1]); // Assuming first longitude column
+
+                    // Second set of lat/lon
+                    let lat2 = parseFloat(columns[2]); // Assuming second latitude column
+                    let lon2 = parseFloat(columns[3]); // Assuming second longitude column
+
+                    // Add first set of markers to the map
+                    if (!isNaN(lat1) && !isNaN(lon1)) {
+                        L.marker([lat1, lon1]).addTo(map);
+                    }
+
+                    // Add second set of markers to the map
+                    if (!isNaN(lat2) && !isNaN(lon2)) {
+                        L.marker([lat2, lon2]).addTo(map);
+                    }
+                });
+            });
+    </script>
 </body>
 </html>
