@@ -28,7 +28,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // تحميل البيانات من ملف JSON
 fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
-    .then(response => response.json())
+    .then(response => {
+        // تحقق من أن الاستجابة صحيحة
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         // إضافة علامات لكل موقع
         data.forEach(item => {
