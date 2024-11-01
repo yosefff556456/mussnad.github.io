@@ -29,18 +29,23 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // تحميل البيانات من ملف JSON
 fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => {
-        // تحقق من أن الاستجابة صحيحة
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         return response.json();
     })
     .then(data => {
+        console.log(data); // قم بطباعة البيانات إلى وحدة التحكم للتأكد من أنها صحيحة
         // إضافة علامات لكل موقع
         data.forEach(item => {
-            L.marker([item.latitude, item.longitude])
-                .addTo(map)
-                .bindPopup(`<b>${item.haplogroup}</b><br>${item.country_code}`); // عرض معلومات عند النقر
+            // تحقق من وجود قيم latitude و longitude
+            if (item.latitude && item.longitude) {
+                L.marker([item.latitude, item.longitude])
+                    .addTo(map)
+                    .bindPopup(`<b>${item.haplogroup}</b><br>${item.country_code}`);
+            } else {
+                console.warn('موقع غير صالح:', item);
+            }
         });
     })
     .catch(error => console.error('Error loading JSON:', error));
