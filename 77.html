@@ -40,10 +40,23 @@ fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
         console.log(data); // قم بطباعة البيانات إلى وحدة التحكم للتأكد من أنها صحيحة
 
         // تحويل البيانات إلى مصفوفة نقاط للحرارة
-        var heatData = data.map(item => [item.latitude, item.longitude]);
+        var heatData = data.map(item => {
+            if (item.latitude && item.longitude) {
+                return [item.latitude, item.longitude];
+            } else {
+                console.warn('موقع غير صالح:', item);
+                return null; // قم بإرجاع null للمواقع غير الصالحة
+            }
+        }).filter(item => item !== null); // إزالة المواقع غير الصالحة
+
+        console.log('نقاط الحرارة:', heatData); // طباعة نقاط الحرارة
 
         // إضافة طبقة الحرارة
-        L.heatLayer(heatData, {radius: 25}).addTo(map);
+        if (heatData.length > 0) {
+            L.heatLayer(heatData, {radius: 25}).addTo(map);
+        } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+        }
     })
     .catch(error => console.error('Error loading JSON:', error));
 
