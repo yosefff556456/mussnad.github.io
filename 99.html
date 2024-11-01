@@ -31,11 +31,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => response.json())
     .then(data => {
-        // تحويل البيانات إلى مصفوفة نقاط
-        var heatData = data.map(item => [item.latitude, item.longitude]);
+        // تحويل البيانات إلى مصفوفة نقاط حرارية
+        var heatData = data.map(item => [item.latitude, item.longitude, 1]); // الثالث هو الكثافة
 
         // إضافة طبقة الحرارة
-        L.heatLayer(heatData, {radius: 25}).addTo(map);
+        L.heatLayer(heatData, {radius: 25, blur: 15}).addTo(map);
     })
     .catch(error => console.error('Error loading JSON:', error));
 
