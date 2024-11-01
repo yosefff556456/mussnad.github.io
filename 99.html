@@ -28,7 +28,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // تحميل البيانات من ملف JSON
-fetch('g.json') // استبدل 'data.json' بمسار ملف JSON الخاص بك
+fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => response.json())
     .then(data => {
         // تحويل البيانات إلى مصفوفة نقاط
