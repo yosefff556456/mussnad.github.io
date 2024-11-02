@@ -1,0 +1,4115 @@
+[
+    {
+        "num": ">RUS [RU-YAR] (id:NAU001) (1)",
+        "latitude": 57.7329,
+        "longitude": 39.2547
+    },
+    "",
+    {
+        "num": ">RUS [RU-YAR] (id:HAL001) (1)",
+        "latitude": 57.7329,
+        "longitude": 39.2547
+    },
+    {
+        "num": ">ITA [IT-CA] (id:ERS256938) (1)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">RUS [RU-TVE] (id:BOL003) (1)",
+        "latitude": 57.0297,
+        "longitude": 34.5445
+    },
+    {
+        "num": ">>>SAU [SA-14] (id:YF077927) (3)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>RUS [RU-BA] (id:MUR003) (3)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>ITA [IT-SA] (id:YF007986) (4)",
+        "latitude": 40.4362,
+        "longitude": 15.2189
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>TJK [TJ-GB] (id:SAMC013074) (8)",
+        "latitude": 38.2492,
+        "longitude": 72.7189
+    },
+    {
+        "num": ">>>>>>>>TJK [TJ-GB] (id:SAMC013077) (8)",
+        "latitude": 38.2492,
+        "longitude": 72.7189
+    },
+    {
+        "num": ">>>>>>>>TJK [TJ-GB] (id:SAMC013076) (8)",
+        "latitude": 38.2492,
+        "longitude": 72.7189
+    },
+    {
+        "num": ">>>>RUS [RU-BA] (id:KZB002) (4)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>IND [IN-MP] (id:YF011130) (4)",
+        "latitude": 22.9404,
+        "longitude": 78.4214
+    },
+    {
+        "num": ">>>>KWT [KW-KU] (id:YF100854) (4)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>UAE [AE-SH] (id:YF094034) (4)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>AUS [AU-VIC] (id:YF009468) (5)",
+        "latitude": -37.0082,
+        "longitude": 144.75
+    },
+    {
+        "num": ">>>>>GBR [GB-CLD] (id:YF007064) (5)",
+        "latitude": 53.7446,
+        "longitude": -1.95182
+    },
+    "",
+    "",
+    {
+        "num": ">>>>HUN [HU-PE] (id:ERS9945170) (4)",
+        "latitude": 47.4344,
+        "longitude": 19.4435
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>RUS [RU-STA] (id:YF112584) (4)",
+        "latitude": 44.981,
+        "longitude": 43.2791
+    },
+    {
+        "num": ">>>>PAK [PK-PB] (id:HG03705) (4)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>RUS [RU-SAM] (id:I0232) (5)",
+        "latitude": 53.1783,
+        "longitude": 50.4377
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>RUS [RU-KEM] (id:ERS2478527) (7)",
+        "latitude": 54.6462,
+        "longitude": 87.1676
+    },
+    {
+        "num": ">>>>>>>RUS [RU-AL] (id:ERS2478501) (7)",
+        "latitude": 50.9782,
+        "longitude": 86.937
+    },
+    {
+        "num": ">>>>>>>RUS [RU-AL] (id:ERR1019034) (7)",
+        "latitude": 50.9782,
+        "longitude": 86.937
+    },
+    {
+        "num": ">>>>>KAZ [KZ-KUS] (id:ERS2374306) (5)",
+        "latitude": 51.2854,
+        "longitude": 64.1291
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>RUS [RU-KK] (id:YF102189) (5)",
+        "latitude": 53.3643,
+        "longitude": 89.8405
+    },
+    {
+        "num": ">>>>>DZA [DZ-13] (id:YF089039) (5)",
+        "latitude": 34.7431,
+        "longitude": -1.49045
+    },
+    "",
+    {
+        "num": ">>>>>>RUS [RU-KB] (id:YF064964) (6)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>KWT [KW-KU] (id:YF132670) (6)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>YEM [YE-HD] (id:YF105443) (6)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>KWT [KW-KU] (id:YF068499) (6)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>RUS [RU-CE] (id:YF101927) (6)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>KWT [KW-HA] (id:YF003234) (7)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>KAZ [KZ-ZAP] (id:YF076432) (7)",
+        "latitude": 49.8909,
+        "longitude": 50.5145
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-IN] (id:YF081370) (8)",
+        "latitude": 43.3661,
+        "longitude": 44.8468
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-CE] (id:YF101199) (8)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-CE] (id:YF014127) (8)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>IRQ [IQ-BG] (id:YF109351) (6)",
+        "latitude": 33.306,
+        "longitude": 44.3827
+    },
+    {
+        "num": ">>>>>>KWT [KW-KU] (id:YF074508) (6)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>RUS [RU-ALT] (id:YF002054) (7)",
+        "latitude": 52.4268,
+        "longitude": 82.8667
+    },
+    {
+        "num": ">>>>>>>IRN [IR-23] (id:YF089047) (7)",
+        "latitude": 27.6455,
+        "longitude": 56.2505
+    },
+    {
+        "num": ">>>>>>>IRQ [IQ-BA] (id:YF074507) (7)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    "",
+    {
+        "num": ">>>>>>>TUR [TR-12] (id:YF122900) (7)",
+        "latitude": 39.0743,
+        "longitude": 40.646
+    },
+    {
+        "num": ">>>>>>>TUR [TR-23] (id:YF097745) (7)",
+        "latitude": 38.5718,
+        "longitude": 39.3702
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-01] (id:YF077593) (8)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>KWT [KW-KU] (id:YF074258) (8)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>KWT [KW-KU] (id:YF074269) (8)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>SAU [SA-04] (id:YF129688) (7)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>SAU [SA-04] (id:YF070772) (7)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>SAU [SA-04] (id:YF016366) (7)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF114708) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>QAT [QA-WA] (id:YF128687) (9)",
+        "latitude": 24.9661,
+        "longitude": 51.4743
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF124994) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF127460) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF127591) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF075648) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    "",
+    {
+        "num": ">>>>FRA [FR-08] (id:YF014461) (4)",
+        "latitude": 49.5403,
+        "longitude": 4.62417
+    },
+    {
+        "num": ">>>>>RUS [RU-KB] (id:YF132429) (5)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>DEU [DE-BE] (id:YF083804) (5)",
+        "latitude": 52.5131,
+        "longitude": 13.4213
+    },
+    {
+        "num": ">>>>>>ESP [ES-S] (id:YF068118) (6)",
+        "latitude": 43.2182,
+        "longitude": -4.02085
+    },
+    {
+        "num": ">>>>>>ESP [ES-S] (id:YF072323) (6)",
+        "latitude": 43.2182,
+        "longitude": -4.02085
+    },
+    {
+        "num": ">>>>>>ESP [ES-S] (id:YF066738) (6)",
+        "latitude": 43.2182,
+        "longitude": -4.02085
+    },
+    {
+        "num": ">>>>>>BGR [BG-23] (id:YF079920) (6)",
+        "latitude": 42.288,
+        "longitude": 23.606
+    },
+    {
+        "num": ">>>>>>>>KWT [KW-KU] (id:YF073946) (8)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>IRQ [IQ-BA] (id:YF128769) (8)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    {
+        "num": ">>>>>>>>IRQ [IQ-BA] (id:YF074261) (8)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    {
+        "num": ">>>>>>>>BHR [BH-15] (id:YF110483) (8)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF080613) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF065639) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF014737) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>SWE [SE-H] (id:YF009474) (5)",
+        "latitude": 57.2764,
+        "longitude": 16.0875
+    },
+    "",
+    {
+        "num": ">>>>>>>UAE [AE-DU] (id:YF122849) (7)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>YEM [YE-HD] (id:YF090794) (7)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>SAU [SA-02] (id:YF067795) (6)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>KWT [KW-HA] (id:YF065644) (6)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>KWT [KW-KU] (id:YF017177) (6)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>RUS [RU-KB] (id:YF102509) (6)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>RUS [RU-KB] (id:YF089820) (6)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>BHR [BH-15] (id:YF081727) (7)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>UAE [AE-FU] (id:YF110476) (8)",
+        "latitude": 25.4752,
+        "longitude": 56.2221
+    },
+    {
+        "num": ">>>>>>>>>>KWT [KW-HA] (id:YF065370) (10)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>IND [IN-GJ] (id:YF132209) (6)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    "",
+    {
+        "num": ">>>>>>JOR [JO-AM] (id:YF087698) (6)",
+        "latitude": 31.6211,
+        "longitude": 36.4418
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>PAK [PK-JK] (id:SAMC013034) (6)",
+        "latitude": 33.868,
+        "longitude": 73.8036
+    },
+    {
+        "num": ">>>>>SAU [SA-01] (id:YF004080) (5)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>SYR [SY-ID] (id:YF086806) (6)",
+        "latitude": 35.8528,
+        "longitude": 36.6829
+    },
+    {
+        "num": ">>>>>>SAU [SA-07] (id:YF083235) (6)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>SAU [SA-03] (id:YF068556) (6)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>ITA [IT-CH] (id:YF009968) (6)",
+        "latitude": 42.1033,
+        "longitude": 14.3997
+    },
+    {
+        "num": ">>>>>>ITA [IT-FI] (id:NA20796) (6)",
+        "latitude": 43.7304,
+        "longitude": 11.3233
+    },
+    {
+        "num": ">>>>>>ITA [IT-FI] (id:NA20539) (6)",
+        "latitude": 43.7304,
+        "longitude": 11.3233
+    },
+    {
+        "num": ">>>>>>KWT [KW-KU] (id:YF100749) (6)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>KWT [KW-MU] (id:YF101120) (6)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>SAU [SA-04] (id:YF014460) (7)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>QAT [QA-KH] (id:YF077476) (7)",
+        "latitude": 25.7512,
+        "longitude": 51.4212
+    },
+    {
+        "num": ">>>>>>BGR [BG-17] (id:YF108751) (6)",
+        "latitude": 43.6291,
+        "longitude": 26.5873
+    },
+    {
+        "num": ">>>>>>KWT [KW-KU] (id:YF080698) (6)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>KWT [KW-FA] (id:YF072334) (6)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>IND [IN-KL] (id:YF015670) (5)",
+        "latitude": 10.3666,
+        "longitude": 76.5237
+    },
+    {
+        "num": ">>>>>SAU [SA-04] (id:YF071924) (5)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>SAU [SA-04] (id:YF017073) (5)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>IND [IN-GJ] (id:NA20897) (5)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>TJK [TJ-GB] (id:SAMC013062) (7)",
+        "latitude": 38.2492,
+        "longitude": 72.7189
+    },
+    {
+        "num": ">>>>>>SAU [SA-02] (id:YF121036) (6)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>PAK [PK-PB] (id:HG02699) (6)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>PAK [PK-PB] (id:HG02603) (6)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>ITA [IT-NA] (id:YF013823) (8)",
+        "latitude": 40.8773,
+        "longitude": 14.4226
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>OMN [OM-DA] (id:YF105086) (7)",
+        "latitude": 22.474,
+        "longitude": 57.3411
+    },
+    {
+        "num": ">>>>>>>BRA [BR-MG] (id:YF019087) (7)",
+        "latitude": -18.5895,
+        "longitude": -44.4808
+    },
+    {
+        "num": ">>>>>>KWT [KW-FA] (id:YF103938) (6)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>KWT [KW-JA] (id:YF122171) (6)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>KWT [KW-JA] (id:YF119719) (6)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>KGZ [KG-J] (id:ALN005) (8)",
+        "latitude": 41.5886,
+        "longitude": 72.4506
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-BA] (id:YF017106) (9)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-BA] (id:ERS2478503) (9)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF130603) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF110625) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-HA] (id:YF015382) (9)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF014990) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF116452) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF115305) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF008866) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF103237) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF129737) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF129700) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF129699) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF129672) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF114384) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF114231) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF113121) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF109452) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF109390) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF013872) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF130576) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF130439) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF115153) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>PAK [PK-JK] (id:SAMC013032) (10)",
+        "latitude": 33.868,
+        "longitude": 73.8036
+    },
+    {
+        "num": ">>>>>>>>>>>>>IND [IN-AR] (id:HG03866) (13)",
+        "latitude": 28.4056,
+        "longitude": 94.4673
+    },
+    {
+        "num": ">>>>>>>>>>>>IND [IN-AP] (id:HG04017) (12)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>PAK [PK-PB] (id:HG02780) (12)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>IND [IN-KA] (id:YF124612) (13)",
+        "latitude": 14.3681,
+        "longitude": 75.667
+    },
+    {
+        "num": ">>>>>>>>>>>>>UAE [AE-RK] (id:YF086034) (13)",
+        "latitude": 25.6964,
+        "longitude": 55.9791
+    },
+    {
+        "num": ">>>>>>>>>>>>>UAE [AE-AZ] (id:YF007197) (13)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-TN] (id:YF094836) (14)",
+        "latitude": 11.0159,
+        "longitude": 78.2704
+    },
+    {
+        "num": ">>>>>>>>>>>>IND [IN-GJ] (id:NA20852) (12)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>MMR [MM-16] (id:YF116369) (13)",
+        "latitude": 20.2747,
+        "longitude": 93.6396
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>AFG [AF-KAB] (id:YF121080) (15)",
+        "latitude": 34.4949,
+        "longitude": 69.3846
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>AFG [AF-KAB] (id:YF119523) (15)",
+        "latitude": 34.4949,
+        "longitude": 69.3846
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>AFG [AF-KAB] (id:YF083740) (15)",
+        "latitude": 34.4949,
+        "longitude": 69.3846
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GJ] (id:NA20898) (14)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-AP] (id:HG03775) (14)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-AP] (id:HG03715) (14)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-AP] (id:HG03713) (14)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>IND [IN-MH] (id:YF132247) (15)",
+        "latitude": 19.4723,
+        "longitude": 75.4647
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-MH] (id:YF132586) (14)",
+        "latitude": 19.4723,
+        "longitude": 75.4647
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-03] (id:YF110627) (14)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>NPL [NP-DH] (id:YF073310) (14)",
+        "latitude": 28.4801,
+        "longitude": 83.5602
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-03] (id:YF101495) (15)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>IND [IN-GJ] (id:YF090636) (15)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-02] (id:YF009549) (15)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>BHR [BH-15] (id:YF075751) (16)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF075768) (17)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF075780) (17)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF075764) (17)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF082488) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF075766) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF075765) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF075763) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF063110) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019215) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014676) (18)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-KA] (id:YF125691) (14)",
+        "latitude": 14.3681,
+        "longitude": 75.667
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>IRQ [IQ-AN] (id:YF009291) (15)",
+        "latitude": 33.2317,
+        "longitude": 41.5307
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF086801) (17)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>IND [IN-TN] (id:YF112381) (17)",
+        "latitude": 11.0159,
+        "longitude": 78.2704
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008833) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>IND [IN-GJ] (id:NA21104) (17)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008726) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>IND [IN-GJ] (id:NA21098) (17)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF124110) (16)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF003049) (16)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>TTO [TT-WTO] (id:YF078489) (16)",
+        "latitude": 11.1959,
+        "longitude": -60.7709
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>IND [IN-BR] (id:YF086666) (16)",
+        "latitude": 25.6853,
+        "longitude": 85.8134
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>IND [IN-GJ] (id:NA20890) (16)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>IRN [IR-30] (id:YF012161) (17)",
+        "latitude": 35.584,
+        "longitude": 58.7976
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>PAK [PK-PB] (id:HG02597) (18)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>IND [IN-AP] (id:HG03871) (19)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>PAK [PK-PB] (id:YF129342) (23)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>IRN [IR-25] (id:YF116110) (10)",
+        "latitude": 32.7074,
+        "longitude": 55.5242
+    },
+    {
+        "num": ">>>>>>>>>>IND [IN-GJ] (id:NA20904) (10)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>IND [IN-BR] (id:YF001382) (11)",
+        "latitude": 25.6853,
+        "longitude": 85.8134
+    },
+    {
+        "num": ">>>>>>>>>>>IND [IN-AP] (id:HG04098) (11)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>KWT [KW-HA] (id:YF064514) (11)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>IRQ [IQ-AN] (id:YF019924) (11)",
+        "latitude": 33.2317,
+        "longitude": 41.5307
+    },
+    {
+        "num": ">>>>>>>>>>>SAU [SA-05] (id:YF004210) (11)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>SAU [SA-05] (id:YF080270) (11)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>SAU [SA-05] (id:YF019587) (11)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>OMN [OM-MA] (id:YF120540) (11)",
+        "latitude": 23.2505,
+        "longitude": 58.6759
+    },
+    {
+        "num": ">>>>>>>>>>>SAU [SA-07] (id:YF014386) (11)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>KWT [KW-KU] (id:YF012753) (11)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>IND [IN-PB] (id:YF104385) (12)",
+        "latitude": 31.0245,
+        "longitude": 75.3762
+    },
+    {
+        "num": ">>>>>>>>>>>>>QAT [QA-DA] (id:YF071943) (13)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>IND [IN-GJ] (id:NA20891) (13)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>PAK [PK-PB] (id:YF007652) (13)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>YEM [YE-SH] (id:YF081792) (13)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>YEM [YE-SH] (id:YF078304) (13)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GJ] (id:NA20850) (14)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>PAK [PK-PB] (id:HG02736) (14)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>PAK [PK-JK] (id:SAMC013038) (15)",
+        "latitude": 33.868,
+        "longitude": 73.8036
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-04] (id:YF115236) (15)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>IND [IN-HR] (id:YF117327) (15)",
+        "latitude": 29.1003,
+        "longitude": 76.271
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-UP] (id:YF085411) (14)",
+        "latitude": 26.7201,
+        "longitude": 80.9966
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF063657) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>PAK [PK-PB] (id:YF124870) (14)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>DZA [DZ-43] (id:YF112406) (14)",
+        "latitude": 36.2449,
+        "longitude": 6.1311
+    },
+    {
+        "num": ">>>>>>>>>>>>>>PAK [PK-PB] (id:YF088187) (14)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>PAK [PK-PB] (id:HG03490) (14)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF130427) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>IND [IN-MH] (id:YF114995) (15)",
+        "latitude": 19.4723,
+        "longitude": 75.4647
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>PAK [PK-PB] (id:YF109810) (15)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>PAK [PK-PB] (id:HG02727) (15)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>IND [IN-PB] (id:YF065553) (17)",
+        "latitude": 31.0245,
+        "longitude": 75.3762
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>PAK [PK-PB] (id:HG03624) (18)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>IND [IN-PB] (id:YF101564) (18)",
+        "latitude": 31.0245,
+        "longitude": 75.3762
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>IND [IN-HR] (id:YF127684) (18)",
+        "latitude": 29.1003,
+        "longitude": 76.271
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>PAK [PK-PB] (id:HG02600) (18)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>IND [IN-TN] (id:YF125023) (19)",
+        "latitude": 11.0159,
+        "longitude": 78.2704
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>PAK [PK-PB] (id:HG02648) (19)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>IRQ [IQ-DQ] (id:YF127819) (19)",
+        "latitude": 31.191,
+        "longitude": 46.4203
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>IND [IN-KA] (id:YF131870) (20)",
+        "latitude": 14.3681,
+        "longitude": 75.667
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-02] (id:YF123723) (12)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-03] (id:YF009353) (12)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-02] (id:YF005986) (12)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>IND [IN-AP] (id:ERR1395609) (13)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-AP] (id:HG03720) (14)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>PAK [PK-PB] (id:YF132721) (12)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>PAK [PK-PB] (id:YF065256) (12)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>UAE [AE-DU] (id:YF005991) (13)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-PB] (id:YF072513) (14)",
+        "latitude": 31.0245,
+        "longitude": 75.3762
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>PAK [PK-JK] (id:SAMC013025) (16)",
+        "latitude": 33.868,
+        "longitude": 73.8036
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>PAK [PK-PB] (id:HG03663) (16)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>IND [IN-PB] (id:YF128381) (16)",
+        "latitude": 31.0245,
+        "longitude": 75.3762
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF010992) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>BHR [BH-15] (id:YF126645) (14)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>BHR [BH-15] (id:YF126636) (14)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>BHR [BH-15] (id:YF122404) (14)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-KH] (id:YF006710) (15)",
+        "latitude": 25.7512,
+        "longitude": 51.4212
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-DA] (id:YF101160) (15)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-DA] (id:YF003713) (15)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-DA] (id:YF011394) (15)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>PAK [PK-PB] (id:HG03234) (14)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>NPL [NP-LU] (id:YF013656) (13)",
+        "latitude": 27.695,
+        "longitude": 83.55
+    },
+    {
+        "num": ">>>>>>>>>>>>>PAK [PK-PB] (id:HG03667) (13)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GJ] (id:NA21115) (14)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GJ] (id:NA21129) (14)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GJ] (id:NA21114) (14)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-AP] (id:HG04219) (14)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>>>KWT [KW-KU] (id:YF132621) (14)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>KWT [KW-KU] (id:YF114589) (14)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GJ] (id:NA20846) (14)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF115756) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF123535) (17)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF108264) (17)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-AP] (id:HG03779) (14)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>>>>>OMN [OM-ZA] (id:YF073571) (14)",
+        "latitude": 22.9127,
+        "longitude": 55.9327
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>UAE [AE-AJ] (id:YF080274) (15)",
+        "latitude": 25.3971,
+        "longitude": 55.5411
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>UAE [AE-DU] (id:YF080273) (15)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>UAE [AE-SH] (id:YF093765) (15)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IND [IN-GA] (id:YF112760) (14)",
+        "latitude": 15.3133,
+        "longitude": 73.9951
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>IND [IN-GJ] (id:NA21095) (15)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>IND [IN-UP] (id:YF125721) (17)",
+        "latitude": 26.7201,
+        "longitude": 80.9966
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>PAK [PK-PB] (id:YF068408) (17)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>PAK [PK-PB] (id:HG03649) (17)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>RUS [RU-KK] (id:ERS2374286) (3)",
+        "latitude": 53.3643,
+        "longitude": 89.8405
+    },
+    {
+        "num": ">>>>SAU [SA-03] (id:YF008307) (4)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>MNG [MN-073] (id:NOM001) (5)",
+        "latitude": 48.0061,
+        "longitude": 100.92
+    },
+    {
+        "num": ">>>>>>>RUS [RU-NIZ] (id:YF132600) (7)",
+        "latitude": 56.1384,
+        "longitude": 44.7751
+    },
+    {
+        "num": ">>>>>>>RUS [RU-PRI] (id:YF014477) (7)",
+        "latitude": 44.8622,
+        "longitude": 134.594
+    },
+    {
+        "num": ">>>>>>>IRN [IR-11] (id:YF116327) (7)",
+        "latitude": 36.3989,
+        "longitude": 48.2959
+    },
+    "",
+    {
+        "num": ">>>>>>RUS [RU-ULY] (id:YF001471) (6)",
+        "latitude": 53.9248,
+        "longitude": 47.3773
+    },
+    {
+        "num": ">>>>>>RUS [RU-SAM] (id:RT5) (6)",
+        "latitude": 53.1783,
+        "longitude": 50.4377
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-KB] (id:YF111567) (8)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>BHR [BH-15] (id:YF097396) (9)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF015504) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF110090) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF104653) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>JOR [JO-AJ] (id:YF082249) (8)",
+        "latitude": 32.2932,
+        "longitude": 35.761
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-HA] (id:YF076691) (9)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-AH] (id:YF109602) (9)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-HA] (id:YF076692) (9)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>KWT [KW-KU] (id:YF067095) (9)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>HUN [HU-BZ] (id:ERS9945103) (6)",
+        "latitude": 48.2104,
+        "longitude": 21.0983
+    },
+    {
+        "num": ">>>>>>>USA [US-MD] (id:YF094500) (7)",
+        "latitude": 39.3874,
+        "longitude": -77.0454
+    },
+    {
+        "num": ">>>>>>>>DEU [DE-NW] (id:YF003274) (8)",
+        "latitude": 51.6146,
+        "longitude": 7.65708
+    },
+    {
+        "num": ">>>>>>>>DEU [DE-NW] (id:YF001977) (8)",
+        "latitude": 51.6146,
+        "longitude": 7.65708
+    },
+    {
+        "num": ">>>>>>>RUS [RU-ROS] (id:ERS2374378) (7)",
+        "latitude": 47.9913,
+        "longitude": 41.2613
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>RUS [RU-KB] (id:YF006443) (8)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>PER [PE-LIM] (id:HG01982) (9)",
+        "latitude": -11.0602,
+        "longitude": -77.0756
+    },
+    {
+        "num": ">>>>>>>>>MEX [MX-NLE] (id:YF013061) (9)",
+        "latitude": 25.6178,
+        "longitude": -99.8307
+    },
+    {
+        "num": ">>>>>>>>HUN [HU-BK] (id:ERS9945166) (8)",
+        "latitude": 46.6096,
+        "longitude": 19.4699
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-BEL] (id:YF001376) (9)",
+        "latitude": 50.8757,
+        "longitude": 37.277
+    },
+    {
+        "num": ">>>>>>>>>DEU [DE-BE] (id:YF007117) (9)",
+        "latitude": 52.5131,
+        "longitude": 13.4213
+    },
+    {
+        "num": ">>>>>>>>>DEU [DE-BE] (id:YF006638) (9)",
+        "latitude": 52.5131,
+        "longitude": 13.4213
+    },
+    {
+        "num": ">>>>>>>>CHE [CH-AI] (id:YF011995) (8)",
+        "latitude": 47.3092,
+        "longitude": 9.39548
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-STA] (id:YF103066) (9)",
+        "latitude": 44.981,
+        "longitude": 43.2791
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-SAM] (id:YF005054) (9)",
+        "latitude": 53.1783,
+        "longitude": 50.4377
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:YF103640) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>AZE [AZ-FUZ] (id:YF080229) (6)",
+        "latitude": 39.5574,
+        "longitude": 47.322
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>UKR [UA-46] (id:YF004855) (9)",
+        "latitude": 49.8152,
+        "longitude": 24.0372
+    },
+    {
+        "num": ">>>>>>>>>>ESP [ES-S] (id:YF015786) (10)",
+        "latitude": 43.2182,
+        "longitude": -4.02085
+    },
+    {
+        "num": ">>>>>>>>>>HUN [HU-CS] (id:ERS9945268) (10)",
+        "latitude": 46.5997,
+        "longitude": 20.1413
+    },
+    "",
+    {
+        "num": ">>>>>>>>>IRQ [IQ-DI] (id:YF132150) (9)",
+        "latitude": 33.9882,
+        "longitude": 45.1046
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KC] (id:YF078877) (9)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>TUR [TR-55] (id:YF009613) (9)",
+        "latitude": 41.2761,
+        "longitude": 36.0198
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-02] (id:YF076074) (10)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>HRV [HR-14] (id:POP23) (10)",
+        "latitude": 45.4948,
+        "longitude": 18.506
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:ERS1789442) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:ERS1789441) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>IRN [IR-15] (id:ERS1789549) (6)",
+        "latitude": 30.1234,
+        "longitude": 56.9567
+    },
+    {
+        "num": ">>>>>>>>>IRN [IR-02] (id:ERS1789550) (9)",
+        "latitude": 36.6666,
+        "longitude": 45.6734
+    },
+    {
+        "num": ">>>>>>>>>>AZE [AZ-AGU] (id:YF079725) (10)",
+        "latitude": 40.5091,
+        "longitude": 48.3659
+    },
+    {
+        "num": ">>>>>>>>>IRN [IR-15] (id:ERS1789548) (9)",
+        "latitude": 30.1234,
+        "longitude": 56.9567
+    },
+    {
+        "num": ">>>>>>>>>>IRN [IR-02] (id:ERS1789551) (10)",
+        "latitude": 36.6666,
+        "longitude": 45.6734
+    },
+    {
+        "num": ">>>>>>>>>>IRQ [IQ-AR] (id:ERS1789460) (10)",
+        "latitude": 36.2371,
+        "longitude": 44.1806
+    },
+    {
+        "num": ">>>>>>>>>>>TUR [TR-62] (id:YF131374) (11)",
+        "latitude": 39.1519,
+        "longitude": 39.6357
+    },
+    {
+        "num": ">>>>>>>>>>>TUR [TR-24] (id:YF132311) (11)",
+        "latitude": 39.6874,
+        "longitude": 39.5121
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>BLR [BY-BR] (id:YF013243) (9)",
+        "latitude": 52.4289,
+        "longitude": 25.3826
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>LVA [LV-DGV] (id:YF003645) (11)",
+        "latitude": 55.8814,
+        "longitude": 26.5517
+    },
+    {
+        "num": ">>>>>>>>>>>>USA [US-PA] (id:YF100185) (12)",
+        "latitude": 40.8601,
+        "longitude": -77.6094
+    },
+    {
+        "num": ">>>>>>>>>>>>>AUT [AT-9] (id:YF088178) (13)",
+        "latitude": 48.2247,
+        "longitude": 16.3798
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>ISR [IL-M] (id:YF125139) (13)",
+        "latitude": 31.9068,
+        "longitude": 34.8491
+    },
+    {
+        "num": ">>>>>>>>>DEU [DE-HE] (id:YF086071) (9)",
+        "latitude": 50.6098,
+        "longitude": 8.95873
+    },
+    {
+        "num": ">>>>>>>>>NLD [NL-UT] (id:YF079373) (9)",
+        "latitude": 52.0749,
+        "longitude": 5.1938
+    },
+    {
+        "num": ">>>>>>>>>UKR [UA-26] (id:YF010415) (9)",
+        "latitude": 48.665,
+        "longitude": 24.6363
+    },
+    {
+        "num": ">>>>>>>>>>>UKR [UA-56] (id:YF068045) (11)",
+        "latitude": 51.048,
+        "longitude": 26.3841
+    },
+    {
+        "num": ">>>>>>>>>>>UKR [UA-61] (id:YF068356) (11)",
+        "latitude": 49.4739,
+        "longitude": 25.5438
+    },
+    {
+        "num": ">>>>>>>>>>>UKR [UA-05] (id:YF115670) (11)",
+        "latitude": 48.9623,
+        "longitude": 28.7233
+    },
+    {
+        "num": ">>>>>>>>>>>>>USA [US-DC] (id:YF121260) (13)",
+        "latitude": 38.8922,
+        "longitude": -77.0113
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>SVK [SK-NI] (id:YF091082) (10)",
+        "latitude": 48.1443,
+        "longitude": 18.3966
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>HUN [HU-BU] (id:YF071751) (13)",
+        "latitude": 47.4757,
+        "longitude": 19.1282
+    },
+    {
+        "num": ">>>>>>>>>>>>>DEU [DE-MV] (id:YF071537) (13)",
+        "latitude": 53.7528,
+        "longitude": 12.5647
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>UKR [UA-71] (id:YF065726) (12)",
+        "latitude": 49.1506,
+        "longitude": 31.2241
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>UKR [UA-71] (id:YF006027) (14)",
+        "latitude": 49.1506,
+        "longitude": 31.2241
+    },
+    {
+        "num": ">>>>>>>>>>>>>>UKR [UA-71] (id:YF006024) (14)",
+        "latitude": 49.1506,
+        "longitude": 31.2241
+    },
+    {
+        "num": ">>>>>>>>>>>>>>ROU [RO-MM] (id:YF126324) (14)",
+        "latitude": 47.6435,
+        "longitude": 23.9992
+    },
+    {
+        "num": ">>>>>>>>>>>>>>USA [US-NY] (id:YF115446) (14)",
+        "latitude": 43.1988,
+        "longitude": -75.3242
+    },
+    {
+        "num": ">>>>>>>>>>>>>>ROU [RO-NT] (id:YF082879) (14)",
+        "latitude": 46.9704,
+        "longitude": 26.4554
+    },
+    "",
+    {
+        "num": ">>>>>PAK [PK-PB] (id:YF107678) (5)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>RUS [RU-CE] (id:YF014107) (6)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-09] (id:YF074931) (9)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-09] (id:YF075820) (9)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>IRQ [IQ-DQ] (id:YF132277) (6)",
+        "latitude": 31.191,
+        "longitude": 46.4203
+    },
+    {
+        "num": ">>>>>>IND [IN-AP] (id:YF128320) (6)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>PRT [PT-14] (id:YF009948) (6)",
+        "latitude": 39.291,
+        "longitude": -8.40378
+    },
+    "",
+    {
+        "num": ">>>>>>>PAK [PK-PB] (id:HG03629) (7)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    {
+        "num": ">>>>>>>AZE [AZ-SMI] (id:YF132356) (7)",
+        "latitude": 40.3768,
+        "longitude": 48.5986
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>TUR [TR-25] (id:YF131181) (14)",
+        "latitude": 39.9678,
+        "longitude": 41.403
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>BHR [BH-13] (id:YF015472) (13)",
+        "latitude": 26.2204,
+        "longitude": 50.5777
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>IRQ [IQ-BG] (id:YF123177) (13)",
+        "latitude": 33.306,
+        "longitude": 44.3827
+    },
+    {
+        "num": ">>>>>>>>>>>>>QAT [QA-DA] (id:YF003623) (13)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF107613) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF093955) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF094163) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF093954) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-02] (id:YF115404) (14)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>AFG [AF-KNR] (id:YF111793) (14)",
+        "latitude": 34.9013,
+        "longitude": 71.1061
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>TJK [TJ-GB] (id:SAMC013067) (14)",
+        "latitude": 38.2492,
+        "longitude": 72.7189
+    },
+    {
+        "num": ">>>>>>>>>>>>>>TJK [TJ-GB] (id:SAMC013065) (14)",
+        "latitude": 38.2492,
+        "longitude": 72.7189
+    },
+    "",
+    {
+        "num": ">>>>>MNG [MN-043] (id:ULI001) (5)",
+        "latitude": 46.8037,
+        "longitude": 92.4584
+    },
+    {
+        "num": ">>>>>KAZ [KZ-KAR] (id:TAL004) (5)",
+        "latitude": 48.0823,
+        "longitude": 70.1925
+    },
+    {
+        "num": ">>>>>RUS [RU-KYA] (id:I3394) (5)",
+        "latitude": 65.5602,
+        "longitude": 95.2029
+    },
+    {
+        "num": ">>>>>RUS [RU-KYA] (id:I3389) (5)",
+        "latitude": 65.5602,
+        "longitude": 95.2029
+    },
+    "",
+    {
+        "num": ">>>>>MNG [MN-046] (id:CHN008) (5)",
+        "latitude": 49.6911,
+        "longitude": 92.8431
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>RUS [RU-KK] (id:RISE495) (7)",
+        "latitude": 53.3643,
+        "longitude": 89.8405
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-KC] (id:ERS2374418) (8)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-CE] (id:YF116732) (9)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-CE] (id:YF110528) (10)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-CE] (id:YF014592) (10)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-CE] (id:YF110532) (10)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-CE] (id:YF105294) (10)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-MOS] (id:YF102418) (10)",
+        "latitude": 55.7177,
+        "longitude": 37.6188
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>USA [US-SC] (id:YF007842) (11)",
+        "latitude": 33.8578,
+        "longitude": -80.6471
+    },
+    {
+        "num": ">>>>>>>KAZ [KZ-AKT] (id:YF132207) (7)",
+        "latitude": 48.0288,
+        "longitude": 58.9373
+    },
+    "",
+    {
+        "num": ">>>>>>>RUS [RU-KYA] (id:I6718) (7)",
+        "latitude": 65.5602,
+        "longitude": 95.2029
+    },
+    {
+        "num": ">>>>>>>RUS [RU-KYA] (id:I3396) (7)",
+        "latitude": 65.5602,
+        "longitude": 95.2029
+    },
+    {
+        "num": ">>>>>>>RUS [RU-KYA] (id:I3392) (7)",
+        "latitude": 65.5602,
+        "longitude": 95.2029
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>GBR [GB-KEN] (id:YF074855) (10)",
+        "latitude": 51.1979,
+        "longitude": 0.718915
+    },
+    "",
+    {
+        "num": ">>>>>>>>>KAZ [KZ-YUZ] (id:ERS2374404) (9)",
+        "latitude": 42.7187,
+        "longitude": 68.7533
+    },
+    {
+        "num": ">>>>>>>>>KGZ [KG-Y] (id:ERS2374354) (9)",
+        "latitude": 42.0387,
+        "longitude": 77.9472
+    },
+    "",
+    {
+        "num": ">>>>>>>>>IRQ [IQ-BB] (id:YF080792) (9)",
+        "latitude": 32.6833,
+        "longitude": 44.5099
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-CE] (id:YF014967) (11)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>>ITA [IT-RC] (id:YF127111) (11)",
+        "latitude": 38.2363,
+        "longitude": 16.0152
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>KAZ [KZ-PAV] (id:YF073499) (14)",
+        "latitude": 52.2076,
+        "longitude": 76.3751
+    },
+    {
+        "num": ">>>>>>>>>>>>>>KAZ [KZ-PAV] (id:YF065864) (14)",
+        "latitude": 52.2076,
+        "longitude": 76.3751
+    },
+    {
+        "num": ">>>>>>>>>>>>>HUN [HU-BU] (id:ERS9945297) (13)",
+        "latitude": 47.4757,
+        "longitude": 19.1282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>HUN [HU-BK] (id:HMSZper88) (14)",
+        "latitude": 46.6096,
+        "longitude": 19.4699
+    },
+    {
+        "num": ">>>>>>>>>>>>>>FRA [FR-39] (id:YF084165) (14)",
+        "latitude": 46.732,
+        "longitude": 5.72845
+    },
+    {
+        "num": ">>>>>>>>>>>>>>FRA [FR-39] (id:YF073541) (14)",
+        "latitude": 46.732,
+        "longitude": 5.72845
+    },
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:YF012487) (19)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-BA] (id:YF013041) (8)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>KGZ [KG-N] (id:ERS2374330) (8)",
+        "latitude": 41.3438,
+        "longitude": 75.9766
+    },
+    {
+        "num": ">>>>>>>>KAZ [KZ-VOS] (id:KKM001) (8)",
+        "latitude": 48.3405,
+        "longitude": 81.9768
+    },
+    {
+        "num": ">>>>>>>>>PRT [PT-20] (id:YF016871) (9)",
+        "latitude": 38.6351,
+        "longitude": -28.0394
+    },
+    {
+        "num": ">>>>>>>>>KGZ [KG-Y] (id:ERS2374355) (9)",
+        "latitude": 42.0387,
+        "longitude": 77.9472
+    },
+    "",
+    {
+        "num": ">>>>>>>>>KAZ [KZ-KAR] (id:KSH004) (9)",
+        "latitude": 48.0823,
+        "longitude": 70.1925
+    },
+    {
+        "num": ">>>>>>>>>KAZ [KZ-VOS] (id:ESZ001) (9)",
+        "latitude": 48.3405,
+        "longitude": 81.9768
+    },
+    {
+        "num": ">>>>>>>>>KAZ [KZ-KAR] (id:ERS2374296) (9)",
+        "latitude": 48.0823,
+        "longitude": 70.1925
+    },
+    {
+        "num": ">>>>>>>>>KAZ [KZ-KAR] (id:AKB001) (9)",
+        "latitude": 48.0823,
+        "longitude": 70.1925
+    },
+    {
+        "num": ">>>>>>>>>>BGR [BG-06] (id:YF126070) (10)",
+        "latitude": 43.4325,
+        "longitude": 23.832
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>KGZ [KG-N] (id:ERS2374326) (13)",
+        "latitude": 41.3438,
+        "longitude": 75.9766
+    },
+    {
+        "num": ">>>>>>>>>>>>>>KAZ [KZ-VOS] (id:KKB002) (14)",
+        "latitude": 48.3405,
+        "longitude": 81.9768
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-AL] (id:SRR1791256) (16)",
+        "latitude": 50.9782,
+        "longitude": 86.937
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>KGZ [KG-GB] (id:SAMC008917) (18)",
+        "latitude": 42.8424,
+        "longitude": 74.5877
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>KGZ [KG-GB] (id:ERR1395586) (19)",
+        "latitude": 42.8424,
+        "longitude": 74.5877
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>KGZ [KG-GB] (id:SAMC008923) (20)",
+        "latitude": 42.8424,
+        "longitude": 74.5877
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>KGZ [KG-GB] (id:SAMC008924) (20)",
+        "latitude": 42.8424,
+        "longitude": 74.5877
+    },
+    {
+        "num": ">>>>>AFG [AF-KAP] (id:YF132805) (5)",
+        "latitude": 34.9748,
+        "longitude": 69.6626
+    },
+    {
+        "num": ">>>>>TUR [TR-58] (id:YF086538) (5)",
+        "latitude": 39.429,
+        "longitude": 37.2907
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>OMN [OM-SH] (id:YF129624) (7)",
+        "latitude": 21.5958,
+        "longitude": 58.9632
+    },
+    {
+        "num": ">>>>>>>KWT [KW-AH] (id:YF124355) (7)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>UAE [AE-SH] (id:YF114908) (8)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>UAE [AE-SH] (id:YF072495) (8)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>USA [US-MA] (id:YF131523) (9)",
+        "latitude": 42.3739,
+        "longitude": -71.9993
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-BA] (id:tem003) (9)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>BHR [BH-14] (id:YF004588) (7)",
+        "latitude": 25.9688,
+        "longitude": 50.5622
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-BAL] (id:SRS6892251) (8)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>IND [IN-GJ] (id:NA20864) (8)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>IND [IN-AP] (id:HG04020) (10)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>IND [IN-AP] (id:HG04096) (10)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>>>IND [IN-AP] (id:HG04023) (10)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-KDZ] (id:SRS6892105) (8)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-KDZ] (id:SRS6892104) (8)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-BAL] (id:SRS6892109) (8)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-KDZ] (id:SRS6892107) (9)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-BAL] (id:SRS6892099) (9)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-KDZ] (id:SRS6892103) (10)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-BAL] (id:SRS6892100) (10)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-ZAB] (id:YF132517) (10)",
+        "latitude": 32.4033,
+        "longitude": 67.1401
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-KAB] (id:YF130834) (10)",
+        "latitude": 34.4949,
+        "longitude": 69.3846
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-BAL] (id:SRS6892106) (10)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-KDZ] (id:SRS6892101) (10)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-KDZ] (id:SRS6892110) (10)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-KDZ] (id:SRS6892108) (10)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>IND [IN-AP] (id:HG04019) (7)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>IND [IN-AP] (id:HG03960) (7)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>BHR [BH-14] (id:YF125381) (8)",
+        "latitude": 25.9688,
+        "longitude": 50.5622
+    },
+    {
+        "num": ">>>>>>>>>>UAE [AE-RK] (id:YF081307) (10)",
+        "latitude": 25.6964,
+        "longitude": 55.9791
+    },
+    {
+        "num": ">>>>>>>>>>KWT [KW-MU] (id:YF070728) (10)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>KWT [KW-HA] (id:YF015926) (10)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>BHR [BH-13] (id:YF019270) (11)",
+        "latitude": 26.2204,
+        "longitude": 50.5777
+    },
+    {
+        "num": ">>>>>>>>KWT [KW-HA] (id:YF066584) (8)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>IRQ [IQ-NI] (id:YF006685) (8)",
+        "latitude": 35.9228,
+        "longitude": 42.7469
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>BHR [BH-13] (id:YF067598) (10)",
+        "latitude": 26.2204,
+        "longitude": 50.5777
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>DZA [DZ-21] (id:YF082725) (11)",
+        "latitude": 36.7555,
+        "longitude": 6.81608
+    },
+    {
+        "num": ">>>>>>>>>>>>PAK [PK-PB] (id:YF087148) (12)",
+        "latitude": 31.3589,
+        "longitude": 72.3449
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>UKR [UA-77] (id:EG600019) (12)",
+        "latitude": 48.2892,
+        "longitude": 26.2156
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>KWT [KW-HA] (id:YF074364) (12)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>SRB [RS-06] (id:SRS6892240) (12)",
+        "latitude": 45.3888,
+        "longitude": 19.647
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892201) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892200) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892124) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892191) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892178) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892168) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892157) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892146) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892135) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892113) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892222) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892102) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892091) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892239) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892080) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-NIZ] (id:YF095616) (13)",
+        "latitude": 56.1384,
+        "longitude": 44.7751
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892226) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892202) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892219) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892214) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892235) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892223) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892203) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892238) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892237) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892225) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892213) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892211) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892229) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892208) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892204) (16)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892233) (17)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892232) (17)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892207) (17)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892215) (16)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892236) (16)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892217) (16)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892216) (16)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892234) (17)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892227) (17)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892221) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892206) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892230) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892218) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892228) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892210) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892205) (18)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>SAU [SA-05] (id:YF066848) (6)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>KAZ [KZ-ATY] (id:YF073481) (7)",
+        "latitude": 47.7744,
+        "longitude": 51.7585
+    },
+    {
+        "num": ">>>>>>>>LBN [LB-BA] (id:YF005017) (8)",
+        "latitude": 33.8849,
+        "longitude": 35.5093
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-JOW] (id:SRS6892198) (8)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-KDZ] (id:SRS6892196) (8)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-BAL] (id:SRS6892195) (8)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-JOW] (id:SRS6892199) (10)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-BAL] (id:SRS6892197) (10)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>DEU [DE-NI] (id:YF104553) (10)",
+        "latitude": 52.775,
+        "longitude": 8.86184
+    },
+    {
+        "num": ">>>>>>>>>>DEU [DE-NI] (id:YF102798) (10)",
+        "latitude": 52.775,
+        "longitude": 8.86184
+    },
+    {
+        "num": ">>>>>>>>>>DEU [DE-NI] (id:YF101938) (10)",
+        "latitude": 52.775,
+        "longitude": 8.86184
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KC] (id:YF087241) (10)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KC] (id:SRS6892082) (10)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-CE] (id:YF094958) (10)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-CE] (id:SRS6892194) (10)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>BLR [BY-MA] (id:YF063691) (8)",
+        "latitude": 53.8241,
+        "longitude": 30.4041
+    },
+    {
+        "num": ">>>>>>>>UKR [UA-09] (id:YF012466) (8)",
+        "latitude": 48.9084,
+        "longitude": 39.0033
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-BA] (id:kzb007) (9)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-CE] (id:YF074309) (14)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892209) (14)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892079) (14)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-KB] (id:YF103573) (16)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-AD] (id:YF075436) (16)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-KB] (id:YF080060) (16)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-BA] (id:YF067993) (15)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-KB] (id:YF118968) (16)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-AD] (id:YF102511) (16)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>RUS [RU-AD] (id:HGDP01396) (16)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:YF105203) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892220) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:YF076660) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892190) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:YF065632) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892264) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892231) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892253) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892241) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>>>>AFG [AF-BAM] (id:SRS6892182) (9)",
+        "latitude": 34.9693,
+        "longitude": 67.2365
+    },
+    {
+        "num": ">>>>>>>>>>PAK [PK-JK] (id:YF119050) (10)",
+        "latitude": 33.868,
+        "longitude": 73.8036
+    },
+    {
+        "num": ">>>>>>>>>>>>IND [IN-TN] (id:YF122759) (12)",
+        "latitude": 11.0159,
+        "longitude": 78.2704
+    },
+    {
+        "num": ">>>>>>>>>>>>IND [IN-KL] (id:YF093274) (12)",
+        "latitude": 10.3666,
+        "longitude": 76.5237
+    },
+    {
+        "num": ">>>>>>>>>>>>>IND [IN-BR] (id:YF127566) (13)",
+        "latitude": 25.6853,
+        "longitude": 85.8134
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-04] (id:YF010852) (14)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>AFG [AF-KDZ] (id:SRS6892183) (15)",
+        "latitude": 36.9043,
+        "longitude": 68.682
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>AFG [AF-GHA] (id:YF105537) (17)",
+        "latitude": 33.4079,
+        "longitude": 67.8006
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>AFG [AF-GHA] (id:YF093207) (17)",
+        "latitude": 33.4079,
+        "longitude": 67.8006
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>AFG [AF-GHA] (id:YF100841) (17)",
+        "latitude": 33.4079,
+        "longitude": 67.8006
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>AFG [AF-GHA] (id:YF090523) (17)",
+        "latitude": 33.4079,
+        "longitude": 67.8006
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>AFG [AF-GHA] (id:YF085525) (17)",
+        "latitude": 33.4079,
+        "longitude": 67.8006
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>AFG [AF-GHA] (id:YF014890) (17)",
+        "latitude": 33.4079,
+        "longitude": 67.8006
+    },
+    {
+        "num": ">>>>>>>IRN [IR-30] (id:YF008521) (7)",
+        "latitude": 35.584,
+        "longitude": 58.7976
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-JOW] (id:SRS6892246) (8)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>USA [US-NJ] (id:YF131866) (8)",
+        "latitude": 40.0449,
+        "longitude": -74.4653
+    },
+    {
+        "num": ">>>>>>>>YEM [YE-IB] (id:YF004744) (8)",
+        "latitude": 14.0543,
+        "longitude": 44.2012
+    },
+    "",
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF127005) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-BAM] (id:SRS6892250) (9)",
+        "latitude": 34.9693,
+        "longitude": 67.2365
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-BAM] (id:SRS6892248) (9)",
+        "latitude": 34.9693,
+        "longitude": 67.2365
+    },
+    "",
+    {
+        "num": ">>>>>>>>>SYR [SY-HL] (id:YF008377) (9)",
+        "latitude": 36.1054,
+        "longitude": 37.601
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-BAL] (id:SRS6892249) (9)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>>KWT [KW-AH] (id:YF108532) (11)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>MNG [MN-041] (id:ARS026) (12)",
+        "latitude": 50.1456,
+        "longitude": 99.8205
+    },
+    {
+        "num": ">>>>>>>>>>>>>TUR [TR-06] (id:YF129238) (13)",
+        "latitude": 39.829,
+        "longitude": 32.578
+    },
+    {
+        "num": ">>>>>>>>>>>>>TUR [TR-07] (id:YF110474) (13)",
+        "latitude": 37.1141,
+        "longitude": 30.9564
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892243) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892242) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892245) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892244) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>BGR [BG-22] (id:YF124533) (12)",
+        "latitude": 42.679,
+        "longitude": 23.357
+    },
+    {
+        "num": ">>>>>>>>>>>>BGR [BG-12] (id:YF006450) (12)",
+        "latitude": 43.487,
+        "longitude": 23.1788
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>USA [US-FL] (id:YF005803) (13)",
+        "latitude": 28.1568,
+        "longitude": -81.6228
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>USA [US-FL] (id:HUCDD5EE) (11)",
+        "latitude": 28.1568,
+        "longitude": -81.6228
+    },
+    {
+        "num": ">>>>>>>>>>>ARM [AM-LO] (id:YF131163) (11)",
+        "latitude": 40.9347,
+        "longitude": 44.4524
+    },
+    {
+        "num": ">>>>>>>>>>>>VNM [VN-26] (id:YF084215) (12)",
+        "latitude": 16.312,
+        "longitude": 107.634
+    },
+    {
+        "num": ">>>>>>>>>>>>ESP [ES-NA] (id:YF117980) (12)",
+        "latitude": 42.7493,
+        "longitude": -1.63845
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>IRN [IR-07] (id:YF111161) (13)",
+        "latitude": 35.5146,
+        "longitude": 51.6548
+    },
+    {
+        "num": ">>>>>>>>>>>>>AFG [AF-JOW] (id:SRS6892247) (13)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>IND [IN-AP] (id:HG03963) (7)",
+        "latitude": 16.4854,
+        "longitude": 79.208
+    },
+    {
+        "num": ">>>>>>>>RUS [RU-CHE] (id:I1053) (8)",
+        "latitude": 54.1131,
+        "longitude": 60.2383
+    },
+    {
+        "num": ">>>>>>>>AFG [AF-BAL] (id:SRS6892092) (8)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>CZE [CZ-VY] (id:YF131551) (10)",
+        "latitude": 49.4088,
+        "longitude": 15.7721
+    },
+    {
+        "num": ">>>>>>>>>>CZE [CZ-VY] (id:YF132856) (10)",
+        "latitude": 49.4088,
+        "longitude": 15.7721
+    },
+    {
+        "num": ">>>>>>>>>>CZE [CZ-VY] (id:YF113227) (10)",
+        "latitude": 49.4088,
+        "longitude": 15.7721
+    },
+    {
+        "num": ">>>>>>>>>>CZE [CZ-VY] (id:YF067321) (10)",
+        "latitude": 49.4088,
+        "longitude": 15.7721
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-ME] (id:YF071684) (9)",
+        "latitude": 56.5407,
+        "longitude": 47.9131
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-PER] (id:YF131903) (9)",
+        "latitude": 58.8735,
+        "longitude": 56.5878
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-PER] (id:YF120256) (9)",
+        "latitude": 58.8735,
+        "longitude": 56.5878
+    },
+    {
+        "num": ">>>>>>>>>>IND [IN-HR] (id:YF131766) (10)",
+        "latitude": 29.1003,
+        "longitude": 76.271
+    },
+    {
+        "num": ">>>>>>>>>>>IND [IN-RJ] (id:YF094669) (11)",
+        "latitude": 26.7468,
+        "longitude": 73.8556
+    },
+    {
+        "num": ">>>>>>>>>>>IND [IN-RJ] (id:YF064325) (11)",
+        "latitude": 26.7468,
+        "longitude": 73.8556
+    },
+    {
+        "num": ">>>>>>>>>>>USA [US-VA] (id:YF094607) (11)",
+        "latitude": 37.7403,
+        "longitude": -78.2431
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-AD] (id:YF080420) (11)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KC] (id:SRS6892090) (11)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>GEO [GE-AB] (id:SRS6892088) (11)",
+        "latitude": 43.1479,
+        "longitude": 41.0701
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-JOW] (id:SRS6892095) (9)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-02] (id:YF004951) (9)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>IND [IN-GJ] (id:NA21092) (9)",
+        "latitude": 22.7501,
+        "longitude": 71.3013
+    },
+    {
+        "num": ">>>>>>>>>>AFG [AF-JOW] (id:SRS6892093) (10)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>>>>AFG [AF-JOW] (id:SRS6892096) (11)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>>>>>AFG [AF-JOW] (id:SRS6892098) (12)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>AFG [AF-JOW] (id:SRS6892097) (12)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>ITA [IT-CA] (id:ERS256940) (10)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>ITA [IT-CA] (id:ERS256939) (10)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>IND [IN-BR] (id:YF086180) (11)",
+        "latitude": 25.6853,
+        "longitude": 85.8134
+    },
+    {
+        "num": ">>>>>>>>>>>AFG [AF-JOW] (id:SRS6892094) (11)",
+        "latitude": 36.8971,
+        "longitude": 65.9617
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-CU] (id:SRS6892089) (12)",
+        "latitude": 55.4883,
+        "longitude": 47.1662
+    },
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF011168) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF109051) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>AFG [AF-BAL] (id:SRS6892087) (9)",
+        "latitude": 36.6851,
+        "longitude": 67.2185
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-05] (id:YF075546) (10)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>UAE [AE-SH] (id:YF016478) (10)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF131131) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-04] (id:YF003432) (10)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF132710) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892083) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892085) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892084) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:YF086935) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892086) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>LBN [LB-JL] (id:YF102559) (10)",
+        "latitude": 33.9291,
+        "longitude": 35.6942
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>USA [US-NJ] (id:YF131508) (12)",
+        "latitude": 40.0449,
+        "longitude": -74.4653
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>NLD [NL-OV] (id:YF122168) (12)",
+        "latitude": 52.4311,
+        "longitude": 6.41649
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF110571) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>GEO [GE-AB] (id:YF124263) (12)",
+        "latitude": 43.1479,
+        "longitude": 41.0701
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892180) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>PAK [PK-JK] (id:SAMC013037) (10)",
+        "latitude": 33.868,
+        "longitude": 73.8036
+    },
+    {
+        "num": ">>>>>>>>>>>PRT [PT-08] (id:YF014852) (11)",
+        "latitude": 37.1704,
+        "longitude": -7.93895
+    },
+    {
+        "num": ">>>>>>>>>>>>QAT [QA-WA] (id:YF079898) (12)",
+        "latitude": 24.9661,
+        "longitude": 51.4743
+    },
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>ESP [ES-O] (id:YF065944) (12)",
+        "latitude": 43.3261,
+        "longitude": -5.84196
+    },
+    {
+        "num": ">>>>>>>>>>>>ESP [ES-O] (id:YF002152) (12)",
+        "latitude": 43.3261,
+        "longitude": -5.84196
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:YF123984) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-DA] (id:SRS6892275) (12)",
+        "latitude": 42.36,
+        "longitude": 47.1424
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF081453) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>RUS [RU-RYA] (id:YF013038) (10)",
+        "latitude": 54.3363,
+        "longitude": 40.6258
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-BA] (id:YF002706) (10)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-BA] (id:SRS6892281) (10)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:YF001427) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892285) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892284) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892272) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892258) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892255) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:ERS2478502) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892280) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-BA] (id:SRS6892254) (11)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892283) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:YF130384) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892282) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-ULY] (id:YF125195) (12)",
+        "latitude": 53.9248,
+        "longitude": 47.3773
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:YF101944) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:YF086833) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>KAZ [KZ-YUZ] (id:YF073164) (12)",
+        "latitude": 42.7187,
+        "longitude": 68.7533
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:YF132760) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:YF108209) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:YF104030) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-CHE] (id:YF072284) (13)",
+        "latitude": 54.1131,
+        "longitude": 60.2383
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892270) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892279) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892271) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892278) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892276) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892274) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-BA] (id:SRS6892273) (12)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892277) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892265) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892269) (13)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892266) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892263) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892262) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892259) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892256) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892268) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892267) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892261) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892260) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-BA] (id:SRS6892257) (14)",
+        "latitude": 54.2086,
+        "longitude": 56.5575
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KB] (id:SRS6892188) (9)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>GEO [GE-AB] (id:YF094067) (10)",
+        "latitude": 43.1479,
+        "longitude": 41.0701
+    },
+    {
+        "num": ">>>>>>>>>>GEO [GE-AB] (id:YF117544) (10)",
+        "latitude": 43.1479,
+        "longitude": 41.0701
+    },
+    {
+        "num": ">>>>>>>>>>GEO [GE-AB] (id:YF088565) (10)",
+        "latitude": 43.1479,
+        "longitude": 41.0701
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KC] (id:YF010210) (9)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KC] (id:YF002327) (9)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KC] (id:SRS6892189) (9)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KC] (id:SRS6892187) (9)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>RUS [RU-KOS] (id:YF002121) (9)",
+        "latitude": 58.3882,
+        "longitude": 43.4689
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:SRS6892112) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892114) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:YF064642) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892115) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892111) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:YF101149) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>RUS [RU-KC] (id:SRS6892166) (10)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-DA] (id:SRS6892160) (11)",
+        "latitude": 42.36,
+        "longitude": 47.1424
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-DA] (id:SRS6892159) (11)",
+        "latitude": 42.36,
+        "longitude": 47.1424
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-DA] (id:SRS6892158) (11)",
+        "latitude": 42.36,
+        "longitude": 47.1424
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:YF132542) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:SRS6892179) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:SRS6892177) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KB] (id:SRS6892176) (10)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892175) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892167) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892163) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892123) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892170) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892161) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892164) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892162) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892173) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892118) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF064654) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892174) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-CE] (id:YF116630) (12)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-CE] (id:YF116629) (12)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892171) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892181) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892172) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>RUS [RU-KC] (id:YF001683) (10)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:YF132814) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:YF108268) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KC] (id:YF103571) (11)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-SE] (id:YF092748) (11)",
+        "latitude": 42.9969,
+        "longitude": 44.1653
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KC] (id:SRS6892130) (11)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892152) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892151) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-AD] (id:YF071791) (11)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:YF019913) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892154) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KB] (id:SRS6892153) (11)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-CE] (id:YF071116) (12)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-CE] (id:YF014713) (12)",
+        "latitude": 43.2153,
+        "longitude": 45.757
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892134) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892119) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF093197) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF012718) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-AD] (id:YF128092) (12)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF066235) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:YF086446) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF080418) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892121) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:YF103570) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:YF071081) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:YF064216) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:YF015109) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892149) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-DA] (id:SRS6892117) (13)",
+        "latitude": 42.36,
+        "longitude": 47.1424
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892143) (14)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892138) (14)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892127) (14)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:YF002397) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892137) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892169) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892132) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF125585) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:YF083751) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-AD] (id:YF128679) (13)",
+        "latitude": 44.4658,
+        "longitude": 40.1293
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:YF128678) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892120) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:YF082287) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892136) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-SE] (id:SRS6892116) (13)",
+        "latitude": 42.9969,
+        "longitude": 44.1653
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KB] (id:YF103569) (14)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892156) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:YF112319) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:YF072488) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KC] (id:YF071306) (15)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>RUS [RU-KC] (id:SRS6892125) (11)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892155) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KB] (id:SRS6892150) (12)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892141) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892140) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892139) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892133) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892128) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:YF112659) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>RUS [RU-KC] (id:SRS6892129) (12)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892131) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:YF080432) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892142) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:YF112368) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892147) (13)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:YF001588) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892165) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>RUS [RU-KC] (id:SRS6892126) (13)",
+        "latitude": 43.7073,
+        "longitude": 41.6866
+    },
+    {
+        "num": ">>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892144) (14)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892145) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892148) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>RUS [RU-KB] (id:SRS6892122) (15)",
+        "latitude": 43.3757,
+        "longitude": 43.3982
+    }
+]
