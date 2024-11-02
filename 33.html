@@ -34,7 +34,7 @@
     }).addTo(map);
 
     // استيراد البيانات من Google Sheets
-    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQy642YD1ghDElX0PXICH8WQ45jW_Wsw_sgaHTTPli4YvjAe0jnFiY4Nc7Hl1FKZQ/pub?output=csv')
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRWRQB032Y_a-w0ZUJRNv8KThFJtaON8C5N-Vz0B6Go0XQCX64OnRwtiUpjcimHFw/pub?output=csv')
         .then(response => response.text())
         .then(data => {
             // معالجة البيانات
