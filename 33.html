@@ -1,74 +1,60 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>خريطة حرارية باستخدام Leaflet</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
     <style>
-        #map { height: 600px; }
+        #map {
+            height: 600px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <div id="map"></div>
-    
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        // إعداد خريطة Leaflet
-        const map = L.map('map').setView([24.7136, 46.6753], 6); // إعداد الموقع الأولي للخريطة
 
-        // إضافة طبقة الخريطة
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+<div id="map"></div>
 
-        // وظيفة لجلب البيانات من Google Sheets
-        async function fetchData() {
-            const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vR1Q6pkyaeXPXJRJ7jSDCdCFl474yZa0VXUR0--Brbe7KE1PknQIbobQ31z1k2gnw/pub?output=csv');
-            const data = await response.text();
-            const rows = data.split('\n').slice(1); // تخطي عنوان الأعمدة
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script>
+    // إنشاء خريطة
+    var map = L.map('map').setView([23.8859, 45.0792], 5); // عرض الخريطة على السعودية
 
-            let uniqueLocation; // المتغير الخاص بموقع النقطة الفريدة
+    // إضافة طبقة الخريطة
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
 
-            // تحليل البيانات
-            rows.forEach((row, index) => {
-                const columns = row.split(',');
-                
-                // قراءة إحداثيات النقطة الفريدة من Q7 و R7
-                if (index === 6) { // الصف السابع هو index 6
-                    const uniqueLatitude = parseFloat(columns[0]); // يجب تعديل هذا حسب العمود الصحيح
-                    const uniqueLongitude = parseFloat(columns[1]);
-                    uniqueLocation = [uniqueLatitude, uniqueLongitude]; // تخزين موقع النقطة الفريدة
-                }
+    // استيراد البيانات من Google Sheets
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vR1Q6pkyaeXPXJRJ7jSDCdCFl474yZa0VXUR0--Brbe7KE1PknQIbobQ31z1k2gnw/pub?output=csv')
+        .then(response => response.text())
+        .then(data => {
+            // معالجة البيانات
+            const rows = data.split('\n').slice(1); // تجاهل العنوان
+            const heatData = [];
 
-                // قراءة إحداثيات الطول والعرض من الأعمدة الأخرى
-                const latitude = parseFloat(columns[0]); // يجب تعديل هذا حسب العمود الصحيح
-                const longitude = parseFloat(columns[1]);
-                
+            rows.forEach(row => {
+                const cols = row.split(',');
+                const latitude = parseFloat(cols[0]);  // عمود خط العرض
+                const longitude = parseFloat(cols[1]); // عمود خط الطول
+                const intensity = parseFloat(cols[2]) || 1; // كثافة البيانات إذا كان موجودًا، افتراضي 1
+
                 if (!isNaN(latitude) && !isNaN(longitude)) {
-                    L.circle([latitude, longitude], {
-                        color: 'red',
-                        radius: 500 // نصف القطر للدائرة
-                    }).addTo(map);
+                    heatData.push([latitude, longitude, intensity]);
                 }
             });
 
-            // إضافة نقطة فريدة بموقع معين
-            if (uniqueLocation) {
-                const uniqueIcon = L.icon({
-                    iconUrl: 'icon.png', // استبدل هذا برابط الأيقونة الخاصة بك
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                });
+            // إضافة البيانات إلى الخريطة الحرارية
+            L.heatLayer(heatData, { radius: 25 }).addTo(map);
+        })
+        .catch(error => {
+            console.error('حدث خطأ:', error);
+        });
+</script>
 
-                L.marker(uniqueLocation, { icon: uniqueIcon }).addTo(map)
-                    .bindPopup('معلومات حول هذا الموقع الفريد')
-                    .openPopup();
-            }
-        }
-
-        fetchData();
-    </script>
 </body>
 </html>
