@@ -44,14 +44,14 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
         // تحويل البيانات إلى مصفوفة نقاط للحرارة
         var heatData = data.map(item => {
             if (item.latitude && item.longitude && item.num) {
-                // استخراج الرقم بين القوسين من حقل "num"
                 let match = item.num.match(/\((\d+)\)/);
                 let rawWeight = match ? parseInt(match[1]) : 1;
+                let adjustedWeight = 1 / rawWeight; // الوزن العكسي
 
                 return {
                     coords: [item.latitude, item.longitude],
-                    weight: 1 / rawWeight, // حساب الوزن العكسي
-                    originalWeight: rawWeight // الاحتفاظ بالوزن الأصلي
+                    weight: adjustedWeight,
+                    numbers: match ? match[1].split(',').map(Number) : [] // استخراج الأرقام كصفيف
                 };
             } else {
                 console.warn('موقع غير صالح أو وزن مفقود:', item);
@@ -59,19 +59,27 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
             }
         }).filter(item => item !== null);
 
+        // حساب مجموع الأوزان
+        let totalWeight = heatData.reduce((sum, item) => sum + item.weight, 0);
+
+        // ضبط الأوزان لجعل المجموع يساوي 1
+        if (totalWeight > 0) {
+            heatData.forEach(item => {
+                item.weight /= totalWeight; // تحويل الوزن ليصبح بين 0 و 1
+            });
+        }
+
         // حساب الموقع المتوسط بناءً على الوزن المعدل
-        let totalLat = 0, totalLng = 0, totalWeight = 0;
+        let totalLat = 0, totalLng = 0;
 
         heatData.forEach(item => {
             totalLat += item.coords[0] * item.weight;
             totalLng += item.coords[1] * item.weight;
-            totalWeight += item.weight; // جمع الوزن
         });
 
-        // إذا كانت النقاط صالحة، احسب الموقع المتوسط
-        if (totalWeight > 0) {
-            let avgLat = totalLat / totalWeight;
-            let avgLng = totalLng / totalWeight;
+        if (heatData.length > 0) {
+            let avgLat = totalLat;
+            let avgLng = totalLng;
 
             // تعيين أيقونة مخصصة للموقع المتوسط
             var customIcon = L.icon({
@@ -87,43 +95,47 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
             // توسيط الخريطة على النقطة المركزية
             map.setView([avgLat, avgLng], 7);
+        } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+        }
 
-            // إضافة طبقة الحرارة
-            var heatPoints = heatData.map(item => item.coords);
-            if (heatPoints.length > 0) {
-                L.heatLayer(heatPoints, {
-                    radius: 60,
-                    blur: 45,
-                    maxZoom: 15,
-                    minOpacity: 0.2,
-                    max: 1.5,
-                    gradient: {
-                        0.2: '#1a9850',
-                        0.4: '#91cf60',
-                        0.6: '#d9ef8b',
-                        0.7: '#fee08b',
-                        0.8: '#fc8d59',
-                        0.9: '#d73027',
-                        1.0: '#7f0000'
-                    }
-                }).addTo(map);
-            } else {
-                console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
-            }
+        // إضافة طبقة الحرارة
+        var heatPoints = heatData.map(item => item.coords);
+        if (heatPoints.length > 0) {
+            L.heatLayer(heatPoints, {
+                radius: 60,
+                blur: 45,
+                maxZoom: 15,
+                minOpacity: 0.2,
+                max: 1.5,
+                gradient: {
+                    0.2: '#1a9850',
+                    0.4: '#91cf60',
+                    0.6: '#d9ef8b',
+                    0.7: '#fee08b',
+                    0.8: '#fc8d59',
+                    0.9: '#d73027',
+                    1.0: '#7f0000'
+                }
+            }).addTo(map);
+        }
 
-            // ترتيب النقاط بناءً على الوزن الأصلي (الأرقام بين الأقواس)
-            heatData.sort((a, b) => a.originalWeight - b.originalWeight);
-
-            // رسم الخطوط من الموقع المتوسط إلى النقاط بناءً على الأوزان
-            let polylinePoints = [[avgLat, avgLng]]; // بدء الخط من الموقع المتوسط
-
-            // إضافة النقاط إلى polyline
-            heatData.forEach(item => {
-                polylinePoints.push(item.coords);
+        // رسم خطوط السلف المشترك بناءً على الأرقام
+        let connections = {};
+        heatData.forEach(item => {
+            item.numbers.forEach(num => {
+                if (!connections[num]) connections[num] = [];
+                connections[num].push(item.coords);
             });
+        });
 
-            // إضافة الخط إلى الخريطة
-            L.polyline(polylinePoints, { color: 'blue', weight: 2 }).addTo(map);
+        for (let num in connections) {
+            if (connections[num].length > 1) {
+                for (let i = 0; i < connections[num].length - 1; i++) {
+                    let latLngs = [connections[num][i], connections[num][i + 1]];
+                    L.polyline(latLngs, { color: 'blue', weight: 2 }).addTo(map); // رسم الخطوط باللون الأزرق
+                }
+            }
         }
     })
     .catch(error => console.error('Error loading JSON:', error));
@@ -132,4 +144,5 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
 </body>
 </html>
+
 
