@@ -33,7 +33,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // تحميل البيانات من ملف JSON
-fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
+fetch('ggg.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -41,23 +41,35 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
         return response.json();
     })
     .then(data => {
-        // تحويل البيانات إلى مصفوفة نقاط للحرارة
-        var heatData = data.map(item => {
+        let locationWeights = {};
+
+        // تجميع الأوزان لكل موقع
+        data.forEach(item => {
             if (item.latitude && item.longitude && item.num) {
+                let coords = `${item.latitude},${item.longitude}`;
                 let match = item.num.match(/\((\d+)\)/);
                 let rawWeight = match ? parseInt(match[1]) : 1;
-                let adjustedWeight = 1 / rawWeight; // الوزن العكسي
 
-                return {
-                    coords: [item.latitude, item.longitude],
-                    weight: adjustedWeight,
-                    numbers: match ? match[1].split(',').map(Number) : [] // استخراج الأرقام كصفيف
-                };
+                // وزن عكسي يعتمد على عدد التكرارات
+                if (!locationWeights[coords]) {
+                    locationWeights[coords] = { totalWeight: 0, count: 0 };
+                }
+
+                locationWeights[coords].totalWeight += 1 / rawWeight; // الوزن العكسي
+                locationWeights[coords].count += 1; // زيادة عدد التكرارات
             } else {
                 console.warn('موقع غير صالح أو وزن مفقود:', item);
-                return null;
             }
-        }).filter(item => item !== null);
+        });
+
+        // تحويل كائن الأوزان إلى مصفوفة
+        let heatData = Object.entries(locationWeights).map(([coords, { totalWeight, count }]) => {
+            let [lat, lng] = coords.split(',').map(Number);
+            
+            // حساب الوزن المعدل بناءً على عدد التكرارات
+            let adjustedWeight = totalWeight / (1 + count); // الوزن المعدل
+            return { coords: [lat, lng], weight: adjustedWeight };
+        });
 
         // حساب مجموع الأوزان
         let totalWeight = heatData.reduce((sum, item) => sum + item.weight, 0);
@@ -95,8 +107,6 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
             // توسيط الخريطة على النقطة المركزية
             map.setView([avgLat, avgLng], 7);
-        } else {
-            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
         }
 
         // إضافة طبقة الحرارة
@@ -118,30 +128,8 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
                     1.0: '#7f0000'
                 }
             }).addTo(map);
-        }
-
-        // رسم خطوط السلف المشترك بناءً على الأرقام
-        let connections = {};
-        heatData.forEach(item => {
-            item.numbers.forEach(num => {
-                if (!connections[num]) connections[num] = [];
-                connections[num].push(item.coords);
-            });
-        });
-
-        // دالة لتحريك الخطوط
-        function animateLine(coords, index) {
-            if (index >= coords.length - 1) return;
-
-            var line = L.polyline([coords[index], coords[index + 1]], { color: 'blue', weight: 2 }).addTo(map);
-            setTimeout(() => animateLine(coords, index + 1), 1000); // الانتقال كل ثانية
-        }
-
-        // بدء التحريك لكل خط
-        for (let num in connections) {
-            if (connections[num].length > 1) {
-                animateLine(connections[num], 0); // بدء التحريك من أول نقطة
-            }
+        } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
         }
     })
     .catch(error => console.error('Error loading JSON:', error));
