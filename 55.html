@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة حرارية باستخدام Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
+    <style>
+        /* جعل الخريطة تملأ النافذة بالكامل */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%; /* جعل الخريطة تأخذ كامل ارتفاع الصفحة */
+            width: 100%;  /* جعل الخريطة تأخذ كامل عرض الصفحة */
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script>
+// إعداد خريطة ليفليت
+var map = L.map('map').setView([23.3432, 45.1404], 6); // ضبط مركز الخريطة
+
+// إضافة خريطة الأساس
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+// تحميل البيانات من ملف JSON
+fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data); // قم بطباعة البيانات إلى وحدة التحكم للتأكد من أنها صحيحة
+
+        // تحويل البيانات إلى مصفوفة نقاط للحرارة
+        var heatData = data.map(item => {
+            if (item.latitude && item.longitude) {
+                return [item.latitude, item.longitude];
+            } else {
+                console.warn('موقع غير صالح:', item);
+                return null; // قم بإرجاع null للمواقع غير الصالحة
+            }
+        }).filter(item => item !== null); // إزالة المواقع غير الصالحة
+
+        console.log('نقاط الحرارة:', heatData); // طباعة نقاط الحرارة
+
+        // إضافة طبقة الحرارة مع خصائص محسنة
+        if (heatData.length > 0) {
+            L.heatLayer(heatData, {
+                radius: 50,       // زيادة نصف قطر النقطة لجعلها أكثر وضوحًا
+                blur: 25,         // تقليل التمييع لجعل النقاط تتداخل بشكل أفضل
+                maxZoom: 17,      // أقصى مستوى تكبير
+                minOpacity: 0.2,  // الحد الأدنى من الشفافية
+                max: 1.0          // الحد الأقصى للكثافة
+            }).addTo(map);
+        } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+        }
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+
+</script>
+
+</body>
+</html>
