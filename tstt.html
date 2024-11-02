@@ -32,34 +32,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
 
-// تعريف مضلعات ذات قوة جذب أعلى (غير مرئية)
-const attractionsPolygons = [
-    { // بغداد
-        coords: [
-            [33.2905, 44.3915],
-            [33.3305, 44.3915],
-            [33.3305, 44.4375],
-            [33.2905, 44.4375]
-        ]
-    },
-    { // دمشق
-        coords: [
-            [33.4905, 36.2855],
-            [33.5205, 36.2855],
-            [33.5205, 36.3165],
-            [33.4905, 36.3165]
-        ]
-    },
-    { // عمان
-        coords: [
-            [31.9333, 35.9165],
-            [31.9583, 35.9165],
-            [31.9583, 35.9415],
-            [31.9333, 35.9415]
-        ]
-    }
-];
-
 // تحميل البيانات من ملف JSON
 fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => {
@@ -69,6 +41,42 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
         return response.json();
     })
     .then(data => {
+        // تعريف مضلعات ذات قوة جذب أعلى
+        const attractionsPolygons = [
+            { // بغداد
+                coords: [
+                    [33.2905, 44.3915],
+                    [33.3305, 44.3915],
+                    [33.3305, 44.4375],
+                    [33.2905, 44.4375]
+                ],
+                color: 'red'
+            },
+            { // دمشق
+                coords: [
+                    [33.4905, 36.2855],
+                    [33.5205, 36.2855],
+                    [33.5205, 36.3165],
+                    [33.4905, 36.3165]
+                ],
+                color: 'green'
+            },
+            { // عمان
+                coords: [
+                    [31.9333, 35.9165],
+                    [31.9583, 35.9165],
+                    [31.9583, 35.9415],
+                    [31.9333, 35.9415]
+                ],
+                color: 'blue'
+            }
+        ];
+
+        // رسم مضلعات على الخريطة
+        attractionsPolygons.forEach(polygon => {
+            L.polygon(polygon.coords, { color: polygon.color, fillOpacity: 0.3 }).addTo(map);
+        });
+
         // تحويل البيانات إلى مصفوفة نقاط للحرارة
         var heatData = data.map(item => {
             if (item.latitude && item.longitude && item.num) {
@@ -79,19 +87,14 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
                 // حساب الوزن العكسي
                 let adjustedWeight = 1 / rawWeight; // الوزن العكسي
 
-                // تحقق مما إذا كانت النقطة داخل أحد المضلعات
-                let insideAttraction = attractionsPolygons.some(polygon => {
-                    return L.Polygon.prototype.contains.call(L.polygon(polygon.coords), [item.latitude, item.longitude]);
-                });
-
-                if (insideAttraction) {
-                    return {
-                        coords: [item.latitude, item.longitude],
-                        weight: adjustedWeight
-                    };
-                }
+                return {
+                    coords: [item.latitude, item.longitude],
+                    weight: adjustedWeight
+                };
+            } else {
+                console.warn('موقع غير صالح أو وزن مفقود:', item);
+                return null;
             }
-            return null;
         }).filter(item => item !== null);
 
         // حساب مجموع الأوزان
