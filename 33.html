@@ -36,9 +36,12 @@
             // معالجة البيانات
             const rows = data.split('\n').slice(1); // تجاهل العنوان
             const heatData = [];
+            let specialPoint = null;
 
             rows.forEach((row, index) => {
                 const cols = row.split(',');
+                
+                // خطوط العرض والطول للنقاط العادية من العمودين الثاني والثالث
                 const latitude = parseFloat(cols[1]);       // العمود الثاني: خط العرض
                 const longitude = parseFloat(cols[2]);      // العمود الثالث: خط الطول
 
@@ -46,23 +49,29 @@
                     // إضافة نقطة البيانات مع كثافة افتراضية 1
                     heatData.push([latitude, longitude, 1]);
 
-                    // التحقق من الصف السابع لإضافة النقطة المميزة
-                    if (index === 9) { // الصف السابع في الفهرسة يبدأ من 0
-                        // إضافة نقطة مميزة
-                        L.marker([latitude, longitude], {
-                            icon: L.icon({
-                                iconUrl: 'https://example.com/icon.png', // استبدل هذا بالرابط الخاص بأيقونة النقطة
-                                iconSize: [25, 41], // حجم الأيقونة
-                                iconAnchor: [12, 41], // نقطة الربط للأيقونة
-                                popupAnchor: [1, -34], // موقع النافذة المنبثقة
-                            })
-                        }).addTo(map).bindPopup('نقطة مميزة');
+                    // التحقق من الصف العاشر لإضافة النقطة المميزة
+                    if (index === 9) { // الصف العاشر في الفهرسة يبدأ من 0
+                        const specialLatitude = parseFloat(cols[16]); // العمود 17: خط العرض
+                        const specialLongitude = parseFloat(cols[17]); // العمود 18: خط الطول
+                        specialPoint = [specialLatitude, specialLongitude];
                     }
                 }
             });
 
             // إضافة البيانات إلى الخريطة الحرارية
             L.heatLayer(heatData, { radius: 25 }).addTo(map);
+
+            // إضافة النقطة المميزة إذا كانت موجودة
+            if (specialPoint) {
+                L.marker(specialPoint, {
+                    icon: L.icon({
+                        iconUrl: 'https://example.com/icon.png', // استبدل هذا بالرابط الخاص بأيقونة النقطة
+                        iconSize: [25, 41], // حجم الأيقونة
+                        iconAnchor: [12, 41], // نقطة الربط للأيقونة
+                        popupAnchor: [1, -34], // موقع النافذة المنبثقة
+                    })
+                }).addTo(map).bindPopup('نقطة مميزة');
+            }
         })
         .catch(error => {
             console.error('حدث خطأ:', error);
