@@ -32,8 +32,36 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
 }).addTo(map);
 
+// تعريف مضلعات ذات قوة جذب أعلى (غير مرئية)
+const attractionsPolygons = [
+    { // بغداد
+        coords: [
+            [33.2905, 44.3915],
+            [33.3305, 44.3915],
+            [33.3305, 44.4375],
+            [33.2905, 44.4375]
+        ]
+    },
+    { // دمشق
+        coords: [
+            [33.4905, 36.2855],
+            [33.5205, 36.2855],
+            [33.5205, 36.3165],
+            [33.4905, 36.3165]
+        ]
+    },
+    { // عمان
+        coords: [
+            [31.9333, 35.9165],
+            [31.9583, 35.9165],
+            [31.9583, 35.9415],
+            [31.9333, 35.9415]
+        ]
+    }
+];
+
 // تحميل البيانات من ملف JSON
-fetch('ggg.json') // تأكد من أن مسار ملف JSON صحيح
+fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -51,14 +79,19 @@ fetch('ggg.json') // تأكد من أن مسار ملف JSON صحيح
                 // حساب الوزن العكسي
                 let adjustedWeight = 1 / rawWeight; // الوزن العكسي
 
-                return {
-                    coords: [item.latitude, item.longitude],
-                    weight: adjustedWeight
-                };
-            } else {
-                console.warn('موقع غير صالح أو وزن مفقود:', item);
-                return null;
+                // تحقق مما إذا كانت النقطة داخل أحد المضلعات
+                let insideAttraction = attractionsPolygons.some(polygon => {
+                    return L.Polygon.prototype.contains.call(L.polygon(polygon.coords), [item.latitude, item.longitude]);
+                });
+
+                if (insideAttraction) {
+                    return {
+                        coords: [item.latitude, item.longitude],
+                        weight: adjustedWeight
+                    };
+                }
             }
+            return null;
         }).filter(item => item !== null);
 
         // حساب مجموع الأوزان
@@ -79,39 +112,21 @@ fetch('ggg.json') // تأكد من أن مسار ملف JSON صحيح
             totalLng += item.coords[1] * item.weight;
         });
 
-        // تقليل حجم العلامات المتكررة
-        let markerCount = {};
-        heatData.forEach(item => {
-            let coordsKey = item.coords.join(',');
-            markerCount[coordsKey] = (markerCount[coordsKey] || 0) + 1;
-        });
-
         if (heatData.length > 0) {
             let avgLat = totalLat;
             let avgLng = totalLng;
 
             // تعيين أيقونة مخصصة للموقع المتوسط
             var customIcon = L.icon({
-                iconUrl: 'https://example.com/path/to/icon.png', // ضع مسار الأيقونة هنا
+                iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // ضع مسار الأيقونة هنا
                 iconSize: [40, 40],
                 iconAnchor: [20, 40],
                 popupAnchor: [0, -40]
             });
 
             // إضافة نقطة الموقع المتوسط كعلامة مميزة على الخريطة
-            Object.entries(markerCount).forEach(([key, count]) => {
-                let [lat, lng] = key.split(',').map(Number);
-                let sizeAdjustment = Math.max(20 - Math.floor(count / 10) * 2, 10); // تقليل الحجم كل 10 أحداث متشابهة
-                var sizeIcon = L.icon({
-                    iconUrl: 'https://example.com/path/to/icon.png',
-                    iconSize: [sizeAdjustment, sizeAdjustment],
-                    iconAnchor: [sizeAdjustment / 2, sizeAdjustment],
-                    popupAnchor: [0, -sizeAdjustment]
-                });
-
-                var marker = L.marker([lat, lng], { icon: sizeIcon, title: "عدد الأحداث: " + count }).addTo(map);
-                marker.bindPopup("عدد الأحداث: " + count).openPopup();
-            });
+            var centerMarker = L.marker([avgLat, avgLng], { icon: customIcon, title: "الموقع المتوسط" }).addTo(map);
+            centerMarker.bindPopup("؟؟").openPopup();
 
             // توسيط الخريطة على النقطة المركزية
             map.setView([avgLat, avgLng], 7);
