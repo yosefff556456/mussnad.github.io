@@ -43,9 +43,8 @@
             let specialPoint = null;
 
             // الحصول على الصف الثاني (مؤشر 1) للحصول على النقطة المميزة
-            const specialRow = rows[1].split(',');
-            const specialLatitude = parseFloat(specialRow[16]); // العمود الثاني: خط العرض
-            const specialLongitude = parseFloat(specialRow[17]); // العمود الثالث: خط الطول
+            const specialLatitude = parseFloat(cols[16]); // العمود الثاني: خط العرض
+            const specialLongitude = parseFloat(cols[17]); // العمود الثالث: خط الطول
             
             // التحقق من صحة إحداثيات النقطة المميزة
             if (!isNaN(specialLatitude) && !isNaN(specialLongitude)) {
@@ -72,7 +71,7 @@
             if (specialPoint) {
                 L.marker(specialPoint, {
                     icon: L.icon({
-                        iconUrl: 'https://example.com/icon.png', // استبدل هذا بالرابط الخاص بأيقونة النقطة
+                        iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // استبدل هذا بالرابط الخاص بأيقونة النقطة
                         iconSize: [25, 41], // حجم الأيقونة
                         iconAnchor: [12, 41], // نقطة الربط للأيقونة
                         popupAnchor: [1, -34], // موقع النافذة المنبثقة
