@@ -44,8 +44,8 @@
 
             // الحصول على الصف الثاني (مؤشر 1) للحصول على النقطة المميزة
             const specialRow = rows[0].split(','); // يجب الحصول على الصف الأول الذي يحتوي على النقطة المميزة
-            const specialLatitude = parseFloat(specialRow[1]); // العمود الثاني: خط العرض
-            const specialLongitude = parseFloat(specialRow[2]); // العمود الثالث: خط الطول
+            const specialLatitude = parseFloat(specialRow[17]); // العمود الثاني: خط العرض
+            const specialLongitude = parseFloat(specialRow[16]); // العمود الثالث: خط الطول
             
             // التحقق من صحة إحداثيات النقطة المميزة
             if (!isNaN(specialLatitude) && !isNaN(specialLongitude)) {
