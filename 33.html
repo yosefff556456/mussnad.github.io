@@ -38,23 +38,22 @@
             const heatData = [];
             let specialPoint = null;
 
+            // الحصول على الصف الثاني (مؤشر 1) للحصول على النقطة المميزة
+            const specialRow = rows[0].split(',');
+            const specialLatitude = parseFloat(specialRow[16]); // العمود الثاني: خط العرض
+            const specialLongitude = parseFloat(specialRow[17]); // العمود الثالث: خط الطول
+            specialPoint = [specialLatitude, specialLongitude];
+
             rows.forEach((row, index) => {
                 const cols = row.split(',');
                 
-                // خطوط العرض والطول للنقاط العادية من العمودين الثاني والثالث
+                // خطوط العرض والطول للنقاط العادية
                 const latitude = parseFloat(cols[1]);       // العمود الثاني: خط العرض
                 const longitude = parseFloat(cols[2]);      // العمود الثالث: خط الطول
 
                 if (!isNaN(latitude) && !isNaN(longitude)) {
                     // إضافة نقطة البيانات مع كثافة افتراضية 1
                     heatData.push([latitude, longitude, 1]);
-
-                    // التحقق من الصف العاشر لإضافة النقطة المميزة
-                    if (index === 9) { // الصف العاشر في الفهرسة يبدأ من 0
-                        const specialLatitude = parseFloat(cols[16]); // العمود 17: خط العرض
-                        const specialLongitude = parseFloat(cols[17]); // العمود 18: خط الطول
-                        specialPoint = [specialLatitude, specialLongitude];
-                    }
                 }
             });
 
