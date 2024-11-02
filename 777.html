@@ -85,7 +85,7 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
             // تعيين أيقونة مخصصة للموقع المتوسط
             var customIcon = L.icon({
-                iconUrl: 'https://example.com/path/to/icon.png', // ضع مسار الأيقونة هنا
+                iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Map_pin_icon.svg/2048px-Map_pin_icon.svg.png', // ضع مسار الأيقونة هنا
                 iconSize: [40, 40],
                 iconAnchor: [20, 40],
                 popupAnchor: [0, -40]
@@ -93,7 +93,7 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
             // إضافة نقطة الموقع المتوسط كعلامة مميزة على الخريطة
             var centerMarker = L.marker([avgLat, avgLng], { icon: customIcon, title: "الموقع المتوسط" }).addTo(map);
-            centerMarker.bindPopup("الموقع المتوسط باستخدام الوزن المعدل").openPopup();
+            centerMarker.bindPopup("؟؟").openPopup();
 
             // توسيط الخريطة على النقطة المركزية
             map.setView([avgLat, avgLng], 7);
