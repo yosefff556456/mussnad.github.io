@@ -39,12 +39,12 @@
 
             rows.forEach(row => {
                 const cols = row.split(',');
-                const latitude = parseFloat(cols[0]);  // العمود الأول: خط العرض
-                const longitude = parseFloat(cols[1]); // العمود الثاني: خط الطول
-                const intensity = parseFloat(cols[2]) || 1; // العمود الثالث: كثافة البيانات، افتراضي 1
+                const latitude = parseFloat(cols[1]);       // العمود الثاني: خط العرض
+                const longitude = parseFloat(cols[2]);      // العمود الثالث: خط الطول
 
                 if (!isNaN(latitude) && !isNaN(longitude)) {
-                    heatData.push([latitude, longitude, intensity]);
+                    // إضافة نقطة البيانات مع كثافة افتراضية 1
+                    heatData.push([latitude, longitude, 1]);
                 }
             });
 
@@ -58,4 +58,3 @@
 
 </body>
 </html>
-
