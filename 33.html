@@ -43,9 +43,9 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
     .then(data => {
         // تحويل البيانات إلى مصفوفة نقاط للحرارة وتحديد الوزن
         var heatData = data.map(item => {
-            if (item.latitude && item.longitude && item.nom) {
-                // استخراج قيمة الوزن من 'nom' واستخدام معكوس الوزن للحساب
-                let weight = parseFloat(item.nom.replace(/[()]/g, ''));
+            if (item.latitude && item.longitude && item.num) {
+                // استخراج قيمة الوزن من 'num' واستخدام معكوس الوزن للحساب
+                let weight = parseFloat(item.num.replace(/[()]/g, ''));
                 let effectiveWeight = weight === 0 ? 1 : 1 / weight; // معكوس الوزن
 
                 return {
