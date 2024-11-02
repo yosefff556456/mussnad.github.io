@@ -44,8 +44,8 @@
 
             // الحصول على الصف الثاني (مؤشر 1) للحصول على النقطة المميزة
             const specialRow = rows[0].split(','); // يجب الحصول على الصف الأول الذي يحتوي على النقطة المميزة
-            const specialLatitude = parseFloat(specialRow[17]); // العمود الثاني: خط العرض
-            const specialLongitude = parseFloat(specialRow[16]); // العمود الثالث: خط الطول
+            const specialLatitude = parseFloat(specialRow[1]); // العمود الثاني: خط العرض
+            const specialLongitude = parseFloat(specialRow[2]); // العمود الثالث: خط الطول
             
             // التحقق من صحة إحداثيات النقطة المميزة
             if (!isNaN(specialLatitude) && !isNaN(specialLongitude)) {
@@ -65,41 +65,38 @@
                 }
             });
 
-      // إضافة طبقة الحرارة
-        var heatPoints = heatData.map(item => item.coords);
-        if (heatPoints.length > 0) {
-            L.heatLayer(heatPoints, {
-                radius: 60,
-                blur: 45,
-                maxZoom: 15,
-                minOpacity: 0.2,
-                max: 1.5,
-                gradient: {
-                    0.2: '#1a9850',
-                    0.4: '#91cf60',
-                    0.6: '#d9ef8b',
-                    0.7: '#fee08b',
-                    0.8: '#fc8d59',
-                    0.9: '#d73027',
-                    1.0: '#7f0000'
-                }
-            }).addTo(map);
- } else {
-            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
-        }
-    })
-        .catch(error => console.error('Error loading JSON:', error));
+            // إضافة طبقة الحرارة
+            var heatPoints = heatData;
+            if (heatPoints.length > 0) {
+                L.heatLayer(heatPoints, {
+                    radius: 60,
+                    blur: 45,
+                    maxZoom: 15,
+                    minOpacity: 0.2,
+                    max: 1.5,
+                    gradient: {
+                        0.2: '#1a9850',
+                        0.4: '#91cf60',
+                        0.6: '#d9ef8b',
+                        0.7: '#fee08b',
+                        0.8: '#fc8d59',
+                        0.9: '#d73027',
+                        1.0: '#7f0000'
+                    }
+                }).addTo(map);
+            } else {
+                console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+            }
 
             // إضافة النقطة المميزة إذا كانت موجودة
             if (specialPoint) {
-                L.marker(specialPoint, {
-                    var customIcon = L.icon({
-                iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // ضع مسار الأيقونة هنا
-                iconSize: [40, 40],
-                iconAnchor: [20, 40],
-                popupAnchor: [0, -40]
-            });
-                }).addTo(map).bindPopup('نقطة مميزة').openPopup(); // فتح النافذة المنبثقة تلقائيًا
+                var customIcon = L.icon({
+                    iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // ضع مسار الأيقونة هنا
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40],
+                    popupAnchor: [0, -40]
+                });
+                L.marker(specialPoint, { icon: customIcon }).addTo(map).bindPopup('نقطة مميزة').openPopup(); // فتح النافذة المنبثقة تلقائيًا
             }
         })
         .catch(error => {
