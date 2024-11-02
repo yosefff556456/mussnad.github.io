@@ -33,7 +33,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // تحميل البيانات من ملف JSON
-fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
+fetch('ff.json') // تأكد من أن مسار ملف JSON صحيح
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -41,35 +41,25 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
         return response.json();
     })
     .then(data => {
-        let locationWeights = {};
-
-        // تجميع الأوزان لكل موقع
-        data.forEach(item => {
+        // تحويل البيانات إلى مصفوفة نقاط للحرارة
+        var heatData = data.map(item => {
             if (item.latitude && item.longitude && item.num) {
-                let coords = `${item.latitude},${item.longitude}`;
+                // استخراج الرقم بين القوسين من حقل "num"
                 let match = item.num.match(/\((\d+)\)/);
                 let rawWeight = match ? parseInt(match[1]) : 1;
 
-                // وزن عكسي يعتمد على عدد التكرارات
-                if (!locationWeights[coords]) {
-                    locationWeights[coords] = { totalWeight: 0, count: 0 };
-                }
+                // حساب الوزن العكسي
+                let adjustedWeight = 1 / rawWeight; // الوزن العكسي
 
-                locationWeights[coords].totalWeight += 1 / rawWeight; // الوزن العكسي
-                locationWeights[coords].count += 1; // زيادة عدد التكرارات
+                return {
+                    coords: [item.latitude, item.longitude],
+                    weight: adjustedWeight
+                };
             } else {
                 console.warn('موقع غير صالح أو وزن مفقود:', item);
+                return null;
             }
-        });
-
-        // تحويل كائن الأوزان إلى مصفوفة
-        let heatData = Object.entries(locationWeights).map(([coords, { totalWeight, count }]) => {
-            let [lat, lng] = coords.split(',').map(Number);
-            
-            // حساب الوزن المعدل بناءً على عدد التكرارات
-            let adjustedWeight = totalWeight / (1 + count); // الوزن المعدل
-            return { coords: [lat, lng], weight: adjustedWeight };
-        });
+        }).filter(item => item !== null);
 
         // حساب مجموع الأوزان
         let totalWeight = heatData.reduce((sum, item) => sum + item.weight, 0);
@@ -138,5 +128,3 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
 </body>
 </html>
-
-
