@@ -34,12 +34,17 @@
             // تحليل البيانات
             rows.forEach((row, index) => {
                 const columns = row.split(',');
-                const latitude = parseFloat(columns[0]); // تأكد من العمود الصحيح للإحداثيات
-                const longitude = parseFloat(columns[1]);
                 
-                if (index === 6) { // Q7 هو الصف السابع (index 6) - تحديد خط العرض
-                    uniqueLocation = [latitude, longitude]; // تخزين موقع النقطة الفريدة
+                // قراءة إحداثيات النقطة الفريدة من Q7 و R7
+                if (index === 6) { // الصف السابع هو index 6
+                    const uniqueLatitude = parseFloat(columns[0]); // يجب تعديل هذا حسب العمود الصحيح
+                    const uniqueLongitude = parseFloat(columns[1]);
+                    uniqueLocation = [uniqueLatitude, uniqueLongitude]; // تخزين موقع النقطة الفريدة
                 }
+
+                // قراءة إحداثيات الطول والعرض من الأعمدة الأخرى
+                const latitude = parseFloat(columns[0]); // يجب تعديل هذا حسب العمود الصحيح
+                const longitude = parseFloat(columns[1]);
                 
                 if (!isNaN(latitude) && !isNaN(longitude)) {
                     L.circle([latitude, longitude], {
