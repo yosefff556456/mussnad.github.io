@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         #map {
-            height: 600px;
+            height: 100vh; /* ملء النافذة بالكامل */
             width: 100%;
         }
     </style>
@@ -42,9 +46,13 @@
             const specialRow = rows[0].split(',');
             const specialLatitude = parseFloat(specialRow[16]); // العمود الثاني: خط العرض
             const specialLongitude = parseFloat(specialRow[17]); // العمود الثالث: خط الطول
-            specialPoint = [specialLatitude, specialLongitude];
+            
+            // التحقق من صحة إحداثيات النقطة المميزة
+            if (!isNaN(specialLatitude) && !isNaN(specialLongitude)) {
+                specialPoint = [specialLatitude, specialLongitude];
+            }
 
-            rows.forEach((row, index) => {
+            rows.forEach((row) => {
                 const cols = row.split(',');
                 
                 // خطوط العرض والطول للنقاط العادية
@@ -69,13 +77,15 @@
                         iconAnchor: [12, 41], // نقطة الربط للأيقونة
                         popupAnchor: [1, -34], // موقع النافذة المنبثقة
                     })
-                }).addTo(map).bindPopup('نقطة مميزة');
+                }).addTo(map).bindPopup('نقطة مميزة').openPopup(); // فتح النافذة المنبثقة تلقائيًا
             }
         })
         .catch(error => {
             console.error('حدث خطأ:', error);
+            alert('تعذر تحميل البيانات، يرجى التحقق من الاتصال أو الرابط.');
         });
 </script>
 
 </body>
 </html>
+
