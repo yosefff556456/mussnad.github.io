@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        /* جعل الخريطة تملأ النافذة بالكامل */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script>
+// إعداد خريطة ليفليت
+var map = L.map('map').setView([23.3432, 45.1404], 6);
+
+// إضافة خريطة الأساس
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+// تحميل البيانات من ملف JSON
+fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // تحويل البيانات إلى مصفوفة نقاط للحرارة
+        var heatData = data.map(item => {
+            if (item.latitude && item.longitude) {
+                return [item.latitude, item.longitude, item.intensity || 0.5]; // إضافة قيمة intensity إذا كانت متوفرة
+            } else {
+                console.warn('موقع غير صالح:', item);
+                return null;
+            }
+        }).filter(item => item !== null);
+
+        // حساب المركز المتوسط للنقاط
+        let totalLat = 0, totalLng = 0, count = heatData.length;
+        heatData.forEach(coord => {
+            totalLat += coord[0];
+            totalLng += coord[1];
+        });
+
+        if (count > 0) {
+            let avgLat = totalLat / count;
+            let avgLng = totalLng / count;
+
+            // إضافة نقطة المركز إلى الخريطة
+            var centerMarker = L.marker([avgLat, avgLng], { title: "الموقع المتوسط" }).addTo(map);
+            centerMarker.bindPopup("الموقع المتوسط لجميع الإحداثيات").openPopup();
+
+            // توسيط الخريطة على النقطة المركزية
+            map.setView([avgLat, avgLng], 7);
+        }
+
+        // إضافة طبقة الحرارة مع خصائص محسنة
+        if (heatData.length > 0) {
+            L.heatLayer(heatData, {
+                radius: 40,
+                blur: 30,
+                maxZoom: 17,
+                gradient: {
+                    0.0: 'blue',
+                    0.4: 'cyan',
+                    0.6: 'lime',
+                    0.8: 'yellow',
+                    1.0: 'red'
+                },
+                minOpacity: 0.15,
+                max: 1.0
+            }).addTo(map);
+        } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+        }
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+
+</script>
+
+</body>
+</html>
