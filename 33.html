@@ -41,17 +41,27 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
         return response.json();
     })
     .then(data => {
-        // تحويل البيانات إلى مصفوفة نقاط للحرارة وتحديد الوزن
+        // تحويل البيانات إلى مصفوفة نقاط للحرارة وتحديد الوزن المعدل
         var heatData = data.map(item => {
             if (item.latitude && item.longitude && item.num) {
                 // استخراج الرقم بين القوسين من حقل "num"
                 let match = item.num.match(/\((\d+)\)/);
-                let weight = match ? parseInt(match[1]) : 1; // إذا لم يكن الرقم موجودًا، يُستخدم 1 كوزن افتراضي
-                let effectiveWeight = weight === 0 ? 1 : 1 / weight; // استخدام معكوس الوزن
+                let rawWeight = match ? parseInt(match[1]) : 1;
+
+                // حساب الوزن المعدل بناءً على بُعد الرقم عن 1 و20
+                let adjustedWeight;
+                if (rawWeight <= 1) {
+                    adjustedWeight = 0.8; // أعلى وزن للأرقام القريبة من 1
+                } else if (rawWeight >= 20) {
+                    adjustedWeight = 0.4; // أقل وزن للأرقام القريبة من 20
+                } else {
+                    // استخدام تدرج خطي بين 0.8 و0.4 لبقية الأرقام
+                    adjustedWeight = 0.8 - ((rawWeight - 1) / (20 - 1)) * (0.8 - 0.4);
+                }
 
                 return {
                     coords: [item.latitude, item.longitude, item.intensity || 0.5],
-                    weight: effectiveWeight
+                    weight: adjustedWeight
                 };
             } else {
                 console.warn('موقع غير صالح أو وزن مفقود:', item);
@@ -59,7 +69,7 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
             }
         }).filter(item => item !== null);
 
-        // حساب الموقع المتوسط بناءً على الوزن
+        // حساب الموقع المتوسط بناءً على الوزن المعدل
         let totalLat = 0, totalLng = 0, totalWeight = 0;
 
         heatData.forEach(item => {
@@ -72,9 +82,17 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
             let avgLat = totalLat / totalWeight;
             let avgLng = totalLng / totalWeight;
 
-            // إضافة نقطة المركز إلى الخريطة
-            var centerMarker = L.marker([avgLat, avgLng], { title: "الموقع المتوسط" }).addTo(map);
-            centerMarker.bindPopup("الموقع المتوسط باستخدام الوزن").openPopup();
+            // تعيين أيقونة مخصصة للموقع المتوسط
+            var customIcon = L.icon({
+                iconUrl: 'https://example.com/path/to/icon.png', // ضع مسار الأيقونة هنا
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+
+            // إضافة نقطة الموقع المتوسط كعلامة مميزة على الخريطة
+            var centerMarker = L.marker([avgLat, avgLng], { icon: customIcon, title: "الموقع المتوسط" }).addTo(map);
+            centerMarker.bindPopup("الموقع المتوسط باستخدام الوزن المعدل").openPopup();
 
             // توسيط الخريطة على النقطة المركزية
             map.setView([avgLat, avgLng], 7);
@@ -109,3 +127,4 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
 
 </body>
 </html>
+
