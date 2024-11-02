@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية معقدة باستخدام Leaflet</title>
+    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         /* جعل الخريطة تملأ النافذة بالكامل */
@@ -13,8 +13,8 @@
             padding: 0;
         }
         #map {
-            height: 100%; /* جعل الخريطة تأخذ كامل ارتفاع الصفحة */
-            width: 100%;  /* جعل الخريطة تأخذ كامل عرض الصفحة */
+            height: 100%;
+            width: 100%;
         }
     </style>
 </head>
@@ -25,13 +25,12 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 <script>
-// إعداد خريطة Leaflet
-var map = L.map('map').setView([23.3432, 45.1404], 6); // ضبط مركز الخريطة
+// إعداد خريطة ليفليت
+var map = L.map('map').setView([23.3432, 45.1404], 6);
 
 // إضافة خريطة الأساس
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 // تحميل البيانات من ملف JSON
@@ -46,30 +45,28 @@ fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
         // تحويل البيانات إلى مصفوفة نقاط للحرارة
         var heatData = data.map(item => {
             if (item.latitude && item.longitude) {
-                return [item.latitude, item.longitude, 0.6]; // إضافة قيمة الكثافة كنقطة ثالثة
+                return [item.latitude, item.longitude, item.intensity || 0.5]; // إضافة قيمة intensity إذا كانت متوفرة
             } else {
                 console.warn('موقع غير صالح:', item);
-                return null; // قم بإرجاع null للمواقع غير الصالحة
+                return null;
             }
-        }).filter(item => item !== null); // إزالة المواقع غير الصالحة
+        }).filter(item => item !== null);
 
-        // إعداد طبقة الحرارة مع خصائص متقدمة
+        // إضافة طبقة الحرارة مع خصائص محسنة
         if (heatData.length > 0) {
             L.heatLayer(heatData, {
-                radius: 60,           // زيادة نصف قطر النقطة لجعلها أكثر وضوحًا
-                blur: 45,             // زيادة التمويه للحصول على تأثير أكثر تداخلاً
-                maxZoom: 15,          // أقصى مستوى تكبير
-                minOpacity: 0.2,      // الحد الأدنى من الشفافية لتحديد المناطق منخفضة الكثافة
-                max: 1.5,             // زيادة الكثافة لتصبح أكثر وضوحًا
-                gradient: {           // تخصيص تدرج لوني معقد
-                    0.2: '#1a9850',   // اللون الأخضر للمناطق الأقل حرارة
-                    0.4: '#91cf60',   
-                    0.6: '#d9ef8b',
-                    0.7: '#fee08b',
-                    0.8: '#fc8d59',
-                    0.9: '#d73027',   // اللون الأحمر الداكن للمناطق الأكثر حرارة
-                    1.0: '#7f0000'    // الأحمر الداكن جدًا للنقاط العالية الكثافة
-                }
+                radius: 40,             // نصف قطر نقطة الحرارة
+                blur: 30,               // زيادة التمييع لتداخل النقاط بشكل معقد
+                maxZoom: 17,
+                gradient: {             // إضافة تدرج لوني مخصص لمزيد من التعقيد
+                    0.0: 'blue',
+                    0.4: 'cyan',
+                    0.6: 'lime',
+                    0.8: 'yellow',
+                    1.0: 'red'
+                },
+                minOpacity: 0.15,       // الحد الأدنى من الشفافية
+                max: 1.0,               // الكثافة القصوى
             }).addTo(map);
         } else {
             console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
@@ -81,4 +78,3 @@ fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
 
 </body>
 </html>
-
