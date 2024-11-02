@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script>
+// إعداد خريطة ليفليت
+var map = L.map('map').setView([23.3432, 45.1404], 6);
+
+// إضافة خريطة الأساس
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+// تحميل البيانات من ملف JSON
+fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // تحويل البيانات إلى مصفوفة نقاط للحرارة
+        var heatData = data.map(item => {
+            if (item.latitude && item.longitude && item.num) {
+                // استخراج الرقم بين القوسين من حقل "num"
+                let match = item.num.match(/\((\d+)\)/);
+                let rawWeight = match ? parseInt(match[1]) : 1;
+
+                // حساب الوزن العكسي
+                let adjustedWeight = 1 / rawWeight; // الوزن العكسي
+
+                return {
+                    coords: [item.latitude, item.longitude],
+                    weight: adjustedWeight
+                };
+            } else {
+                console.warn('موقع غير صالح أو وزن مفقود:', item);
+                return null;
+            }
+        }).filter(item => item !== null);
+
+        // حساب مجموع الأوزان
+        let totalWeight = heatData.reduce((sum, item) => sum + item.weight, 0);
+
+        // ضبط الأوزان لجعل المجموع يساوي 1
+        if (totalWeight > 0) {
+            heatData.forEach(item => {
+                item.weight /= totalWeight; // تحويل الوزن ليصبح بين 0 و 1
+            });
+        }
+
+        // حساب الموقع المتوسط بناءً على الوزن المعدل
+        let totalLat = 0, totalLng = 0;
+
+        heatData.forEach(item => {
+            totalLat += item.coords[0] * item.weight;
+            totalLng += item.coords[1] * item.weight;
+        });
+
+        if (heatData.length > 0) {
+            let avgLat = totalLat;
+            let avgLng = totalLng;
+
+            // تعيين أيقونة مخصصة للموقع المتوسط
+            var customIcon = L.icon({
+                iconUrl: 'https://example.com/path/to/icon.png', // ضع مسار الأيقونة هنا
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+
+            // إضافة نقطة الموقع المتوسط كعلامة مميزة على الخريطة
+            var centerMarker = L.marker([avgLat, avgLng], { icon: customIcon, title: "الموقع المتوسط" }).addTo(map);
+            centerMarker.bindPopup("الموقع المتوسط باستخدام الوزن المعدل").openPopup();
+
+            // توسيط الخريطة على النقطة المركزية
+            map.setView([avgLat, avgLng], 7);
+        }
+
+        // إضافة طبقة الحرارة
+        var heatPoints = heatData.map(item => item.coords);
+        if (heatPoints.length > 0) {
+            L.heatLayer(heatPoints, {
+                radius: 60,
+                blur: 45,
+                maxZoom: 15,
+                minOpacity: 0.2,
+                max: 1.5,
+                gradient: {
+                    0.2: '#1a9850',
+                    0.4: '#91cf60',
+                    0.6: '#d9ef8b',
+                    0.7: '#fee08b',
+                    0.8: '#fc8d59',
+                    0.9: '#d73027',
+                    1.0: '#7f0000'
+                }
+            }).addTo(map);
+        } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+        }
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+
+</script>
+
+</body>
+</html>
