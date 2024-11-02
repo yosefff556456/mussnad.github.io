@@ -65,18 +65,40 @@
                 }
             });
 
-            // إضافة البيانات إلى الخريطة الحرارية
-            L.heatLayer(heatData, { radius: 25 }).addTo(map);
+      // إضافة طبقة الحرارة
+        var heatPoints = heatData.map(item => item.coords);
+        if (heatPoints.length > 0) {
+            L.heatLayer(heatPoints, {
+                radius: 60,
+                blur: 45,
+                maxZoom: 15,
+                minOpacity: 0.2,
+                max: 1.5,
+                gradient: {
+                    0.2: '#1a9850',
+                    0.4: '#91cf60',
+                    0.6: '#d9ef8b',
+                    0.7: '#fee08b',
+                    0.8: '#fc8d59',
+                    0.9: '#d73027',
+                    1.0: '#7f0000'
+                }
+            }).addTo(map);
+ } else {
+            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+        }
+    })
+        .catch(error => console.error('Error loading JSON:', error));
 
             // إضافة النقطة المميزة إذا كانت موجودة
             if (specialPoint) {
                 L.marker(specialPoint, {
-                    icon: L.icon({
-                        iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // أيقونة حمراء
-                        iconSize: [25, 41], // حجم الأيقونة
-                        iconAnchor: [12, 41], // نقطة الربط للأيقونة
-                        popupAnchor: [1, -34], // موقع النافذة المنبثقة
-                    })
+                    var customIcon = L.icon({
+                iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // ضع مسار الأيقونة هنا
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
                 }).addTo(map).bindPopup('نقطة مميزة').openPopup(); // فتح النافذة المنبثقة تلقائيًا
             }
         })
