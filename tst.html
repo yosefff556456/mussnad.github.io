@@ -1,0 +1,141 @@
+<!DOCTYPE html> 
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+<script>
+// إعداد خريطة ليفليت
+var map = L.map('map').setView([23.3432, 45.1404], 6);
+
+// إضافة خريطة الأساس
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+// تحميل البيانات من ملف JSON
+fetch('ggg.json') // تأكد من أن مسار ملف JSON صحيح
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // تحويل البيانات إلى مصفوفة نقاط للحرارة
+        var heatData = data.map(item => {
+            if (item.latitude && item.longitude && item.num) {
+                let match = item.num.match(/\((\d+)\)/);
+                let rawWeight = match ? parseInt(match[1]) : 1;
+                let adjustedWeight = 1 / rawWeight; // الوزن العكسي
+
+                return {
+                    coords: [item.latitude, item.longitude],
+                    weight: adjustedWeight
+                };
+            } else {
+                console.warn('موقع غير صالح أو وزن مفقود:', item);
+                return null;
+            }
+        }).filter(item => item !== null);
+
+        // حساب مجموع الأوزان
+        let totalWeight = heatData.reduce((sum, item) => sum + item.weight, 0);
+
+        // ضبط الأوزان لجعل المجموع يساوي 1
+        if (totalWeight > 0) {
+            heatData.forEach(item => {
+                item.weight /= totalWeight; // تحويل الوزن ليصبح بين 0 و 1
+            });
+        }
+
+        // تجميع الأحداثيات المتطابقة
+        let coordsCount = {};
+        heatData.forEach(item => {
+            const key = item.coords.join(',');
+            if (coordsCount[key]) {
+                coordsCount[key].count++;
+            } else {
+                coordsCount[key] = {
+                    coords: item.coords,
+                    count: 1,
+                    weight: item.weight
+                };
+            }
+        });
+
+        // حساب الموقع المتوسط وتقليل الحجم حسب العدد
+        let avgLat = 0, avgLng = 0, totalCount = 0;
+        let adjustedHeatPoints = [];
+
+        Object.values(coordsCount).forEach(item => {
+            const { coords, count, weight } = item;
+            let adjustedRadius = 60; // الحجم الافتراضي
+            
+            // تقليل الحجم بناءً على العدد
+            if (count > 10) {
+                adjustedRadius = Math.max(10, 60 - Math.floor(count / 10) * 5);
+            }
+
+            avgLat += coords[0] * weight;
+            avgLng += coords[1] * weight;
+            adjustedHeatPoints.push([coords[0], coords[1], weight, adjustedRadius]);
+            totalCount += weight;
+        });
+
+        // إذا كان لدينا بيانات صالحة، نحسب الموقع المتوسط
+        if (totalCount > 0) {
+            avgLat /= totalCount;
+            avgLng /= totalCount;
+
+            // تعيين أيقونة مخصصة للموقع المتوسط
+            var customIcon = L.icon({
+                iconUrl: 'https://example.com/path/to/icon.png', // ضع مسار الأيقونة هنا
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+
+            // إضافة نقطة الموقع المتوسط كعلامة مميزة على الخريطة
+            var centerMarker = L.marker([avgLat, avgLng], { icon: customIcon, title: "الموقع المتوسط" }).addTo(map);
+            centerMarker.bindPopup("الموقع المتوسط باستخدام الوزن المعدل").openPopup();
+
+            // توسيط الخريطة على النقطة المركزية
+            map.setView([avgLat, avgLng], 7);
+        }
+
+        // إضافة طبقة الحرارة مع الأحجام المعدلة
+        adjustedHeatPoints.forEach(item => {
+            L.heatLayer([[item[0], item[1], item[2]]], {
+                radius: item[3],
+                blur: 45,
+                maxZoom: 15,
+                minOpacity: 0.2,
+            }).addTo(map);
+        });
+    })
+    .catch(error => console.error('Error loading JSON:', error));
+
+</script>
+
+</body>
+</html>
