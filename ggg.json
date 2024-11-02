@@ -1,0 +1,4888 @@
+[
+    {
+        "num": ">>>>YEM [YE-DH] (id:YF063106) (4)",
+        "latitude": 14.6805,
+        "longitude": 44.2001
+    },
+    {
+        "num": ">>>>>SAU [SA-14] (id:YF062599) (5)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>SAU [SA-14] (id:YF019236) (5)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>SAU [SA-11] (id:YF062792) (7)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>SAU [SA-11] (id:YF018999) (7)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-03] (id:YF019534) (8)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-11] (id:YF019754) (8)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-11] (id:YF004526) (8)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>SAU [SA-11] (id:YF019405) (7)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>SAU [SA-11] (id:YF019394) (7)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>SAU [SA-11] (id:YF019393) (7)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-09] (id:YF019401) (8)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-11] (id:YF013203) (8)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-11] (id:YF013202) (8)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>ITA [IT-CA] (id:ERS256733) (4)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>MEX [MX-NLE] (id:YF013769) (7)",
+        "latitude": 25.6178,
+        "longitude": -99.8307
+    },
+    {
+        "num": ">>>>>>>MEX [MX-NLE] (id:YF006373) (7)",
+        "latitude": 25.6178,
+        "longitude": -99.8307
+    },
+    "",
+    {
+        "num": ">>>>>>>>ISR [IL-JM] (id:YF017304) (8)",
+        "latitude": 31.7397,
+        "longitude": 35.0176
+    },
+    {
+        "num": ">>>>>>>>UKR [UA-35] (id:YF005963) (8)",
+        "latitude": 48.4261,
+        "longitude": 31.8288
+    },
+    {
+        "num": ">>>>>>>>DEU [DE-BY] (id:YF015123) (8)",
+        "latitude": 49.0056,
+        "longitude": 11.3966
+    },
+    {
+        "num": ">>>>>>>>UKR [UA-05] (id:YF012079) (8)",
+        "latitude": 48.9623,
+        "longitude": 28.7233
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>BLR [BY-HR] (id:YF005245) (10)",
+        "latitude": 53.4855,
+        "longitude": 25.0839
+    },
+    "",
+    "",
+    {
+        "num": ">>>SAU [SA-01] (id:YF017020) (3)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>SAU [SA-01] (id:YF015119) (4)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>OMN [OM-WU] (id:YF063257) (5)",
+        "latitude": 20.4263,
+        "longitude": 56.8705
+    },
+    {
+        "num": ">>>>>>>OMN [OM-ZU] (id:YF003858) (7)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>OMN [OM-ZU] (id:YF015332) (7)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>OMN [OM-ZU] (id:YF014315) (7)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>OMN [OM-ZU] (id:YF016740) (7)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>YEM [YE-HD] (id:YF018993) (8)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>OMN [OM-ZU] (id:YF015894) (8)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    "",
+    {
+        "num": ">>>>>>>>>OMN [OM-ZU] (id:YF016021) (9)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>YEM [YE-MR] (id:YF014877) (9)",
+        "latitude": 16.8785,
+        "longitude": 51.6413
+    },
+    {
+        "num": ">>>>>>>>>YEM [YE-MR] (id:YF063255) (9)",
+        "latitude": 16.8785,
+        "longitude": 51.6413
+    },
+    {
+        "num": ">>>>>>>>>YEM [YE-MR] (id:YF016553) (9)",
+        "latitude": 16.8785,
+        "longitude": 51.6413
+    },
+    {
+        "num": ">>>>>>>>>YEM [YE-MR] (id:YF016550) (9)",
+        "latitude": 16.8785,
+        "longitude": 51.6413
+    },
+    {
+        "num": ">>>>>>NOR [NO-05] (id:YF005329) (6)",
+        "latitude": 61.5731,
+        "longitude": 9.24644
+    },
+    {
+        "num": ">>>>>>IND [IN-PB] (id:YF004986) (6)",
+        "latitude": 31.0245,
+        "longitude": 75.3762
+    },
+    {
+        "num": ">>>>>>>SAU [SA-02] (id:YF012610) (7)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>SAU [SA-03] (id:YF016925) (8)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>KWT [KW-KU] (id:YF013354) (8)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>KWT [KW-KU] (id:YF012445) (8)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>ITA [IT-CA] (id:ERS256748) (7)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>EGY [EG-FYM] (id:YF014641) (8)",
+        "latitude": 29.2965,
+        "longitude": 30.4584
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>UKR [UA-26] (id:YF019121) (10)",
+        "latitude": 48.665,
+        "longitude": 24.6363
+    },
+    {
+        "num": ">>>>>>>>>>UKR [UA-18] (id:YF019151) (10)",
+        "latitude": 50.6898,
+        "longitude": 28.4643
+    },
+    {
+        "num": ">>>>>>>>>ITA [IT-PA] (id:YF006498) (9)",
+        "latitude": 37.889,
+        "longitude": 13.5583
+    },
+    {
+        "num": ">>>>>>>>>>IRQ [IQ-BG] (id:YF003353) (10)",
+        "latitude": 33.306,
+        "longitude": 44.3827
+    },
+    {
+        "num": ">>>>>>>>>>LBN [LB-JL] (id:YF008663) (10)",
+        "latitude": 33.9291,
+        "longitude": 35.6942
+    },
+    {
+        "num": ">>>>>>>>>>LBN [LB-JL] (id:YF006500) (10)",
+        "latitude": 33.9291,
+        "longitude": 35.6942
+    },
+    {
+        "num": ">>>>>>>>>ITA [IT-CA] (id:ERS256735) (9)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>ITA [IT-CA] (id:ERS256743) (9)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>ITA [IT-CA] (id:ERS256749) (8)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>ITA [IT-BA] (id:YF002485) (8)",
+        "latitude": 40.928,
+        "longitude": 16.7706
+    },
+    {
+        "num": ">>>>>>>>ITA [IT-CA] (id:ERS256760) (8)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>PER [PE-LIM] (id:HG02253) (8)",
+        "latitude": -11.0602,
+        "longitude": -77.0756
+    },
+    {
+        "num": ">>>>>>>>>SAU [SA-04] (id:YF013491) (9)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>SAU [SA-02] (id:YF013039) (10)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>IRQ [IQ-WA] (id:YF013138) (11)",
+        "latitude": 32.6139,
+        "longitude": 45.5635
+    },
+    {
+        "num": ">>>>>>>>>>>>>UAE [AE-AZ] (id:YF010271) (13)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF009325) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>ITA [IT-SA] (id:YF015009) (12)",
+        "latitude": 40.4362,
+        "longitude": 15.2189
+    },
+    {
+        "num": ">>>>>>>>>>>>PRT [PT-20] (id:YF016955) (12)",
+        "latitude": 38.6351,
+        "longitude": -28.0394
+    },
+    {
+        "num": ">>>>>>>>>>>>PRT [PT-20] (id:YF016870) (12)",
+        "latitude": 38.6351,
+        "longitude": -28.0394
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-05] (id:YF009222) (12)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-02] (id:YF015256) (12)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-02] (id:YF015255) (12)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>DEU [DE-RP] (id:YF009705) (13)",
+        "latitude": 49.8685,
+        "longitude": 7.36974
+    },
+    {
+        "num": ">>>>>>>>>>>>>>MDA [MD-CU] (id:YF018787) (14)",
+        "latitude": 47.0348,
+        "longitude": 28.822
+    },
+    {
+        "num": ">>>>>>>>>>>>>>GBR [GB-NYK] (id:YF013486) (14)",
+        "latitude": 54.2158,
+        "longitude": -1.37567
+    },
+    {
+        "num": ">>>>>>>>>>>>>>ITA [IT-CA] (id:ERS256773) (14)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>RUS [RU-SMO] (id:YF007855) (17)",
+        "latitude": 54.6726,
+        "longitude": 33.0803
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>MDA [MD-BR] (id:YF063204) (17)",
+        "latitude": 48.2646,
+        "longitude": 26.9644
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>ITA [IT-SA] (id:YF006545) (11)",
+        "latitude": 40.4362,
+        "longitude": 15.2189
+    },
+    {
+        "num": ">>>>>>>>>>>YEM [YE-IB] (id:YF016888) (11)",
+        "latitude": 14.0543,
+        "longitude": 44.2012
+    },
+    {
+        "num": ">>>>>>>>>>>YEM [YE-RA] (id:YF008829) (11)",
+        "latitude": 14.6655,
+        "longitude": 43.758
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-04] (id:YF004577) (12)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-01] (id:YF006439) (12)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>SAU [SA-01] (id:YF005053) (12)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>IRQ [IQ-BG] (id:YF063217) (12)",
+        "latitude": 33.306,
+        "longitude": 44.3827
+    },
+    {
+        "num": ">>>>>>>>>>>>TUR [TR-26] (id:YF015218) (12)",
+        "latitude": 39.6297,
+        "longitude": 31.0894
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF015147) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF002669) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-01] (id:YF016387) (14)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-DA] (id:YF002905) (15)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-DA] (id:YF013137) (15)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-05] (id:YF002902) (13)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF003113) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF003112) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF002904) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-01] (id:YF006436) (14)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF009352) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF008733) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF007746) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF002982) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>KWT [KW-KU] (id:YF009177) (13)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>KWT [KW-KU] (id:YF001401) (13)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>KWT [KW-KU] (id:YF019740) (14)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-04] (id:YF007790) (14)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-05] (id:YF012502) (14)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-05] (id:YF007570) (14)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-05] (id:YF006511) (14)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-01] (id:YF016299) (14)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF008735) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF008541) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF016778) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF006348) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF016777) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF007189) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF002906) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF002866) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>SYR [SY-HI] (id:YF016985) (12)",
+        "latitude": 34.1503,
+        "longitude": 38.1425
+    },
+    {
+        "num": ">>>>>>>>>>>>>MLT [MT-24] (id:YF009591) (13)",
+        "latitude": 35.8992,
+        "longitude": 14.4412
+    },
+    {
+        "num": ">>>>>>>>>>>>>ITA [IT-CA] (id:ERS256782) (13)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>>>>>ITA [IT-CA] (id:HGDP01079) (14)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-04] (id:YF014858) (14)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>GBR [GB-DOW] (id:YF007619) (14)",
+        "latitude": 54.3616,
+        "longitude": -5.80955
+    },
+    {
+        "num": ">>>>>>>>>>>>>>NLD [NL-NB] (id:YF002023) (14)",
+        "latitude": 51.6008,
+        "longitude": 5.16122
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>ITA [IT-CA] (id:ERS256776) (15)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>ITA [IT-CA] (id:ERS256777) (15)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>LTU [LT-VL] (id:YF010144) (17)",
+        "latitude": 54.7338,
+        "longitude": 25.1588
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>UKR [UA-12] (id:YF007409) (17)",
+        "latitude": 48.6313,
+        "longitude": 34.9555
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF004455) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>UKR [UA-48] (id:YF011628) (13)",
+        "latitude": 47.0902,
+        "longitude": 31.6498
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>ITA [IT-CA] (id:ERS256775) (14)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>>>>>ITA [IT-CT] (id:YF001432) (14)",
+        "latitude": 37.5882,
+        "longitude": 14.969
+    },
+    {
+        "num": ">>>>>>>>>>>>>>IRL [IE-LD] (id:YF001542) (14)",
+        "latitude": 53.7166,
+        "longitude": -7.70239
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>TUR [TR-25] (id:YF012187) (15)",
+        "latitude": 39.9678,
+        "longitude": 41.403
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>EGY [EG-DK] (id:YF006572) (16)",
+        "latitude": 31.0304,
+        "longitude": 31.4929
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF011022) (19)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017174) (19)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017173) (19)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>JOR [JO-MD] (id:YF016852) (19)",
+        "latitude": 31.5852,
+        "longitude": 35.6722
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017111) (19)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>ISR [IL-D] (id:HGDP00616) (19)",
+        "latitude": 30.935,
+        "longitude": 34.8419
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF063161) (20)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017170) (20)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017151) (20)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF014518) (20)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017169) (21)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017080) (21)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF016875) (21)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017179) (22)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017154) (22)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017166) (23)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017109) (23)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF015731) (23)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF014544) (23)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017172) (23)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF017162) (23)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>UAE [AE-RK] (id:YF004473) (13)",
+        "latitude": 25.6964,
+        "longitude": 55.9791
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-01] (id:YF006744) (13)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF015856) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF015835) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-01] (id:YF013468) (14)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-04] (id:YF009406) (14)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-11] (id:YF062981) (14)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>UAE [AE-RK] (id:YF004309) (14)",
+        "latitude": 25.6964,
+        "longitude": 55.9791
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF012257) (16)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013258) (17)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>UKR [UA-71] (id:YF016401) (15)",
+        "latitude": 49.1506,
+        "longitude": 31.2241
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF016800) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-04] (id:YF015725) (13)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-14] (id:YF013385) (14)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-14] (id:YF063004) (15)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-14] (id:YF014017) (15)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-14] (id:YF009458) (15)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>PER [PE-LIM] (id:HG01935) (16)",
+        "latitude": -11.0602,
+        "longitude": -77.0756
+    },
+    {
+        "num": ">>>>>>>>>>>>>>ITA [IT-CA] (id:ERS256774) (14)",
+        "latitude": 39.4502,
+        "longitude": 9.2574
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>LBN [LB-JL] (id:YF008631) (16)",
+        "latitude": 33.9291,
+        "longitude": 35.6942
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>UAE [AE-RK] (id:YF009784) (16)",
+        "latitude": 25.6964,
+        "longitude": 55.9791
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>COL [CO-ANT] (id:HG01437) (18)",
+        "latitude": 6.70366,
+        "longitude": -75.5071
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-04] (id:YF014464) (14)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-09] (id:YF007596) (14)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>KWT [KW-HA] (id:YF016620) (14)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>JOR [JO-AJ] (id:YF015455) (14)",
+        "latitude": 32.2932,
+        "longitude": 35.761
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-01] (id:YF016952) (15)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>BHR [BH-15] (id:YF016106) (15)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>SAU [SA-11] (id:YF016570) (16)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF005037) (16)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>SAU [SA-03] (id:YF019965) (13)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>YEM [YE-HD] (id:YF016951) (13)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>NLD [NL-LI] (id:YF011067) (13)",
+        "latitude": 51.2248,
+        "longitude": 5.93161
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-14] (id:YF063344) (15)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>QAT [QA-US] (id:YF007454) (15)",
+        "latitude": 25.4594,
+        "longitude": 51.3552
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>SAU [SA-02] (id:YF015024) (15)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>SAU [SA-02] (id:YF007199) (16)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF019613) (17)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF012566) (17)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>SAU [SA-04] (id:YF004322) (14)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF015102) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF018774) (19)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF011359) (19)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF009482) (19)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF010800) (18)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>LBN [LB-NA] (id:YF014030) (19)",
+        "latitude": 33.3303,
+        "longitude": 35.5666
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>IRN [IR-30] (id:YF005331) (19)",
+        "latitude": 35.584,
+        "longitude": 58.7976
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF001458) (19)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF010459) (19)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF007797) (19)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF016385) (19)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF010438) (20)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF010437) (21)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF003962) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF004228) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF003166) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF016908) (20)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>IRQ [IQ-NA] (id:YF010439) (20)",
+        "latitude": 30.9322,
+        "longitude": 43.7551
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF010463) (20)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>LBN [LB-JA] (id:YF014168) (21)",
+        "latitude": 33.2661,
+        "longitude": 35.2966
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF015435) (21)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF014910) (21)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>IRQ [IQ-MU] (id:YF012663) (20)",
+        "latitude": 30.4381,
+        "longitude": 45.2843
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>SAU [SA-09] (id:YF003467) (16)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF063069) (17)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF062997) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF063167) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF003466) (17)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF009261) (17)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>BHR [BH-15] (id:YF004402) (18)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF019208) (17)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007762) (17)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF014179) (19)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016997) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015611) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010880) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002775) (20)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF063339) (18)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>YEM [YE-AM] (id:YF009436) (18)",
+        "latitude": 16.0938,
+        "longitude": 44.0107
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>YEM [YE-SH] (id:YF007840) (18)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SYR [SY-DR] (id:YF062814) (19)",
+        "latitude": 32.8686,
+        "longitude": 36.1698
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF015821) (22)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF013357) (22)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF019620) (21)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-10] (id:YF019923) (19)",
+        "latitude": 18.2931,
+        "longitude": 45.6917
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-10] (id:YF017115) (19)",
+        "latitude": 18.2931,
+        "longitude": 45.6917
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF013102) (19)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>BHR [BH-13] (id:YF011763) (19)",
+        "latitude": 26.2204,
+        "longitude": 50.5777
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF009302) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010914) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011009) (20)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014784) (20)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015742) (21)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF003279) (21)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF003755) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF012534) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF062681) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF007150) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF007149) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF012181) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>YEM [YE-BA] (id:YF008445) (20)",
+        "latitude": 14.2903,
+        "longitude": 45.3371
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015797) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF005070) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF003167) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF007063) (22)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>YEM [YE-SH] (id:YF012159) (21)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>YEM [YE-SH] (id:YF019058) (21)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>YEM [YE-SH] (id:YF002988) (22)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>YEM [YE-SH] (id:YF012742) (22)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF011261) (23)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF011038) (23)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF011249) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF011084) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF011037) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF009283) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF009221) (21)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF009530) (23)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF010843) (24)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF010469) (25)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF008845) (25)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF008550) (25)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF019967) (23)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF008408) (23)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF010844) (24)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF063116) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF016344) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>QAT [QA-RA] (id:YF003022) (22)",
+        "latitude": 25.1648,
+        "longitude": 51.1605
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF009444) (22)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF063224) (16)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016512) (17)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>SYR [SY-HM] (id:YF014187) (17)",
+        "latitude": 35.2352,
+        "longitude": 37.22
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>YEM [YE-BA] (id:YF019308) (18)",
+        "latitude": 14.2903,
+        "longitude": 45.3371
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF010320) (18)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>YEM [YE-SH] (id:YF016405) (18)",
+        "latitude": 14.8965,
+        "longitude": 47.0989
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF009430) (18)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF006958) (19)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF005518) (19)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF007141) (19)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>YEM [YE-IB] (id:YF013859) (19)",
+        "latitude": 14.0543,
+        "longitude": 44.2012
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF016921) (19)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>LBN [LB-BA] (id:YF016648) (19)",
+        "latitude": 33.8849,
+        "longitude": 35.5093
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>QAT [QA-RA] (id:YF019130) (21)",
+        "latitude": 25.1648,
+        "longitude": 51.1605
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SYR [SY-DI] (id:YF012685) (18)",
+        "latitude": 33.5101,
+        "longitude": 36.2897
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014318) (20)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF015800) (22)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF063210) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF063073) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF012985) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014290) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF019437) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF014289) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF007748) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF007747) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF006477) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF006476) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF010389) (24)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-DY] (id:YF016920) (24)",
+        "latitude": 35.0736,
+        "longitude": 40.275
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF015097) (24)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-DY] (id:YF015580) (24)",
+        "latitude": 35.0736,
+        "longitude": 40.275
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF012069) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF018756) (25)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF014181) (25)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014065) (25)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012584) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012919) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004405) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016563) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF002288) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF012603) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF005031) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF016579) (27)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF014687) (27)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>JOR [JO-MA] (id:YF004298) (27)",
+        "latitude": 32.2481,
+        "longitude": 37.6195
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006659) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016676) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016661) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF007630) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013226) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF014261) (26)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF016821) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015676) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014622) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>JOR [JO-AM] (id:YF019617) (26)",
+        "latitude": 31.6211,
+        "longitude": 36.4418
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF003803) (26)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015616) (27)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014067) (27)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012542) (28)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015868) (28)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014600) (28)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF013747) (28)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF063395) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF018964) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF016907) (25)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-BG] (id:YF016025) (25)",
+        "latitude": 33.306,
+        "longitude": 44.3827
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF014596) (25)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015659) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF014481) (25)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF016022) (25)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF014995) (25)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF016044) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF004348) (25)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF011705) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF062838) (25)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF062826) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF018965) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF013429) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF015739) (24)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF015679) (25)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016024) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF013101) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF016660) (25)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012630) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF019113) (25)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF015388) (25)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF016819) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015677) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014984) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF019765) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF015346) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014066) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF019181) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014662) (27)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012628) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019179) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016844) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011704) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012073) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF010468) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF013475) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014309) (27)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF013992) (27)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019235) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012265) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012206) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012123) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007629) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF013289) (20)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SYR [SY-HL] (id:YF015928) (18)",
+        "latitude": 36.1054,
+        "longitude": 37.601
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013619) (18)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>PRT [PT-20] (id:YF012835) (18)",
+        "latitude": 38.6351,
+        "longitude": -28.0394
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF016475) (19)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>BHR [BH-13] (id:YF013055) (19)",
+        "latitude": 26.2204,
+        "longitude": 50.5777
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>KGZ [KG-Y] (id:YF008091) (19)",
+        "latitude": 42.0387,
+        "longitude": 77.9472
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF015483) (20)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF014484) (20)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>YEM [YE-DH] (id:YF010798) (20)",
+        "latitude": 14.6805,
+        "longitude": 44.2001
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF009156) (20)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019820) (21)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010654) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>BHR [BH-17] (id:YF015317) (23)",
+        "latitude": 26.1624,
+        "longitude": 50.4868
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF006579) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF018940) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015667) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF016280) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF009919) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-15] (id:YF009409) (24)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF006933) (24)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013046) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF013040) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SYR [SY-HM] (id:YF012549) (20)",
+        "latitude": 35.2352,
+        "longitude": 37.22
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF016507) (21)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>ISR [IL-HA] (id:HGDP00597) (21)",
+        "latitude": 32.5523,
+        "longitude": 34.9727
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SYR [SY-HM] (id:YF012263) (21)",
+        "latitude": 35.2352,
+        "longitude": 37.22
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF005653) (21)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011164) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF019261) (22)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019065) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF013458) (22)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011406) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019521) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016783) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015604) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012629) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010789) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007191) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016246) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015850) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF015605) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF013457) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012607) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011697) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015701) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012652) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012623) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012262) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007192) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005350) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016270) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011407) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012746) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012253) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015703) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF013466) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013456) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012624) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006428) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015705) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013460) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF012829) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007744) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF004146) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013459) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012264) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>TCD [TD-SA] (id:YF017099) (20)",
+        "latitude": 10.5811,
+        "longitude": 20.6054
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SYR [SY-DR] (id:YF010937) (22)",
+        "latitude": 32.8686,
+        "longitude": 36.1698
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>EGY [EG-ASN] (id:YF018753) (22)",
+        "latitude": 22.6543,
+        "longitude": 32.2794
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF011057) (22)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF002568) (22)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF011049) (22)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-14] (id:YF016102) (23)",
+        "latitude": 19.3484,
+        "longitude": 42.9503
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF019905) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF018908) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF007135) (24)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF003932) (25)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF008939) (26)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF019978) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-17] (id:YF012729) (26)",
+        "latitude": 26.1624,
+        "longitude": 50.4868
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF007001) (25)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF019925) (25)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF012744) (25)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF019009) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF005750) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-MA] (id:YF009128) (26)",
+        "latitude": 15.5368,
+        "longitude": 45.7376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-10] (id:YF006157) (27)",
+        "latitude": 18.2931,
+        "longitude": 45.6917
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF011631) (27)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF010158) (27)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF010824) (27)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF012261) (26)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF007145) (27)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF016842) (28)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF009129) (28)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF005872) (28)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF007158) (29)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF005468) (30)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF062778) (30)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF005260) (30)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-ZU] (id:YF018974) (30)",
+        "latitude": 18.4966,
+        "longitude": 54.2927
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF014569) (30)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>YEM [YE-HD] (id:YF008865) (30)",
+        "latitude": 16.3779,
+        "longitude": 48.9133
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>JOR [JO-AM] (id:YF063071) (21)",
+        "latitude": 31.6211,
+        "longitude": 36.4418
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF015989) (21)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>TUN [TN-52] (id:YF012773) (20)",
+        "latitude": 35.6225,
+        "longitude": 10.7538
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF004778) (20)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF004304) (20)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF009328) (21)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF003172) (22)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006561) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF003757) (22)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF015387) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF004689) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013962) (22)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF005338) (23)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF005337) (23)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF009237) (25)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008427) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF019212) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF018856) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005992) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF015207) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF063066) (24)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF012238) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002567) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF004683) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004531) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF003320) (25)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005656) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005127) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF006701) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004375) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015855) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002986) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF018772) (26)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF018726) (26)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF007475) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007194) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF011837) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007382) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF005283) (23)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016247) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF013268) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF013266) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF013267) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF010069) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008855) (25)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF012256) (26)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008856) (26)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF010805) (24)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007948) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011156) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010842) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012433) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007804) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007152) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007088) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007156) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007143) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004057) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004056) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007131) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015681) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012547) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012770) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005129) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF003934) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF015775) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF014754) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF007462) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF007178) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF012255) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007938) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF007445) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF007369) (28)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF011082) (23)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015278) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF010064) (24)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF016924) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014047) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF013005) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016117) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006622) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014332) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF009143) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014354) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014303) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF002573) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF002565) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015019) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014304) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF062574) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF018648) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015963) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015956) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015774) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013347) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012530) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012512) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012675) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006567) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002576) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF004999) (22)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF004967) (22)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF004099) (22)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-KH] (id:YF010461) (25)",
+        "latitude": 25.7512,
+        "longitude": 51.4212
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF009061) (26)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF004474) (28)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005353) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF009737) (23)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002564) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-14] (id:YF007408) (24)",
+        "latitude": 25.9688,
+        "longitude": 50.5622
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF019843) (24)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002563) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002572) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF008742) (23)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF003541) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF019229) (23)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF019745) (23)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF006670) (23)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016086) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004584) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF019867) (24)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF016084) (24)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF016077) (24)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015854) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008871) (23)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012576) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011701) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016785) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010548) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF011871) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010551) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002566) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF006913) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF002569) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019516) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010543) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019523) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010546) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010550) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010547) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010545) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010544) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF063005) (27)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019520) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010549) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016082) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014595) (27)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF012657) (27)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011095) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-DQ] (id:YF011887) (23)",
+        "latitude": 31.191,
+        "longitude": 46.4203
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF063369) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF003558) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF003412) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002550) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002549) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016271) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019290) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF062812) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002556) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016272) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012916) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF019289) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002774) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF017021) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF014882) (27)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF010049) (27)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF019008) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF014183) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF011957) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF002575) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-BG] (id:YF014787) (24)",
+        "latitude": 33.306,
+        "longitude": 44.3827
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF063323) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF006206) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF010860) (24)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>DZA [DZ-47] (id:ERS2065804) (23)",
+        "latitude": 31.1547,
+        "longitude": 3.11396
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-DI] (id:YF015117) (25)",
+        "latitude": 33.5101,
+        "longitude": 36.2897
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>DZA [DZ-47] (id:YF019718) (25)",
+        "latitude": 31.1547,
+        "longitude": 3.11396
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>DZA [DZ-17] (id:YF015370) (25)",
+        "latitude": 34.1508,
+        "longitude": 3.70376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>DZA [DZ-28] (id:YF013928) (25)",
+        "latitude": 35.3592,
+        "longitude": 4.37961
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-09] (id:YF010859) (25)",
+        "latitude": 17.3028,
+        "longitude": 42.726
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF011947) (26)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008528) (26)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF012120) (26)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF002577) (26)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF002578) (27)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF005474) (27)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF017314) (25)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF018918) (26)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF018743) (26)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF008151) (28)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF008959) (29)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF007536) (28)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF016569) (28)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF007535) (28)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>AZE [AZ-NX] (id:YF013081) (23)",
+        "latitude": 39.2127,
+        "longitude": 45.4212
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF012850) (23)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011771) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002580) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013174) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011408) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF010845) (24)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-BA] (id:YF062827) (23)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-BA] (id:YF019018) (23)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>EGY [EG-MNF] (id:YF006406) (22)",
+        "latitude": 30.5076,
+        "longitude": 31.0029
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>LBY [LY-BA] (id:YF016609) (23)",
+        "latitude": 31.2887,
+        "longitude": 20.6182
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>LBY [LY-SB] (id:YF014058) (23)",
+        "latitude": 27.2371,
+        "longitude": 15.1065
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF007431) (23)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF005336) (24)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008706) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008010) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008428) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF005548) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>LBY [LY-BA] (id:YF006880) (23)",
+        "latitude": 31.2887,
+        "longitude": 20.6182
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>LBY [LY-MJ] (id:YF010539) (23)",
+        "latitude": 32.1682,
+        "longitude": 21.0132
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>LBY [LY-MB] (id:YF016680) (24)",
+        "latitude": 32.5351,
+        "longitude": 14.1357
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>LBY [LY-BU] (id:YF063183) (25)",
+        "latitude": 30.069,
+        "longitude": 24.0559
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007775) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF015949) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF015265) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF011462) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF010596) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008553) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF008426) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF007947) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF006039) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>EGY [EG-BNS] (id:YF013840) (23)",
+        "latitude": 28.8948,
+        "longitude": 30.5041
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF004872) (23)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    "",
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF017006) (24)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF008491) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005637) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF018909) (26)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF016624) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF016622) (26)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF012473) (26)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF009306) (26)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016072) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014504) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013236) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004536) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>EGY [EG-FYM] (id:YF019622) (22)",
+        "latitude": 29.2965,
+        "longitude": 30.4584
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF019040) (22)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>IRN [IR-06] (id:YF013713) (22)",
+        "latitude": 28.8273,
+        "longitude": 51.4225
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-DQ] (id:YF013699) (22)",
+        "latitude": 31.191,
+        "longitude": 46.4203
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011046) (22)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF010371) (22)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-BA] (id:YF009791) (22)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF009176) (22)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>TUR [TR-63] (id:YF008164) (22)",
+        "latitude": 37.3189,
+        "longitude": 39.0508
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014412) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF012795) (23)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF009499) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF018646) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF013002) (23)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF009605) (23)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF004129) (23)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF010564) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-15] (id:YF009606) (24)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF012551) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF006682) (24)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SYR [SY-RA] (id:YF008502) (23)",
+        "latitude": 36.0067,
+        "longitude": 38.9127
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-AN] (id:YF005789) (23)",
+        "latitude": 33.2317,
+        "longitude": 41.5307
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-02] (id:YF003486) (23)",
+        "latitude": 21.4348,
+        "longitude": 40.2542
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015150) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF006950) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF014959) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013668) (25)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF010761) (25)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF010277) (25)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF007236) (25)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013440) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004394) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF011216) (25)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF008469) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF002665) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010396) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-BA] (id:YF015728) (25)",
+        "latitude": 23.9794,
+        "longitude": 56.8199
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>OMN [OM-BA] (id:YF010534) (25)",
+        "latitude": 23.9794,
+        "longitude": 56.8199
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF012431) (25)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011087) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF009282) (26)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AJ] (id:YF008076) (26)",
+        "latitude": 25.3971,
+        "longitude": 55.5411
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AJ] (id:YF014583) (26)",
+        "latitude": 25.3971,
+        "longitude": 55.5411
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013160) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013159) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF007477) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF005119) (24)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF015665) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014698) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014695) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF014694) (26)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014693) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014474) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF012051) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014463) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF014214) (26)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016780) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014678) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016400) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF014804) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015900) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014697) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013450) (24)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF011948) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>DZA [DZ-01] (id:YF002960) (25)",
+        "latitude": 25.7004,
+        "longitude": -0.93557
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-HI] (id:YF018786) (25)",
+        "latitude": 34.1503,
+        "longitude": 38.1425
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF002943) (26)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF063407) (26)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF002942) (27)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF003805) (26)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF002961) (26)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-15] (id:YF004253) (28)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-BA] (id:YF019896) (28)",
+        "latitude": 30.6802,
+        "longitude": 47.5605
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-DU] (id:YF003209) (28)",
+        "latitude": 24.9508,
+        "longitude": 55.3436
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF002967) (28)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF003870) (29)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF003804) (29)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF003725) (29)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF003508) (29)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF014372) (29)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-AZ] (id:YF001865) (29)",
+        "latitude": 23.5238,
+        "longitude": 54.0817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-13] (id:YF013676) (24)",
+        "latitude": 26.2204,
+        "longitude": 50.5777
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF005290) (24)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>EGY [EG-BA] (id:YF014055) (26)",
+        "latitude": 25.2164,
+        "longitude": 33.7267
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>JOR [JO-BA] (id:YF014032) (26)",
+        "latitude": 31.8345,
+        "longitude": 35.7216
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF005937) (27)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF005936) (27)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF005273) (27)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010918) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005913) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF003364) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF008430) (27)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF006925) (27)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF014654) (28)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF010973) (28)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF015628) (28)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF010797) (28)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF011356) (28)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-QU] (id:YF063208) (26)",
+        "latitude": 33.053,
+        "longitude": 35.9145
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-QU] (id:YF063207) (26)",
+        "latitude": 33.053,
+        "longitude": 35.9145
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>JOR [JO-BA] (id:YF013687) (26)",
+        "latitude": 31.8345,
+        "longitude": 35.7216
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>IRQ [IQ-NA] (id:YF006655) (26)",
+        "latitude": 30.9322,
+        "longitude": 43.7551
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>EGY [EG-BA] (id:YF007977) (28)",
+        "latitude": 25.2164,
+        "longitude": 33.7267
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF010615) (29)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>JOR [JO-AM] (id:YF009985) (29)",
+        "latitude": 31.6211,
+        "longitude": 36.4418
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008840) (29)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF005284) (29)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF010972) (29)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF010971) (29)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>EGY [EG-FYM] (id:YF016404) (29)",
+        "latitude": 29.2965,
+        "longitude": 30.4584
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>EGY [EG-SHR] (id:YF007583) (29)",
+        "latitude": 30.8161,
+        "longitude": 31.8817
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF007112) (29)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF006462) (29)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-FA] (id:YF006458) (29)",
+        "latitude": 29.2592,
+        "longitude": 47.9381
+    },
+    "",
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF011270) (28)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF011269) (28)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF005444) (28)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF010812) (30)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF008033) (31)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF010810) (32)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF010811) (32)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008399) (32)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF013353) (30)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-07] (id:YF006217) (30)",
+        "latitude": 27.9146,
+        "longitude": 36.8014
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-JA] (id:YF011118) (30)",
+        "latitude": 29.7843,
+        "longitude": 48.2027
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF007438) (30)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF006229) (30)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF005445) (29)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF006536) (29)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF013740) (30)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF008400) (30)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF005922) (30)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-11] (id:YF016403) (30)",
+        "latitude": 20.1605,
+        "longitude": 41.4165
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF013698) (30)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF010671) (30)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF005272) (30)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF011251) (30)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF006533) (30)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-06] (id:YF005450) (30)",
+        "latitude": 27.2652,
+        "longitude": 41.7076
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF005919) (30)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-MU] (id:YF018887) (31)",
+        "latitude": 29.2535,
+        "longitude": 48.0548
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF014880) (31)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF014892) (31)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-AH] (id:YF006452) (31)",
+        "latitude": 28.8653,
+        "longitude": 47.9393
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016808) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>UAE [AE-SH] (id:YF015691) (23)",
+        "latitude": 25.172,
+        "longitude": 55.7788
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012096) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF008106) (23)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF012126) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF005776) (24)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012003) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015779) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004002) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013397) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012078) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012631) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012124) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015140) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007193) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007134) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006634) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015124) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012267) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010801) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006600) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015698) (27)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010795) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005454) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015899) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015641) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SYR [SY-RA] (id:YF011212) (26)",
+        "latitude": 36.0067,
+        "longitude": 38.9127
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006596) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014071) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF009357) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012118) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>QAT [QA-DA] (id:YF004968) (26)",
+        "latitude": 25.2686,
+        "longitude": 51.5282
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF006635) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012119) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015683) (28)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015682) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005790) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-08] (id:YF016787) (27)",
+        "latitude": 29.227,
+        "longitude": 43.3124
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-12] (id:YF013231) (27)",
+        "latitude": 29.5589,
+        "longitude": 38.3651
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011658) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF011165) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007745) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF005136) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF003947) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007627) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF003800) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF015766) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015700) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-KU] (id:YF015699) (25)",
+        "latitude": 29.4497,
+        "longitude": 48.3318
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015687) (25)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF015685) (25)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015680) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012129) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF009038) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014447) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012194) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010393) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012270) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF011027) (26)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012215) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF003933) (26)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013378) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013060) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012539) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010355) (25)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF010910) (26)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-04] (id:YF010413) (26)",
+        "latitude": 22.9875,
+        "longitude": 50.1714
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>BHR [BH-15] (id:YF015662) (26)",
+        "latitude": 26.261,
+        "longitude": 50.6376
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010593) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015697) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF014444) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015686) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010908) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF016790) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013366) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015692) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF004742) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF015689) (27)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF015743) (28)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF015619) (28)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-03] (id:YF004459) (28)",
+        "latitude": 24.9279,
+        "longitude": 39.4378
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015622) (29)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012193) (29)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF015620) (29)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-05] (id:YF012220) (29)",
+        "latitude": 25.9478,
+        "longitude": 43.2716
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF014090) (26)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF009255) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>KWT [KW-HA] (id:YF006640) (26)",
+        "latitude": 29.3243,
+        "longitude": 48.0306
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF003201) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF012613) (26)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015678) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010876) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015615) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF007440) (27)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF013452) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF006012) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF015684) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    },
+    {
+        "num": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>SAU [SA-01] (id:YF010796) (28)",
+        "latitude": 23.3432,
+        "longitude": 45.1404
+    }
+]
