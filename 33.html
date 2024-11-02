@@ -129,12 +129,18 @@ fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
             });
         });
 
+        // دالة لتحريك الخطوط
+        function animateLine(coords, index) {
+            if (index >= coords.length - 1) return;
+
+            var line = L.polyline([coords[index], coords[index + 1]], { color: 'blue', weight: 2 }).addTo(map);
+            setTimeout(() => animateLine(coords, index + 1), 1000); // الانتقال كل ثانية
+        }
+
+        // بدء التحريك لكل خط
         for (let num in connections) {
             if (connections[num].length > 1) {
-                for (let i = 0; i < connections[num].length - 1; i++) {
-                    let latLngs = [connections[num][i], connections[num][i + 1]];
-                    L.polyline(latLngs, { color: 'blue', weight: 2 }).addTo(map); // رسم الخطوط باللون الأزرق
-                }
+                animateLine(connections[num], 0); // بدء التحريك من أول نقطة
             }
         }
     })
