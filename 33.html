@@ -1,109 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية باستخدام Leaflet</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.heat/dist/leaflet-heat.css" />
+    <title>خريطة حرارية ليف ليت مع بيانات Google Sheets</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        #map {
-            height: 100vh; /* ملء النافذة بالكامل */
-            width: 100%;
-        }
+        #map { height: 600px; width: 100%; }
     </style>
 </head>
 <body>
+    <h2>خريطة حرارية للإحداثيات</h2>
+    <div id="map"></div>
 
-<div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script> <!-- مكتبة الخريطة الحرارية -->
+    <script>
+        // إعداد الخريطة
+        var map = L.map('map').setView([23.8859, 45.0792], 5);  // مركز على السعودية كنقطة بداية
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-<script>
-    // إنشاء خريطة
-    var map = L.map('map').setView([23.8859, 45.0792], 5); // عرض الخريطة على السعودية
+        // إضافة طبقة خريطة
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
 
-    // إضافة طبقة الخريطة
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
+        // رابط Google Sheets بصيغة CSV
+        var googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSlzuOHduE0dufp5Gy8G-3-WENhQRH5QbNrjAec-_kZyU9nhG3GpA04jMRtGiE3kg/pub?output=csv';
 
-    // استيراد البيانات من Google Sheets
-    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vR1Q6pkyaeXPXJRJ7jSDCdCFl474yZa0VXUR0--Brbe7KE1PknQIbobQ31z1k2gnw/pub?output=csv')
-        .then(response => response.text())
-        .then(data => {
-            // معالجة البيانات
-            const rows = data.split('\n').slice(1); // تجاهل العنوان
-            const heatData = [];
-            let specialPoint = null;
+        // جلب البيانات من Google Sheets
+        fetch(googleSheetURL)
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split("\n").slice(1);  // حذف العنوان
+                const heatData = [];  // مصفوفة لحفظ نقاط الحرارة
 
-            // الحصول على الصف الثاني (مؤشر 1) للحصول على النقطة المميزة
-            const specialRow = rows[0].split(','); // يجب الحصول على الصف الأول الذي يحتوي على النقطة المميزة
-            const specialLatitude = parseFloat(specialRow[17]); // العمود الثاني: خط العرض
-            const specialLongitude = parseFloat(specialRow[16]); // العمود الثالث: خط الطول
-            
-            // التحقق من صحة إحداثيات النقطة المميزة
-            if (!isNaN(specialLatitude) && !isNaN(specialLongitude)) {
-                specialPoint = [specialLatitude, specialLongitude];
-            }
-
-            rows.forEach((row) => {
-                const cols = row.split(',');
-                
-                // خطوط العرض والطول للنقاط العادية
-                const latitude = parseFloat(cols[1]);       // العمود الثاني: خط العرض
-                const longitude = parseFloat(cols[2]);      // العمود الثالث: خط الطول
-
-                if (!isNaN(latitude) && !isNaN(longitude)) {
-                    // إضافة نقطة البيانات مع كثافة افتراضية 1
-                    heatData.push([latitude, longitude, 1]);
-                }
-            });
-
-            // إضافة طبقة الحرارة
-            var heatPoints = heatData;
-            if (heatPoints.length > 0) {
-                L.heatLayer(heatPoints, {
-                    radius: 60,
-                    blur: 45,
-                    maxZoom: 15,
-                    minOpacity: 0.2,
-                    max: 1.5,
-                    gradient: {
-                        0.2: '#1a9850',
-                        0.4: '#91cf60',
-                        0.6: '#d9ef8b',
-                        0.7: '#fee08b',
-                        0.8: '#fc8d59',
-                        0.9: '#d73027',
-                        1.0: '#7f0000'
+                rows.forEach(row => {
+                    const [latitude, longitude] = row.split(",");
+                    if (latitude && longitude) {
+                        heatData.push([parseFloat(latitude), parseFloat(longitude), 0.5]);  // 0.5 يمثل الكثافة لكل نقطة
                     }
-                }).addTo(map);
-            } else {
-                console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
-            }
-
-            // إضافة النقطة المميزة إذا كانت موجودة
-            if (specialPoint) {
-                var customIcon = L.icon({
-                    iconUrl: 'https://img.icons8.com/ios-filled/50/ff0000/marker.png', // ضع مسار الأيقونة هنا
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 40],
-                    popupAnchor: [0, -40]
                 });
-                L.marker(specialPoint, { icon: customIcon }).addTo(map).bindPopup('نقطة مميزة').openPopup(); // فتح النافذة المنبثقة تلقائيًا
-            }
-        })
-        .catch(error => {
-            console.error('حدث خطأ:', error);
-            alert('تعذر تحميل البيانات، يرجى التحقق من الاتصال أو الرابط.');
-        });
-</script>
 
+                // إضافة طبقة حرارية
+                L.heatLayer(heatData, { 
+                    radius: 25,         // نصف قطر التأثير الحراري
+                    blur: 15,           // تشويش الحواف
+                    maxZoom: 10,        // الحد الأقصى للتقريب
+                    gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}  // ألوان الخريطة الحرارية
+                }).addTo(map);
+            })
+            .catch(error => console.error('خطأ في جلب البيانات:', error));
+    </script>
 </body>
 </html>
