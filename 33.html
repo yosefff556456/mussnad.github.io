@@ -3,54 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية ليف ليت مع بيانات Google Sheets</title>
+    <title>خريطة أسلاف تفرعية</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map { height: 600px; width: 100%; }
+        .ancestor-label {
+            font-size: 14px;
+            font-weight: bold;
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #333;
+        }
     </style>
 </head>
 <body>
-    <h2>خريطة حرارية للإحداثيات</h2>
+    <h2>خريطة الأسلاف التفرعية</h2>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script> <!-- مكتبة الخريطة الحرارية -->
     <script>
         // إعداد الخريطة
-        var map = L.map('map').setView([23.8859, 45.0792], 5);  // مركز على السعودية كنقطة بداية
-
-        // إضافة طبقة خريطة
+        var map = L.map('map').setView([15.38, 43.649], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // رابط Google Sheets بصيغة CSV
-        var googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSlzuOHduE0dufp5Gy8G-3-WENhQRH5QbNrjAec-_kZyU9nhG3GpA04jMRtGiE3kg/pub?output=csv';
-
-        // جلب البيانات من Google Sheets
-        fetch(googleSheetURL)
+        // قراءة البيانات من Google Sheets
+        fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSlzuOHduE0dufp5Gy8G-3-WENhQRH5QbNrjAec-_kZyU9nhG3GpA04jMRtGiE3kg/pub?output=csv')
             .then(response => response.text())
-            .then(data => {
-                const rows = data.split("\n").slice(1);  // حذف العنوان
-                const heatData = [];  // مصفوفة لحفظ نقاط الحرارة
+            .then(csv => {
+                const data = parseCSV(csv);
+                const ancestorTree = parseAncestors(data);
+                displayAncestors(map, ancestorTree, 15.38, 43.649);
+            });
 
-                rows.forEach(row => {
-                    const [latitude, longitude] = row.split(",");
-                    if (latitude && longitude) {
-                        heatData.push([parseFloat(latitude), parseFloat(longitude), 0.5]);  // 0.5 يمثل الكثافة لكل نقطة
+        // دالة لتحليل CSV
+        function parseCSV(csv) {
+            const lines = csv.split('\n').map(line => line.split(','));
+            const headers = lines[0];
+            const results = [];
+            for (let i = 1; i < lines.length; i++) {
+                const obj = {};
+                for (let j = 0; j < headers.length; j++) {
+                    obj[headers[j].trim()] = lines[i][j].trim();
+                }
+                results.push(obj);
+            }
+            return results;
+        }
+
+        // دالة لتحليل الأسلاف
+        function parseAncestors(data) {
+            const tree = {};
+            data.forEach(item => {
+                const ancestorList = item.Ancestors.split('>');
+                const lat = parseFloat(item.Latitude);
+                const lng = parseFloat(item.Longitude);
+                let currentLevel = tree;
+
+                // إضافة الإحداثيات إلى الشجرة
+                ancestorList.forEach((ancestor, index) => {
+                    if (!currentLevel[ancestor]) {
+                        currentLevel[ancestor] = { children: {}, lat, lng };
                     }
+                    currentLevel = currentLevel[ancestor].children;
                 });
+            });
+            return tree;
+        }
 
-                // إضافة طبقة حرارية
-                L.heatLayer(heatData, { 
-                    radius: 25,         // نصف قطر التأثير الحراري
-                    blur: 15,           // تشويش الحواف
-                    maxZoom: 10,        // الحد الأقصى للتقريب
-                    gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}  // ألوان الخريطة الحرارية
+        // دالة لعرض الأسلاف بشكل تفرعي على الخريطة
+        function displayAncestors(map, tree, lat, lng, level = 0, parentMarker = null) {
+            for (const ancestor in tree) {
+                // إضافة العلامة لكل سلف
+                const marker = L.marker([lat - (level * 0.02), lng + (level * 0.02)], {
+                    icon: L.divIcon({
+                        className: 'ancestor-label',
+                        html: ancestor,
+                        iconSize: [100, 30]
+                    })
                 }).addTo(map);
-            })
-            .catch(error => console.error('خطأ في جلب البيانات:', error));
+
+                // ربط السلف بالوالد إذا كان موجوداً
+                if (parentMarker) {
+                    L.polyline([parentMarker.getLatLng(), marker.getLatLng()], { color: 'blue', weight: 2 }).addTo(map);
+                }
+
+                // تكرار للسلف التالي
+                displayAncestors(map, tree[ancestor].children, lat, lng, level + 1, marker);
+            }
+        }
     </script>
 </body>
 </html>
