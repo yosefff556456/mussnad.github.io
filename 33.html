@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة أسلاف تفرعية</title>
+    <title>خريطة حرارية للأسلاف</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
         #map { height: 600px; width: 100%; }
@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <h2>خريطة الأسلاف التفرعية</h2>
+    <h2>خريطة حرارية للأسلاف</h2>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -36,10 +36,11 @@
             .then(csv => {
                 const data = parseCSV(csv);
                 const ancestorTree = parseAncestors(data);
-                displayAncestors(map, ancestorTree, 15.38, 43.649);
+                const averageCoordinates = calculateAverageCoordinates(ancestorTree);
+                displayAncestors(map, ancestorTree, averageCoordinates.lat, averageCoordinates.lng);
             });
 
-        // دالة لتحليل CSV
+        // تحليل CSV
         function parseCSV(csv) {
             const lines = csv.split('\n').map(line => line.split(','));
             const headers = lines[0];
@@ -54,7 +55,7 @@
             return results;
         }
 
-        // دالة لتحليل الأسلاف
+        // تحليل شجرة الأسلاف
         function parseAncestors(data) {
             const tree = {};
             data.forEach(item => {
@@ -64,7 +65,7 @@
                 let currentLevel = tree;
 
                 // إضافة الإحداثيات إلى الشجرة
-                ancestorList.forEach((ancestor, index) => {
+                ancestorList.forEach(ancestor => {
                     if (!currentLevel[ancestor]) {
                         currentLevel[ancestor] = { children: {}, lat, lng };
                     }
@@ -74,7 +75,32 @@
             return tree;
         }
 
-        // دالة لعرض الأسلاف بشكل تفرعي على الخريطة
+        // حساب متوسط الإحداثيات
+        function calculateAverageCoordinates(tree) {
+            const coordinates = [];
+
+            // استخرج الإحداثيات لكل سلف في الشجرة
+            for (const ancestor in tree) {
+                const { lat, lng } = tree[ancestor];
+                coordinates.push({ lat, lng });
+
+                // إذا كان هناك أطفال، استخرج إحداثياتهم أيضاً
+                if (Object.keys(tree[ancestor].children).length > 0) {
+                    const childCoords = calculateAverageCoordinates(tree[ancestor].children);
+                    coordinates.push(...childCoords);
+                }
+            }
+
+            // احسب المتوسط إذا كانت الإحداثيات متاحة
+            if (coordinates.length === 0) return { lat: 0, lng: 0 };
+
+            const avgLat = coordinates.reduce((sum, coord) => sum + coord.lat, 0) / coordinates.length;
+            const avgLng = coordinates.reduce((sum, coord) => sum + coord.lng, 0) / coordinates.length;
+
+            return { lat: avgLat, lng: avgLng };
+        }
+
+        // عرض الأسلاف على الخريطة
         function displayAncestors(map, tree, lat, lng, level = 0, parentMarker = null) {
             for (const ancestor in tree) {
                 // إضافة العلامة لكل سلف
