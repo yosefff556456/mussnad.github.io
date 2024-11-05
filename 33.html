@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <!-- تحميل مكتبة PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <!-- تحميل Leaflet.LabelTextCollision -->
+    <script src="https://unpkg.com/leaflet-labeltextcollision/L.LabelTextCollision.js"></script>
     <style>
         #map {
             height: 600px;
@@ -27,10 +29,6 @@
 <body>
 
 <h2>خريطة الأسلاف التفاعلية</h2>
-<div id="slider-container">
-    مستوى الأسلاف: <input type="range" id="ancestorSlider" min="0" max="5" value="0" step="1">
-    <span id="currentLevel">0</span>
-</div>
 <div id="map"></div>
 
 <!-- تحميل مكتبة Leaflet -->
@@ -106,62 +104,29 @@ function buildAncestorsTree(data) {
 
     // استخراج الجذور (الأسلاف بدون والد)
     roots = Object.values(ancestorsTree).filter(node => !node.parent);
-
-    // جمع العينات من الأبناء
-    collectSamplesFromChildren(ancestorsTree);
 }
 
-// دالة لجمع العينات من الأبناء وتطبيق الأوزان بناءً على بعدهم
-function collectSamplesFromChildren(ancestorsTree) {
-    function traverse(node) {
-        node.children.forEach(child => {
-            traverse(child);
-            // جمع العينات من الابن
-            child.samples.forEach(sample => {
-                // حساب الوزن بناءً على بعد العينة عن السلف الحالي
-                const distance = sample.ancestorLevel - node.level;
-                const weight = 1 / (distance + 1);
-                node.samples.push({
-                    lat: sample.lat,
-                    lon: sample.lon,
-                    weight: weight,
-                    ancestorLevel: node.level
-                });
-            });
-        });
-    }
-
-    roots.forEach(root => traverse(root));
-}
-
-// دالة لحساب المتوسط الموزون للإحداثيات
-function calculateWeightedCoordinates(samples) {
+// دالة لحساب المتوسط البسيط للإحداثيات
+function calculateAverageCoordinates(samples) {
     let totalLat = 0;
     let totalLon = 0;
-    let totalWeight = 0;
     samples.forEach(sample => {
-        const weight = sample.weight;
-        totalLat += parseFloat(sample.lat) * weight;
-        totalLon += parseFloat(sample.lon) * weight;
-        totalWeight += weight;
+        totalLat += parseFloat(sample.lat);
+        totalLon += parseFloat(sample.lon);
     });
     return {
-        lat: totalLat / totalWeight,
-        lon: totalLon / totalWeight
+        lat: totalLat / samples.length,
+        lon: totalLon / samples.length
     };
 }
 
-// دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
-function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
+// دالة لإضافة الأسلاف إلى الخريطة
+function addAncestorsToMap(nodes, parentCoords = null) {
     nodes.forEach(node => {
-        if (node.level > maxDisplayLevel) {
-            return;
-        }
-
         let avgCoords = null;
         if (node.samples.length > 0) {
-            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
-            avgCoords = calculateWeightedCoordinates(node.samples);
+            // حساب موقع السلف التقريبي
+            avgCoords = calculateAverageCoordinates(node.samples);
         } else if (parentCoords) {
             // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
             avgCoords = parentCoords;
@@ -174,15 +139,19 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
             // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
             const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
 
-            // إنشاء أيقونة نصية لعرض اسم السلف
-            const myIcon = L.divIcon({
-                className: 'ancestor-label',
-                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
-            });
+            // إنشاء أيقونة نصية لعرض اسم السلف باستخدام LayerGroup من المكتبة
+            const textMarker = new L.Marker.TextCollision(
+                [avgCoords.lat, avgCoords.lon],
+                {
+                    icon: new L.DivIcon({
+                        className: 'ancestor-label',
+                        html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
+                    }),
+                    collisionBuffer: 10
+                }
+            ).addTo(map);
 
-            // إضافة العلامة إلى الخريطة
-            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
-            allMarkers.push(marker);
+            allMarkers.push(textMarker);
 
             // رسم خط بين السلف والأب (إذا كان موجوداً)
             if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
@@ -194,21 +163,9 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
             }
 
             // استدعاء الدالة بشكل متكرر للأبناء
-            addAncestorsToMap(node.children, avgCoords, maxDisplayLevel);
+            addAncestorsToMap(node.children, avgCoords);
         }
     });
-}
-
-// دالة لتحديث الخريطة بناءً على مستوى السلف المختار
-function updateMap(level) {
-    // إزالة جميع العلامات والخطوط السابقة
-    allMarkers.forEach(marker => map.removeLayer(marker));
-    allPolylines.forEach(polyline => map.removeLayer(polyline));
-    allMarkers = [];
-    allPolylines = [];
-
-    // إضافة الأسلاف إلى الخريطة حتى المستوى المحدد
-    addAncestorsToMap(roots, null, level);
 }
 
 // تحميل ومعالجة ملف CSV
@@ -223,26 +180,14 @@ fetch(csvUrl)
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
 
-                // تحديث الحد الأقصى للشريط بناءً على أقصى مستوى
-                const ancestorSlider = document.getElementById('ancestorSlider');
-                ancestorSlider.max = maxLevel;
-
-                // إضافة الأسلاف إلى الخريطة في المستوى الأولي
-                updateMap(0);
+                // إضافة الأسلاف إلى الخريطة
+                addAncestorsToMap(roots);
             }
         });
     })
     .catch(error => {
         console.error('خطأ في تحميل ملف CSV:', error);
     });
-
-// استماع لتغيير قيمة الشريط
-document.getElementById('ancestorSlider').addEventListener('input', function() {
-    const level = parseInt(this.value);
-    document.getElementById('currentLevel').textContent = level;
-    updateMap(level);
-});
 </script>
 </body>
 </html>
-
