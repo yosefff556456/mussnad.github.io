@@ -13,6 +13,12 @@
             height: 600px;
             width: 100%;
         }
+        .ancestor-label {
+            font-weight: bold;
+            text-align: center;
+            color: black;
+            text-shadow: 1px 1px 2px white;
+        }
     </style>
 </head>
 <body>
@@ -36,17 +42,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
 
-// دالة لحساب متوسط الإحداثيات
-function calculateAverageCoordinates(samples) {
+// دالة لحساب المتوسط الموزون للإحداثيات
+function calculateWeightedCoordinates(samples) {
     let totalLat = 0;
     let totalLon = 0;
+    let totalWeight = 0;
     samples.forEach(sample => {
-        totalLat += parseFloat(sample.lat);
-        totalLon += parseFloat(sample.lon);
+        const weight = sample.weight;
+        totalLat += parseFloat(sample.lat) * weight;
+        totalLon += parseFloat(sample.lon) * weight;
+        totalWeight += weight;
     });
     return {
-        lat: totalLat / samples.length,
-        lon: totalLon / samples.length
+        lat: totalLat / totalWeight,
+        lon: totalLon / totalWeight
     };
 }
 
@@ -71,12 +80,13 @@ function buildAncestorsTree(data) {
                         name: ancestor,
                         parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
                         samples: [],
-                        children: []
+                        children: [],
+                        level: index // مستوى السلف في الشجرة
                     };
                 }
                 // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
                 if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon });
+                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
                 }
             });
         }
@@ -100,8 +110,8 @@ function addAncestorsToMap(nodes, parentCoords = null) {
     nodes.forEach(node => {
         let avgCoords = null;
         if (node.samples.length > 0) {
-            // حساب موقع السلف التقريبي باستخدام العينات المتصلة به مباشرة
-            avgCoords = calculateAverageCoordinates(node.samples);
+            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
+            avgCoords = calculateWeightedCoordinates(node.samples);
         } else if (parentCoords) {
             // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
             avgCoords = parentCoords;
@@ -111,9 +121,17 @@ function addAncestorsToMap(nodes, parentCoords = null) {
         }
 
         if (avgCoords) {
-            // إضافة علامة على الخريطة
-            const marker = L.marker([avgCoords.lat, avgCoords.lon]).addTo(map)
-                .bindPopup(`<b>${node.name}</b><br>خط العرض: ${avgCoords.lat.toFixed(4)}<br>خط الطول: ${avgCoords.lon.toFixed(4)}`);
+            // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
+            const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
+
+            // إنشاء أيقونة نصية لعرض اسم السلف
+            const myIcon = L.divIcon({
+                className: 'ancestor-label',
+                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
+            });
+
+            // إضافة العلامة إلى الخريطة
+            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
 
             // رسم خط بين السلف والأب (إذا كان موجوداً)
             if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
@@ -152,3 +170,4 @@ fetch(csvUrl)
 </script>
 </body>
 </html>
+
