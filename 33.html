@@ -55,23 +55,6 @@ let allPolylines = [];
 let maxLevel = 0;
 let roots = [];
 
-// دالة لحساب المتوسط الموزون للإحداثيات
-function calculateWeightedCoordinates(samples) {
-    let totalLat = 0;
-    let totalLon = 0;
-    let totalWeight = 0;
-    samples.forEach(sample => {
-        const weight = sample.weight;
-        totalLat += parseFloat(sample.lat) * weight;
-        totalLon += parseFloat(sample.lon) * weight;
-        totalWeight += weight;
-    });
-    return {
-        lat: totalLat / totalWeight,
-        lon: totalLon / totalWeight
-    };
-}
-
 // بناء هيكل الأسلاف
 function buildAncestorsTree(data) {
     const ancestorsTree = {};
@@ -91,6 +74,7 @@ function buildAncestorsTree(data) {
                 if (!ancestorsTree[ancestorKey]) {
                     ancestorsTree[ancestorKey] = {
                         name: ancestor,
+                        key: ancestorKey,
                         parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
                         samples: [],
                         children: [],
@@ -102,7 +86,12 @@ function buildAncestorsTree(data) {
                 }
                 // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
                 if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
+                    ancestorsTree[ancestorKey].samples.push({
+                        lat: lat,
+                        lon: lon,
+                        weight: 1,
+                        ancestorLevel: index
+                    });
                 }
             });
         }
@@ -117,6 +106,49 @@ function buildAncestorsTree(data) {
 
     // استخراج الجذور (الأسلاف بدون والد)
     roots = Object.values(ancestorsTree).filter(node => !node.parent);
+
+    // جمع العينات من الأبناء
+    collectSamplesFromChildren(ancestorsTree);
+}
+
+// دالة لجمع العينات من الأبناء وتطبيق الأوزان بناءً على بعدهم
+function collectSamplesFromChildren(ancestorsTree) {
+    function traverse(node) {
+        node.children.forEach(child => {
+            traverse(child);
+            // جمع العينات من الابن
+            child.samples.forEach(sample => {
+                // حساب الوزن بناءً على بعد العينة عن السلف الحالي
+                const distance = sample.ancestorLevel - node.level;
+                const weight = 1 / (distance + 1);
+                node.samples.push({
+                    lat: sample.lat,
+                    lon: sample.lon,
+                    weight: weight,
+                    ancestorLevel: node.level
+                });
+            });
+        });
+    }
+
+    roots.forEach(root => traverse(root));
+}
+
+// دالة لحساب المتوسط الموزون للإحداثيات
+function calculateWeightedCoordinates(samples) {
+    let totalLat = 0;
+    let totalLon = 0;
+    let totalWeight = 0;
+    samples.forEach(sample => {
+        const weight = sample.weight;
+        totalLat += parseFloat(sample.lat) * weight;
+        totalLon += parseFloat(sample.lon) * weight;
+        totalWeight += weight;
+    });
+    return {
+        lat: totalLat / totalWeight,
+        lon: totalLon / totalWeight
+    };
 }
 
 // دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
@@ -213,3 +245,4 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
+
