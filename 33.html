@@ -1,126 +1,110 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
+    <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية للأسلاف</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- تحميل مكتبة Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <style>
-        #map { height: 600px; width: 100%; }
-        .ancestor-label {
-            font-size: 14px;
-            font-weight: bold;
-            background-color: white;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #333;
+        #map {
+            height: 600px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
-    <h2>خريطة حرارية للأسلاف</h2>
-    <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script>
-        // إعداد الخريطة
-        var map = L.map('map').setView([15.38, 43.649], 6);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '© OpenStreetMap'
-        }).addTo(map);
+<h2>خريطة الأسلاف التفاعلية</h2>
+<div id="map"></div>
 
-        // قراءة البيانات من Google Sheets
-        fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vSlzuOHduE0dufp5Gy8G-3-WENhQRH5QbNrjAec-_kZyU9nhG3GpA04jMRtGiE3kg/pub?output=csv')
-            .then(response => response.text())
-            .then(csv => {
-                const data = parseCSV(csv);
-                const ancestorTree = parseAncestors(data);
-                const averageCoordinates = calculateAverageCoordinates(ancestorTree);
-                displayAncestors(map, ancestorTree, averageCoordinates.lat, averageCoordinates.lng);
-            });
+<!-- تحميل مكتبة Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
-        // تحليل CSV
-        function parseCSV(csv) {
-            const lines = csv.split('\n').map(line => line.split(','));
-            const headers = lines[0];
-            const results = [];
-            for (let i = 1; i < lines.length; i++) {
-                const obj = {};
-                for (let j = 0; j < headers.length; j++) {
-                    obj[headers[j].trim()] = lines[i][j].trim();
-                }
-                results.push(obj);
-            }
-            return results;
+<!-- كود JavaScript -->
+<script>
+// البيانات المقدمة
+const data = [
+    { ancestors: "J-Y10887", lat: 16.3414, lon: 43.1875 },
+    { ancestors: "J-Y10887>J-FGC4415", lat: 15.38, lon: 43.649 },
+    { ancestors: "J-Y10887>J-FGC4415>J-Y574494", lat: 15.38, lon: 43.649 },
+    { ancestors: "J-Y10887>J-FGC4415>J-Y574494>J-FT49595", lat: 15.38, lon: 43.649 },
+    { ancestors: "J-Y10887>J-FGC4415>J-Y574494>J-FT49595>J-FT49595*", lat: 15.38, lon: 43.649 },
+    { ancestors: "J-Y10887>J-FGC4415>J-Y13481>J-Y500504>J-Y500506>J-ZS1948>J-ZS1943>J-CTS1806", lat: 15.38, lon: 43.649 },
+    { ancestors: "J-Y10887>J-FGC4415>J-Y13481>J-Y500504>J-Y500506>J-ZS1948>J-ZS1943>J-CTS1806>J-Y209959", lat: 15.38, lon: 43.649 },
+    { ancestors: "J-Y10887>", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-YMA1388>J-YMA1390", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-YMA1388>J-YMA1390>J-YMA1390*", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FTA697", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FTA697>J-FTA697*", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353>J-FGC34355", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353>J-FGC34355>J-FGC34355*", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353>J-FGC34355>J-FT92531", lat: 17.3028, lon: 42.726 },
+    { ancestors: "J-Y10887>J-ZS4740>J-ZS4723>J-ZS4726", lat: 17.3028, lon: 42.726 }
+];
+
+// دالة لحساب متوسط الإحداثيات
+function calculateAverageCoordinates(samples) {
+    let totalLat = 0;
+    let totalLon = 0;
+    samples.forEach(sample => {
+        totalLat += sample.lat;
+        totalLon += sample.lon;
+    });
+    return {
+        lat: totalLat / samples.length,
+        lon: totalLon / samples.length
+    };
+}
+
+// بناء هيكل الأسلاف
+const ancestorsTree = {};
+
+data.forEach(item => {
+    const ancestorList = item.ancestors.split('>');
+    ancestorList.reduce((prev, curr) => {
+        if (!prev[curr]) {
+            prev[curr] = { children: {}, samples: [] };
         }
+        prev[curr].samples.push({ lat: item.lat, lon: item.lon });
+        return prev[curr].children;
+    }, ancestorsTree);
+});
 
-        // تحليل شجرة الأسلاف
-        function parseAncestors(data) {
-            const tree = {};
-            data.forEach(item => {
-                const ancestorList = item.Ancestors.split('>');
-                const lat = parseFloat(item.Latitude);
-                const lng = parseFloat(item.Longitude);
-                let currentLevel = tree;
-
-                // إضافة الإحداثيات إلى الشجرة
-                ancestorList.forEach(ancestor => {
-                    if (!currentLevel[ancestor]) {
-                        currentLevel[ancestor] = { children: {}, lat, lng };
-                    }
-                    currentLevel = currentLevel[ancestor].children;
-                });
-            });
-            return tree;
+// دالة لإضافة الأسلاف إلى الخريطة
+function addAncestorsToMap(tree, parentCoords = null, map) {
+    for (let ancestor in tree) {
+        const node = tree[ancestor];
+        // حساب موقع السلف التقريبي
+        const avgCoords = calculateAverageCoordinates(node.samples);
+        // إضافة علامة على الخريطة
+        const marker = L.marker([avgCoords.lat, avgCoords.lon]).addTo(map)
+            .bindPopup(`<b>${ancestor}</b><br>خط العرض: ${avgCoords.lat.toFixed(4)}<br>خط الطول: ${avgCoords.lon.toFixed(4)}`);
+        // رسم خط بين السلف والأب (إذا كان موجوداً)
+        if (parentCoords) {
+            const polyline = L.polyline([
+                [parentCoords.lat, parentCoords.lon],
+                [avgCoords.lat, avgCoords.lon]
+            ], { color: 'blue' }).addTo(map);
         }
+        // استدعاء الدالة بشكل متكرر للأبناء
+        addAncestorsToMap(node.children, avgCoords, map);
+    }
+}
 
-        // حساب متوسط الإحداثيات
-        function calculateAverageCoordinates(tree) {
-            const coordinates = [];
+// إنشاء الخريطة
+const map = L.map('map').setView([16.6161, 43.0556], 6);
 
-            // استخرج الإحداثيات لكل سلف في الشجرة
-            for (const ancestor in tree) {
-                const { lat, lng } = tree[ancestor];
-                coordinates.push({ lat, lng });
+// إضافة طبقة الخريطة
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; مساهمة OpenStreetMap'
+}).addTo(map);
 
-                // إذا كان هناك أطفال، استخرج إحداثياتهم أيضاً
-                if (Object.keys(tree[ancestor].children).length > 0) {
-                    const childCoords = calculateAverageCoordinates(tree[ancestor].children);
-                    coordinates.push(...childCoords);
-                }
-            }
+// إضافة الأسلاف إلى الخريطة
+addAncestorsToMap(ancestorsTree, null, map);
 
-            // احسب المتوسط إذا كانت الإحداثيات متاحة
-            if (coordinates.length === 0) return { lat: 0, lng: 0 };
-
-            const avgLat = coordinates.reduce((sum, coord) => sum + coord.lat, 0) / coordinates.length;
-            const avgLng = coordinates.reduce((sum, coord) => sum + coord.lng, 0) / coordinates.length;
-
-            return { lat: avgLat, lng: avgLng };
-        }
-
-        // عرض الأسلاف على الخريطة
-        function displayAncestors(map, tree, lat, lng, level = 0, parentMarker = null) {
-            for (const ancestor in tree) {
-                // إضافة العلامة لكل سلف
-                const marker = L.marker([lat - (level * 0.02), lng + (level * 0.02)], {
-                    icon: L.divIcon({
-                        className: 'ancestor-label',
-                        html: ancestor,
-                        iconSize: [100, 30]
-                    })
-                }).addTo(map);
-
-                // ربط السلف بالوالد إذا كان موجوداً
-                if (parentMarker) {
-                    L.polyline([parentMarker.getLatLng(), marker.getLatLng()], { color: 'blue', weight: 2 }).addTo(map);
-                }
-
-                // تكرار للسلف التالي
-                displayAncestors(map, tree[ancestor].children, lat, lng, level + 1, marker);
-            }
-        }
-    </script>
+</script>
 </body>
 </html>
