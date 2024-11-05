@@ -1,102 +1,119 @@
+import requests
+from bs4 import BeautifulSoup
+import json
+
+# طلب الطفرة من المستخدم
+snp_marker = input("أدخل الطفرة (SNP) المطلوبة (مثل J-Y10887): ").strip()
+
+# بناء رابط الصفحة
+url = f'https://www.yfull.com/tree/{snp_marker}/'
+
+# تحميل محتوى الصفحة
+response = requests.get(url)
+if response.status_code == 200:
+    html_content = response.text
+else:
+    print("خطأ في تحميل الصفحة. تأكد من أن الطفرة صحيحة.")
+    exit()
+
+# مسار ملف JSON الذي يحتوي على أكواد المناطق وإحداثياتها
+json_file_path = 'region_coordinates.json'
+
+# قراءة ملف JSON
+with open(json_file_path, 'r', encoding='utf-8') as json_file:
+    region_coordinates = json.load(json_file)
+
+soup = BeautifulSoup(html_content, 'html.parser')
+
+def extract_coordinates():
+    # البحث عن جميع العناصر التي تمثل الأشخاص
+    person_items = soup.find_all('li', attrs={'valsampleid': True})
+    
+    # قائمة لتخزين الإحداثيات
+    coordinates_list = []
+    
+    for person in person_items:
+        # استخراج كود المنطقة
+        b_tag = person.find('b', text=lambda x: x and '[' in x and ']' in x)
+        if b_tag:
+            region_code_full = b_tag.text.strip()
+            # استخراج النص بين القوسين المربعين
+            start = region_code_full.find('[') + 1
+            end = region_code_full.find(']')
+            region_code = region_code_full[start:end]
+            
+            # الحصول على الإحداثيات من ملف JSON
+            coordinates = region_coordinates.get(region_code)
+            if coordinates:
+                if isinstance(coordinates, str):
+                    lat_long = coordinates.split(',')
+                    if len(lat_long) == 2:
+                        latitude = float(lat_long[0].strip())
+                        longitude = float(lat_long[1].strip())
+                        coordinates_list.append([latitude, longitude])
+                else:
+                    latitude = coordinates.get('latitude')
+                    longitude = coordinates.get('longitude')
+                    if latitude and longitude:
+                        coordinates_list.append([float(latitude), float(longitude)])
+            else:
+                # إذا لم يتم العثور على الإحداثيات، يمكن تجاهل هذا العنصر
+                continue
+    return coordinates_list
+
+# استخراج الإحداثيات
+coordinates = extract_coordinates()
+
+if not coordinates:
+    print("لم يتم العثور على إحداثيات لعرضها على الخريطة.")
+    exit()
+
+# حفظ الإحداثيات في ملف JavaScript
+js_data = f"var heatmapData = {json.dumps(coordinates)};"
+
+with open('heatmap_data.js', 'w', encoding='utf-8') as js_file:
+    js_file.write(js_data)
+
+print("تم استخراج الإحداثيات وحفظها في الملف: heatmap_data.js")
+
+# إنشاء ملف HTML للخريطة
+html_content = '''
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>خريطة الحرارة للطفرة {snp_marker}</title>
+    <meta charset="utf-8" />
     <style>
-        /* جعل الخريطة تملأ النافذة بالكامل */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        #map {
-            height: 100%;
-            width: 100%;
-        }
+        #mapid {{ height: 600px; }}
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+     integrity="sha512-xodZBntMnuCAL0zzJH5wU3sP6ih7qo+4ySJrR+SvbQ8QevtykHMf1mxG8j6n8AbT3cZrA3PPY1JX9Hh5Qw5u1A=="
+     crossorigin=""/>
 </head>
 <body>
+    <h3>خريطة الحرارة للطفرة {snp_marker}</h3>
+    <div id="mapid"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+     integrity="sha512-gZwIG9x3wUXgLybN0QqKD1XnEh6p1Vioe9FAIUKSdBl+zX3xI5pVQDlyf3YhX3cNjzrFmd5xRz7qZ5aE2r3zsw=="
+     crossorigin=""></script>
+    <script src="heatmap_data.js"></script>
+    <!-- إضافة مكتبة Leaflet.heat -->
+    <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <script>
+        var map = L.map('mapid').setView([20.0, 45.0], 5);  // يمكنك تعديل مركز الخريطة ومستوى التكبير
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {{
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }}).addTo(map);
 
-<div id="map"></div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-<script>
-// إعداد خريطة ليفليت
-var map = L.map('map').setView([23.3432, 45.1404], 6);
-
-// إضافة خريطة الأساس
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-}).addTo(map);
-
-// تحميل البيانات من ملف JSON
-fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // تحويل البيانات إلى مصفوفة نقاط للحرارة
-        var heatData = data.map(item => {
-            if (item.latitude && item.longitude) {
-                return [item.latitude, item.longitude, item.intensity || 0.5]; // إضافة قيمة intensity إذا كانت متوفرة
-            } else {
-                console.warn('موقع غير صالح:', item);
-                return null;
-            }
-        }).filter(item => item !== null);
-
-        // حساب المركز المتوسط للنقاط
-        let totalLat = 0, totalLng = 0, count = heatData.length;
-        heatData.forEach(coord => {
-            totalLat += coord[0];
-            totalLng += coord[1];
-        });
-
-        if (count > 0) {
-            let avgLat = totalLat / count;
-            let avgLng = totalLng / count;
-
-            // إضافة نقطة المركز إلى الخريطة
-            var centerMarker = L.marker([avgLat, avgLng], { title: "الموقع المتوسط" }).addTo(map);
-            centerMarker.bindPopup("الموقع المتوسط لجميع الإحداثيات").openPopup();
-
-            // توسيط الخريطة على النقطة المركزية
-            map.setView([avgLat, avgLng], 7);
-        }
-
-        // إضافة طبقة الحرارة مع خصائص محسنة
-        if (heatData.length > 0) {
-                     L.heatLayer(heatData, {
-                radius: 60,           // زيادة نصف قطر النقطة لجعلها أكثر وضوحًا
-                blur: 45,             // زيادة التمويه للحصول على تأثير أكثر تداخلاً
-                maxZoom: 15,          // أقصى مستوى تكبير
-                minOpacity: 0.2,      // الحد الأدنى من الشفافية لتحديد المناطق منخفضة الكثافة
-                max: 1.5,             // زيادة الكثافة لتصبح أكثر وضوحًا
-                gradient: {           // تخصيص تدرج لوني معقد
-                    0.2: '#1a9850',   // اللون الأخضر للمناطق الأقل حرارة
-                    0.4: '#91cf60',   
-                    0.6: '#d9ef8b',
-                    0.7: '#fee08b',
-                    0.8: '#fc8d59',
-                    0.9: '#d73027',   // اللون الأحمر الداكن للمناطق الأكثر حرارة
-                    1.0: '#7f0000'    // الأحمر الداكن جدًا للنقاط العالية الكثافة
-                }
-             
-            }).addTo(map);
-        } else {
-            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
-        }
-    })
-    .catch(error => console.error('Error loading JSON:', error));
-
-</script>
-
+        // استخدام البيانات من heatmap_data.js
+        var heat = L.heatLayer(heatmapData, {{radius: 25}}).addTo(map);
+    </script>
 </body>
 </html>
+'''.format(snp_marker=snp_marker)
+
+with open('heatmap.html', 'w', encoding='utf-8') as html_file:
+    html_file.write(html_content)
+
+print("تم إنشاء ملف الخريطة وحفظه في: heatmap.html")
