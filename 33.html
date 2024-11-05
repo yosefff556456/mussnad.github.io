@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- تحميل مكتبة Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- تحميل مكتبة PapaParse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         #map {
             height: 600px;
@@ -23,76 +25,8 @@
 
 <!-- كود JavaScript -->
 <script>
-// البيانات المقدمة
-const data = [
-    { ancestors: "J-Y10887", lat: 16.3414, lon: 43.1875 },
-    { ancestors: "J-Y10887>J-FGC4415", lat: 15.38, lon: 43.649 },
-    { ancestors: "J-Y10887>J-FGC4415>J-Y574494", lat: 15.38, lon: 43.649 },
-    { ancestors: "J-Y10887>J-FGC4415>J-Y574494>J-FT49595", lat: 15.38, lon: 43.649 },
-    { ancestors: "J-Y10887>J-FGC4415>J-Y574494>J-FT49595>J-FT49595*", lat: 15.38, lon: 43.649 },
-    { ancestors: "J-Y10887>J-FGC4415>J-Y13481>J-Y500504>J-Y500506>J-ZS1948>J-ZS1943>J-CTS1806", lat: 15.38, lon: 43.649 },
-    { ancestors: "J-Y10887>J-FGC4415>J-Y13481>J-Y500504>J-Y500506>J-ZS1948>J-ZS1943>J-CTS1806>J-Y209959", lat: 15.38, lon: 43.649 },
-    { ancestors: "J-Y10887>", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-YMA1388>J-YMA1390", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-YMA1388>J-YMA1390>J-YMA1390*", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FTA697", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FTA697>J-FTA697*", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353>J-FGC34355", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353>J-FGC34355>J-FGC34355*", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-FGC34365>J-FGC34353>J-FGC34355>J-FT92531", lat: 17.3028, lon: 42.726 },
-    { ancestors: "J-Y10887>J-ZS4740>J-ZS4723>J-ZS4726", lat: 17.3028, lon: 42.726 }
-];
-
-// دالة لحساب متوسط الإحداثيات
-function calculateAverageCoordinates(samples) {
-    let totalLat = 0;
-    let totalLon = 0;
-    samples.forEach(sample => {
-        totalLat += sample.lat;
-        totalLon += sample.lon;
-    });
-    return {
-        lat: totalLat / samples.length,
-        lon: totalLon / samples.length
-    };
-}
-
-// بناء هيكل الأسلاف
-const ancestorsTree = {};
-
-data.forEach(item => {
-    const ancestorList = item.ancestors.split('>');
-    ancestorList.reduce((prev, curr) => {
-        if (!prev[curr]) {
-            prev[curr] = { children: {}, samples: [] };
-        }
-        prev[curr].samples.push({ lat: item.lat, lon: item.lon });
-        return prev[curr].children;
-    }, ancestorsTree);
-});
-
-// دالة لإضافة الأسلاف إلى الخريطة
-function addAncestorsToMap(tree, parentCoords = null, map) {
-    for (let ancestor in tree) {
-        const node = tree[ancestor];
-        // حساب موقع السلف التقريبي
-        const avgCoords = calculateAverageCoordinates(node.samples);
-        // إضافة علامة على الخريطة
-        const marker = L.marker([avgCoords.lat, avgCoords.lon]).addTo(map)
-            .bindPopup(`<b>${ancestor}</b><br>خط العرض: ${avgCoords.lat.toFixed(4)}<br>خط الطول: ${avgCoords.lon.toFixed(4)}`);
-        // رسم خط بين السلف والأب (إذا كان موجوداً)
-        if (parentCoords) {
-            const polyline = L.polyline([
-                [parentCoords.lat, parentCoords.lon],
-                [avgCoords.lat, avgCoords.lon]
-            ], { color: 'blue' }).addTo(map);
-        }
-        // استدعاء الدالة بشكل متكرر للأبناء
-        addAncestorsToMap(node.children, avgCoords, map);
-    }
-}
+// رابط ملف CSV
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSlzuOHduE0dufp5Gy8G-3-WENhQRH5QbNrjAec-_kZyU9nhG3GpA04jMRtGiE3kg/pub?output=csv';
 
 // إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
@@ -102,9 +36,119 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
 
-// إضافة الأسلاف إلى الخريطة
-addAncestorsToMap(ancestorsTree, null, map);
+// دالة لحساب متوسط الإحداثيات
+function calculateAverageCoordinates(samples) {
+    let totalLat = 0;
+    let totalLon = 0;
+    samples.forEach(sample => {
+        totalLat += parseFloat(sample.lat);
+        totalLon += parseFloat(sample.lon);
+    });
+    return {
+        lat: totalLat / samples.length,
+        lon: totalLon / samples.length
+    };
+}
 
+// بناء هيكل الأسلاف
+function buildAncestorsTree(data) {
+    const ancestorsTree = {};
+
+    data.forEach(item => {
+        const ancestorsStr = item['Ancestors'];
+        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
+        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
+
+        if (ancestorsStr && lat && lon) {
+            const ancestorList = ancestorsStr.split('>');
+            // إزالة أي عناصر فارغة
+            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+
+            filteredAncestorList.forEach((ancestor, index) => {
+                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
+                if (!ancestorsTree[ancestorKey]) {
+                    ancestorsTree[ancestorKey] = {
+                        name: ancestor,
+                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
+                        samples: [],
+                        children: []
+                    };
+                }
+                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
+                if (index === filteredAncestorList.length - 1) {
+                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon });
+                }
+            });
+        }
+    });
+
+    // بناء العلاقات بين الأسلاف
+    Object.values(ancestorsTree).forEach(node => {
+        if (node.parent && ancestorsTree[node.parent]) {
+            ancestorsTree[node.parent].children.push(node);
+        }
+    });
+
+    // استخراج الجذور (الأسلاف بدون والد)
+    const roots = Object.values(ancestorsTree).filter(node => !node.parent);
+
+    return roots;
+}
+
+// دالة لإضافة الأسلاف إلى الخريطة
+function addAncestorsToMap(nodes, parentCoords = null) {
+    nodes.forEach(node => {
+        let avgCoords = null;
+        if (node.samples.length > 0) {
+            // حساب موقع السلف التقريبي باستخدام العينات المتصلة به مباشرة
+            avgCoords = calculateAverageCoordinates(node.samples);
+        } else if (parentCoords) {
+            // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
+            avgCoords = parentCoords;
+        } else {
+            // إذا لم يكن هناك عينات ولا موقع أب، تخطى هذا السلف
+            return;
+        }
+
+        if (avgCoords) {
+            // إضافة علامة على الخريطة
+            const marker = L.marker([avgCoords.lat, avgCoords.lon]).addTo(map)
+                .bindPopup(`<b>${node.name}</b><br>خط العرض: ${avgCoords.lat.toFixed(4)}<br>خط الطول: ${avgCoords.lon.toFixed(4)}`);
+
+            // رسم خط بين السلف والأب (إذا كان موجوداً)
+            if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
+                const polyline = L.polyline([
+                    [parentCoords.lat, parentCoords.lon],
+                    [avgCoords.lat, avgCoords.lon]
+                ], { color: 'blue' }).addTo(map);
+            }
+
+            // استدعاء الدالة بشكل متكرر للأبناء
+            addAncestorsToMap(node.children, avgCoords);
+        }
+    });
+}
+
+// تحميل ومعالجة ملف CSV
+fetch(csvUrl)
+    .then(response => response.text())
+    .then(csvText => {
+        Papa.parse(csvText, {
+            header: true,
+            delimiter: ',',
+            complete: function(results) {
+                const data = results.data;
+                // بناء هيكل الأسلاف
+                const roots = buildAncestorsTree(data);
+
+                // إضافة الأسلاف إلى الخريطة
+                addAncestorsToMap(roots);
+            }
+        });
+    })
+    .catch(error => {
+        console.error('خطأ في تحميل ملف CSV:', error);
+    });
 </script>
 </body>
 </html>
