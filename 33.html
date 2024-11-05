@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 <head>
     <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
@@ -81,10 +81,23 @@ function buildAncestorsTree(data) {
         let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
         let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
 
-        if (ancestorsStr && lat && lon) {
+        // **تعديل: التحقق من صحة الإحداثيات**
+        if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
+
+            // **تعديل: إزالة العينات التي لا تحتوي على إحداثيات**
+            const sample = { lat: lat, lon: lon, weight: 1 };
+
             const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة
-            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+            // إزالة أي عناصر فارغة وإزالة الأسلاف الذين يحتوي اسمهم على (*)
+            const filteredAncestorList = ancestorList.filter(ancestor => {
+                ancestor = ancestor.trim();
+                return ancestor !== '' && !ancestor.includes('*');
+            });
+
+            // **تخطي إذا كانت القائمة فارغة بعد التصفية**
+            if (filteredAncestorList.length === 0) {
+                return;
+            }
 
             filteredAncestorList.forEach((ancestor, index) => {
                 const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
@@ -102,11 +115,18 @@ function buildAncestorsTree(data) {
                 }
                 // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
                 if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
+                    ancestorsTree[ancestorKey].samples.push(sample);
                 }
             });
         }
     });
+
+    // **تعديل: إزالة الأسلاف الذين لا يمتلكون عينات بعد التصفية**
+    for (let key in ancestorsTree) {
+        if (ancestorsTree[key].samples.length === 0) {
+            delete ancestorsTree[key];
+        }
+    }
 
     // بناء العلاقات بين الأسلاف
     Object.values(ancestorsTree).forEach(node => {
@@ -213,3 +233,4 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
+
