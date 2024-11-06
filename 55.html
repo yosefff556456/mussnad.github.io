@@ -124,9 +124,9 @@
         }
 
         // تحميل كلا الملفين
-        loadCSV(csvUrl1, 1, function(data1, weight1) {
+        loadCSV(csvUrl1, 20, function(data1, weight1) {
             processData(data1, weight1);
-            loadCSV(csvUrl2, 20, function(data2, weight2) {
+            loadCSV(csvUrl2, 1, function(data2, weight2) {
                 processData(data2, weight2);
                 finalizeData();
             });
