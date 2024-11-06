@@ -33,6 +33,7 @@
             Papa.parse(csvUrl, {
                 download: true,
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     let data = results.data;
                     let ancestorLocations = {};
@@ -43,9 +44,9 @@
                         let latitude = parseFloat(row['Latitude']);
                         let longitude = parseFloat(row['Longitude']);
 
-                        if (!isNaN(latitude) && !isNaN(longitude)) {
+                        if (ancestors && !isNaN(latitude) && !isNaN(longitude)) {
                             let splitAncestors = ancestors.split('>');
-                            splitAncestors.forEach((ancestor, index) => {
+                            splitAncestors.forEach((ancestor) => {
                                 if (!ancestorLocations[ancestor]) {
                                     ancestorLocations[ancestor] = { latSum: 0, lngSum: 0, count: 0 };
                                 }
