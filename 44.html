@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 <head>
     <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
@@ -18,20 +18,18 @@
             text-align: center;
             color: black;
             text-shadow: 1px 1px 2px white;
-            white-space: nowrap; /* منع التفاف النص */
         }
-        #info {
+        #slider-container {
             margin: 10px;
-            font-family: Arial, sans-serif;
         }
     </style>
 </head>
 <body>
 
 <h2>خريطة الأسلاف التفاعلية</h2>
-<div id="info">
-    <p>عدد الصفوف المعالجة: <span id="processedCount">0</span></p>
-    <p>عدد الصفوف التي تم تخطيها بسبب نقص الإحداثيات: <span id="skippedCount">0</span></p>
+<div id="slider-container">
+    مستوى الأسلاف: <input type="range" id="ancestorSlider" min="0" max="5" value="0" step="1">
+    <span id="currentLevel">0</span>
 </div>
 <div id="map"></div>
 
@@ -41,7 +39,7 @@
 <!-- كود JavaScript -->
 <script>
 // رابط ملف CSV
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
+const csvUrl = 'data.csv'; // رابط ملف CSV الذي يحتوي على البيانات
 
 // إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
@@ -51,40 +49,26 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
 
-// إضافة علامة اختبارية للتأكد من أن الخريطة تعمل
-L.marker([16.6161, 43.0556]).addTo(map)
-    .bindPopup('موقع اختبار')
-    .openPopup();
-
 // متغيرات عامة
 let allMarkers = [];
 let allPolylines = [];
 let maxLevel = 0;
 let roots = [];
-let processedCount = 0;
-let skippedCount = 0;
 
-// دالة لحساب المتوسط البسيط للإحداثيات
-function calculateAverageCoordinates(samples) {
+// دالة لحساب المتوسط الموزون للإحداثيات
+function calculateWeightedCoordinates(samples) {
     let totalLat = 0;
     let totalLon = 0;
-    let count = 0;
+    let totalWeight = 0;
     samples.forEach(sample => {
-        const lat = parseFloat(sample.lat);
-        const lon = parseFloat(sample.lon);
-        if (!isNaN(lat) && !isNaN(lon)) {
-            totalLat += lat;
-            totalLon += lon;
-            count += 1;
-        }
+        const weight = sample.weight;
+        totalLat += parseFloat(sample.lat) * weight;
+        totalLon += parseFloat(sample.lon) * weight;
+        totalWeight += weight;
     });
-    if (count === 0) {
-        console.warn('لا توجد عينات صالحة لحساب المتوسط.');
-        return null;
-    }
     return {
-        lat: totalLat / count,
-        lon: totalLon / count
+        lat: totalLat / totalWeight,
+        lon: totalLon / totalWeight
     };
 }
 
@@ -92,24 +76,26 @@ function calculateAverageCoordinates(samples) {
 function buildAncestorsTree(data) {
     const ancestorsTree = {};
 
-    data.forEach((item, rowIndex) => {
-        const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'];
-        let lon = item['Longitude'];
+    data.forEach(item => {
+        const ancestorsStr = item[0]; // العمود الأول للأسلاف
+        let lat = item[1].replace(',', '.').replace('٫', '.'); // العمود الثاني للإحداثيات العرضية
+        let lon = item[2].replace(',', '.').replace('٫', '.'); // العمود الثالث للإحداثيات الطولية
 
-        // استبدال الفاصلة العشرية العربية بالنقطة
-        if (lat) lat = lat.replace('٫', '.').replace(',', '.');
-        if (lon) lon = lon.replace('٫', '.').replace(',', '.');
+        // **تعديل: التحقق من صحة الإحداثيات**
+        if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
 
-        // التحقق من وجود إحداثيات صحيحة
-        if (ancestorsStr && lat && lon && !isNaN(parseFloat(lat)) && !isNaN(parseFloat(lon))) {
+            // **تعديل: إزالة العينات التي لا تحتوي على إحداثيات**
+            const sample = { lat: lat, lon: lon, weight: 1 };
+
             const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة
-            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+            // إزالة أي عناصر فارغة وإزالة الأسلاف الذين يحتوي اسمهم على (*)
+            const filteredAncestorList = ancestorList.filter(ancestor => {
+                ancestor = ancestor.trim();
+                return ancestor !== '' && !ancestor.includes('*');
+            });
 
+            // **تخطي إذا كانت القائمة فارغة بعد التصفية**
             if (filteredAncestorList.length === 0) {
-                console.warn(`صف ${rowIndex + 1} يحتوي على أسلاف فارغة بعد الترشيح.`);
-                skippedCount += 1;
                 return;
             }
 
@@ -129,17 +115,18 @@ function buildAncestorsTree(data) {
                 }
                 // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
                 if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
-                    processedCount += 1;
+                    ancestorsTree[ancestorKey].samples.push(sample);
                 }
             });
-        } else {
-            if (ancestorsStr && (isNaN(parseFloat(lat)) || isNaN(parseFloat(lon)))) {
-                console.warn(`صف ${rowIndex + 1} يحتوي على إحداثيات ناقصة أو غير صحيحة.`);
-                skippedCount += 1;
-            }
         }
     });
+
+    // **تعديل: إزالة الأسلاف الذين لا يمتلكون عينات بعد التصفية**
+    for (let key in ancestorsTree) {
+        if (ancestorsTree[key].samples.length === 0) {
+            delete ancestorsTree[key];
+        }
+    }
 
     // بناء العلاقات بين الأسلاف
     Object.values(ancestorsTree).forEach(node => {
@@ -150,16 +137,10 @@ function buildAncestorsTree(data) {
 
     // استخراج الجذور (الأسلاف بدون والد)
     roots = Object.values(ancestorsTree).filter(node => !node.parent);
-
-    console.log('الشجرة مكتملة:', ancestorsTree);
-    console.log('الجذور:', roots);
-    console.log('أقصى مستوى:', maxLevel);
-    console.log('عدد الصفوف المعالجة:', processedCount);
-    console.log('عدد الصفوف التي تم تخطيها:', skippedCount);
 }
 
 // دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
-function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = Infinity) {
+function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
     nodes.forEach(node => {
         if (node.level > maxDisplayLevel) {
             return;
@@ -167,8 +148,8 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = Infinit
 
         let avgCoords = null;
         if (node.samples.length > 0) {
-            // حساب موقع السلف التقريبي باستخدام المتوسط البسيط
-            avgCoords = calculateAverageCoordinates(node.samples);
+            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
+            avgCoords = calculateWeightedCoordinates(node.samples);
         } else if (parentCoords) {
             // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
             avgCoords = parentCoords;
@@ -179,14 +160,12 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = Infinit
 
         if (avgCoords) {
             // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
-            const fontSize = Math.max(12, 24 - (node.level * 2)); // حجم الخط بين 12px و24px
+            const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
 
             // إنشاء أيقونة نصية لعرض اسم السلف
             const myIcon = L.divIcon({
                 className: 'ancestor-label',
-                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`,
-                iconSize: [100, 40],
-                iconAnchor: [50, 20]
+                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
             });
 
             // إضافة العلامة إلى الخريطة
@@ -209,14 +188,12 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = Infinit
 }
 
 // دالة لتحديث الخريطة بناءً على مستوى السلف المختار
-function updateMap(level = Infinity) {
+function updateMap(level) {
     // إزالة جميع العلامات والخطوط السابقة
     allMarkers.forEach(marker => map.removeLayer(marker));
     allPolylines.forEach(polyline => map.removeLayer(polyline));
     allMarkers = [];
     allPolylines = [];
-
-    console.log(`تحديث الخريطة للمستوى: ${level}`);
 
     // إضافة الأسلاف إلى الخريطة حتى المستوى المحدد
     addAncestorsToMap(roots, null, level);
@@ -224,30 +201,23 @@ function updateMap(level = Infinity) {
 
 // تحميل ومعالجة ملف CSV
 fetch(csvUrl)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`خطأ في HTTP! الحالة: ${response.status}`);
-        }
-        return response.text();
-    })
+    .then(response => response.text())
     .then(csvText => {
         Papa.parse(csvText, {
-            header: true,
+            header: false,
             delimiter: ',',
-            skipEmptyLines: true,
             complete: function(results) {
                 const data = results.data;
-                console.log('البيانات المحملة:', data);
 
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
 
-                // عرض عدد الصفوف المعالجة والمخلوطة
-                document.getElementById('processedCount').textContent = processedCount;
-                document.getElementById('skippedCount').textContent = skippedCount;
+                // تحديث الحد الأقصى للشريط بناءً على أقصى مستوى
+                const ancestorSlider = document.getElementById('ancestorSlider');
+                ancestorSlider.max = maxLevel;
 
-                // إضافة الأسلاف إلى الخريطة في المستوى الأولي (كل المستويات)
-                updateMap();
+                // إضافة الأسلاف إلى الخريطة في المستوى الأولي
+                updateMap(0);
             }
         });
     })
@@ -255,9 +225,12 @@ fetch(csvUrl)
         console.error('خطأ في تحميل ملف CSV:', error);
     });
 
-// (اختياري) يمكنك إضافة دالة لمنع تداخل النصوص هنا، ولكنها تتطلب خوارزميات متقدمة أو استخدام مكتبات إضافية.
+// استماع لتغيير قيمة الشريط
+document.getElementById('ancestorSlider').addEventListener('input', function() {
+    const level = parseInt(this.value);
+    document.getElementById('currentLevel').textContent = level;
+    updateMap(level);
+});
 </script>
 </body>
 </html>
-
-
