@@ -2,79 +2,277 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
+    <title>عرض جميع الأنساب على خريطة مع وزن الإحداثيات</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /* جعل الخريطة تملأ النافذة بالكامل */
-        html, body {
-            height: 100%;
+        #map {
+            height: 800px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl; /* لجعل النصوص تتناسب مع اللغة العربية */
             margin: 0;
             padding: 0;
         }
-        #map {
-            height: 100%;
-            width: 100%;
+        h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+        #controls {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        #slider {
+            width: 300px;
+        }
+        .label-text {
+            background-color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
+    <h2>عرض جميع الأنساب على خريطة مع وزن الإحداثيات</h2>
+    <div id="controls">
+        <label for="slider">عدد الأنساب المعروضة: <span id="sliderValue">10</span></label><br>
+        <input type="range" id="slider" min="1" max="100" value="10">
+    </div>
+    <div id="map"></div>
 
-<div id="map"></div>
+    <!-- مكتبة Leaflet -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- مكتبة PapaParse لقراءة ملفات CSV -->
+    <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
+    <script>
+        // تهيئة الخريطة
+        var map = L.map('map').setView([30, 30], 2); // ضبط الإحداثيات الافتراضية
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-<script>
-// إعداد خريطة ليفليت
-var map = L.map('map').setView([23.3432, 45.1404], 6);
+        // إضافة طبقة الخريطة (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-// إضافة خريطة الأساس
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-}).addTo(map);
+        // روابط ملفات CSV
+        var csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv'; // استبدلها برابط ملف CSV الأساسي
+        var csvUrl2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSGe3-PRkHipGFhbf_UwtAE86jhUQiVTAIon735l6cCFJYfIEUgkChCX0jQ6igP7w/pub?output=csv'; // استبدلها برابط ملف CSV الإضافي
 
-// تحميل البيانات من ملف JSON
-fetch('g.json') // تأكد من أن مسار ملف JSON صحيح
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // تحويل البيانات إلى مصفوفة نقاط للحرارة
-        var heatData = data.map(item => {
-            if (item.latitude && item.longitude) {
-                return [item.latitude, item.longitude, item.intensity || 0.5]; // إضافة قيمة intensity إذا كانت متوفرة
-            } else {
-                console.warn('موقع غير صالح:', item);
-                return null;
-            }
-        }).filter(item => item !== null);
-
-        // إضافة طبقة الحرارة مع خصائص محسنة
-        if (heatData.length > 0) {
-            L.heatLayer(heatData, {
-                radius: 40,             // نصف قطر نقطة الحرارة
-                blur: 30,               // زيادة التمييع لتداخل النقاط بشكل معقد
-                maxZoom: 17,
-                gradient: {             // إضافة تدرج لوني مخصص لمزيد من التعقيد
-                    0.0: 'blue',
-                    0.4: 'cyan',
-                    0.6: 'lime',
-                    0.8: 'yellow',
-                    1.0: 'red'
+        // تحميل ملفات CSV باستخدام PapaParse
+        function loadCSV(url, weight, callback) {
+            Papa.parse(url, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    callback(results.data, weight);
                 },
-                minOpacity: 0.15,       // الحد الأدنى من الشفافية
-                max: 1.0,               // الكثافة القصوى
-            }).addTo(map);
-        } else {
-            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
+                error: function(error) {
+                    console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
+                }
+            });
         }
-    })
-    .catch(error => console.error('Error loading JSON:', error));
 
-</script>
+        var tree = {}; // هيكل الشجرة
+        var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
 
+        // دالة لمعالجة البيانات من كل ملف CSV
+        function processData(data, weight) {
+            data.forEach(function(row) {
+                var ancestors = row.Ancestors.split('>');
+                var currentPath = '';
+                ancestors.forEach(function(name, index) {
+                    currentPath = index === 0 ? name : currentPath + '>' + name;
+
+                    // إذا لم يتم تسجيل السلف بعد، نقوم بإنشائه
+                    if (!tree[currentPath]) {
+                        tree[currentPath] = {
+                            name: name,
+                            children: [],
+                            parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
+                            latitudes: [], // لتخزين جميع إحداثيات خط العرض
+                            longitudes: []  // لتخزين جميع إحداثيات خط الطول
+                        };
+                        ancestorList.push(currentPath);
+                    }
+
+                    // إضافة إحداثيات السلف إذا كانت موجودة
+                    if (row.Latitude && row.Longitude) {
+                        tree[currentPath].latitudes.push(parseFloat(row.Latitude) * weight);
+                        tree[currentPath].longitudes.push(parseFloat(row.Longitude) * weight);
+                    }
+
+                    // ربط الأب بالأبناء
+                    if (index > 0) {
+                        var parentPath = ancestors.slice(0, index).join('>');
+                        tree[parentPath].children.push(currentPath);
+                        tree[currentPath].parents.push(parentPath);
+                    }
+                });
+            });
+        }
+
+        // تحميل كلا الملفين
+        loadCSV(csvUrl1, 1, function(data1, weight1) {
+            processData(data1, weight1);
+            loadCSV(csvUrl2, 2, function(data2, weight2) {
+                processData(data2, weight2);
+                finalizeData();
+            });
+        });
+
+        // دالة لحساب متوسط الإحداثيات
+        function calculateAverage(latitudes, longitudes) {
+            var sumLat = latitudes.reduce((a, b) => a + b, 0);
+            var sumLng = longitudes.reduce((a, b) => a + b, 0);
+            var count = latitudes.length > 0 ? latitudes.length : 1; // تجنب القسمة على صفر
+            return {
+                lat: sumLat / count,
+                lng: sumLng / count
+            };
+        }
+
+        // دالة لمعالجة البيانات بعد تحميل كلا الملفين
+        function finalizeData() {
+            // حساب المتوسط الحسابي للإحداثيات لكل سلف
+            Object.keys(tree).forEach(function(path) {
+                var node = tree[path];
+                if (node.latitudes.length > 0 && node.longitudes.length > 0) {
+                    var avg = calculateAverage(node.latitudes, node.longitudes);
+                    node.lat = avg.lat;
+                    node.lng = avg.lng;
+                } else {
+                    node.lat = null;
+                    node.lng = null;
+                }
+            });
+
+            // وظيفة لتقدير إحداثيات السلف بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
+            function estimateCoordinates() {
+                var updated = false;
+                ancestorList.forEach(function(path) {
+                    var node = tree[path];
+                    if (node.lat === null || node.lng === null) {
+                        if (node.children.length > 0) {
+                            var sumLat = 0, sumLng = 0, count = 0;
+                            node.children.forEach(function(childPath) {
+                                var child = tree[childPath];
+                                if (child.lat !== null && child.lng !== null) {
+                                    sumLat += child.lat;
+                                    sumLng += child.lng;
+                                    count++;
+                                }
+                            });
+                            if (count > 0) {
+                                node.lat = sumLat / count;
+                                node.lng = sumLng / count;
+                                updated = true;
+                            }
+                        }
+                    }
+                });
+                return updated;
+            }
+
+            // تقدير الإحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
+            while (estimateCoordinates()) {}
+
+            // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق السلسلة الأنسابية
+            ancestorList.sort(function(a, b) {
+                return a.split('>').length - b.split('>').length;
+            });
+
+            // إنشاء الماركيرات والخطوط وترتيبها
+            var markers = [];
+            var polylines = [];
+
+            ancestorList.forEach(function(path, index) {
+                var node = tree[path];
+                if (node.lat !== null && node.lng !== null) {
+                    // إنشاء ماركر نصي
+                    var marker = L.marker([node.lat, node.lng], {
+                        icon: L.divIcon({
+                            className: 'label-text',
+                            html: node.name,
+                            iconSize: [100, 40],
+                            iconAnchor: [50, 20]
+                        })
+                    });
+
+                    markers.push({
+                        marker: marker,
+                        index: index + 1 // ترتيب الأنساب يبدأ من 1
+                    });
+
+                    // إنشاء خطوط ربط بين الأبناء والآباء
+                    node.parents.forEach(function(parentPath) {
+                        if (tree[parentPath].lat !== null && tree[parentPath].lng !== null) {
+                            var polyline = L.polyline([
+                                [tree[parentPath].lat, tree[parentPath].lng],
+                                [node.lat, node.lng]
+                            ], {color: 'blue'});
+                            polylines.push({
+                                polyline: polyline,
+                                index: index + 1 // ترتيب الأنساب يبدأ من 1
+                            });
+                        }
+                    });
+                }
+            });
+
+            // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
+            var maxSliderValue = markers.length;
+            document.getElementById('slider').max = maxSliderValue;
+
+            // دالة لتحديث الخريطة بناءً على قيمة شريط التمرير
+            function updateMap(value) {
+                // إزالة جميع الماركيرات والخطوط الحالية
+                markers.forEach(function(m) {
+                    map.removeLayer(m.marker);
+                });
+                polylines.forEach(function(p) {
+                    map.removeLayer(p.polyline);
+                });
+
+                // إضافة الماركيرات والخطوط حتى القيمة المحددة
+                markers.forEach(function(m) {
+                    if (m.index <= value) {
+                        m.marker.addTo(map);
+                    }
+                });
+                polylines.forEach(function(p) {
+                    if (p.index <= value) {
+                        p.polyline.addTo(map);
+                    }
+                });
+            }
+
+            // ضبط الشريط التمرير ليبدأ من القيمة 1
+            document.getElementById('slider').value = 1;
+            document.getElementById('sliderValue').innerText = 1;
+            updateMap(1);
+
+            // إضافة مستمع لحدث تغيير قيمة الشريط التمرير
+            document.getElementById('slider').addEventListener('input', function(e) {
+                var value = parseInt(e.target.value);
+                document.getElementById('sliderValue').innerText = value;
+                updateMap(value);
+            });
+
+            // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
+            var allMarkers = markers.map(function(m) { return m.marker; });
+            var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
+            map.fitBounds(group.getBounds().pad(0.5));
+        }
+    </script>
 </body>
 </html>
