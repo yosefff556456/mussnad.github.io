@@ -4,7 +4,9 @@
     <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- تحميل مكتبة Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- تحميل مكتبة PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         #map {
@@ -16,146 +18,246 @@
             text-align: center;
             color: black;
             text-shadow: 1px 1px 2px white;
+            white-space: nowrap; /* منع التفاف النص */
+        }
+        #info {
+            margin: 10px;
+            font-family: Arial, sans-serif;
         }
     </style>
 </head>
 <body>
 
 <h2>خريطة الأسلاف التفاعلية</h2>
+<div id="info">
+    <p>عدد الصفوف المعالجة: <span id="processedCount">0</span></p>
+    <p>عدد الصفوف التي تم تخطيها بسبب نقص الإحداثيات: <span id="skippedCount">0</span></p>
+</div>
 <div id="map"></div>
 
+<!-- تحميل مكتبة Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
+<!-- كود JavaScript -->
 <script>
-const csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuMXx0shOoaXKp9nxINFg5TI7C30bKfIXEkYl_dBsDcmgeXCYzgzZiMrkLnKwkqA/pub?output=csv';
-const csvUrl2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_OnJg9i2DLOh8DSYejqL8fsDnSwa2-YTD63Nkq7JccI7VApcTsm7WiJe6eVRUOQ/pub?output=csv';
+// رابط ملف CSV
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
 
+// إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
 
+// إضافة طبقة الخريطة
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
 
-function calculateWeightedCoordinates(samples) {
+// إضافة علامة اختبارية للتأكد من أن الخريطة تعمل
+L.marker([16.6161, 43.0556]).addTo(map)
+    .bindPopup('موقع اختبار')
+    .openPopup();
+
+// متغيرات عامة
+let allMarkers = [];
+let allPolylines = [];
+let maxLevel = 0;
+let roots = [];
+let processedCount = 0;
+let skippedCount = 0;
+
+// دالة لحساب المتوسط البسيط للإحداثيات
+function calculateAverageCoordinates(samples) {
     let totalLat = 0;
     let totalLon = 0;
-    let totalWeight = 0;
+    let count = 0;
     samples.forEach(sample => {
-        const weight = sample.weight;
-        totalLat += parseFloat(sample.lat) * weight;
-        totalLon += parseFloat(sample.lon) * weight;
-        totalWeight += weight;
+        const lat = parseFloat(sample.lat);
+        const lon = parseFloat(sample.lon);
+        if (!isNaN(lat) && !isNaN(lon)) {
+            totalLat += lat;
+            totalLon += lon;
+            count += 1;
+        }
     });
+    if (count === 0) {
+        console.warn('لا توجد عينات صالحة لحساب المتوسط.');
+        return null;
+    }
     return {
-        lat: totalLat / totalWeight,
-        lon: totalLon / totalWeight
+        lat: totalLat / count,
+        lon: totalLon / count
     };
 }
 
+// بناء هيكل الأسلاف
 function buildAncestorsTree(data) {
     const ancestorsTree = {};
 
-    data.forEach(item => {
+    data.forEach((item, rowIndex) => {
         const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'] ? item['Latitude'].replace(',', '.').replace('٫', '.') : '';
-        let lon = item['Longitude'] ? item['Longitude'].replace(',', '.').replace('٫', '.') : '';
+        let lat = item['Latitude'];
+        let lon = item['Longitude'];
 
-        // تخطي الصفوف التي تحتوي على إحداثيات فارغة أو تحورات تحتوي على علامة النجمة (*)
-        if (!lat || !lon || ancestorsStr.includes('*')) {
-            return;
+        // استبدال الفاصلة العشرية العربية بالنقطة
+        if (lat) lat = lat.replace('٫', '.').replace(',', '.');
+        if (lon) lon = lon.replace('٫', '.').replace(',', '.');
+
+        // التحقق من وجود إحداثيات صحيحة
+        if (ancestorsStr && lat && lon && !isNaN(parseFloat(lat)) && !isNaN(parseFloat(lon))) {
+            const ancestorList = ancestorsStr.split('>');
+            // إزالة أي عناصر فارغة
+            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+
+            if (filteredAncestorList.length === 0) {
+                console.warn(`صف ${rowIndex + 1} يحتوي على أسلاف فارغة بعد الترشيح.`);
+                skippedCount += 1;
+                return;
+            }
+
+            filteredAncestorList.forEach((ancestor, index) => {
+                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
+                if (!ancestorsTree[ancestorKey]) {
+                    ancestorsTree[ancestorKey] = {
+                        name: ancestor,
+                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
+                        samples: [],
+                        children: [],
+                        level: index // مستوى السلف في الشجرة
+                    };
+                    if (index > maxLevel) {
+                        maxLevel = index;
+                    }
+                }
+                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
+                if (index === filteredAncestorList.length - 1) {
+                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
+                    processedCount += 1;
+                }
+            });
+        } else {
+            if (ancestorsStr && (isNaN(parseFloat(lat)) || isNaN(parseFloat(lon)))) {
+                console.warn(`صف ${rowIndex + 1} يحتوي على إحداثيات ناقصة أو غير صحيحة.`);
+                skippedCount += 1;
+            }
         }
-
-        const ancestorList = ancestorsStr.split('>').map(ancestor => ancestor.trim());
-
-        ancestorList.forEach((ancestor, index) => {
-            const ancestorKey = ancestorList.slice(0, index + 1).join('>');
-            if (!ancestorsTree[ancestorKey]) {
-                ancestorsTree[ancestorKey] = {
-                    name: ancestor,
-                    parent: index > 0 ? ancestorList.slice(0, index).join('>') : null,
-                    samples: [],
-                    children: [],
-                    level: index
-                };
-            }
-            if (index === ancestorList.length - 1) {
-                ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: item.weight });
-            }
-        });
     });
 
+    // بناء العلاقات بين الأسلاف
     Object.values(ancestorsTree).forEach(node => {
         if (node.parent && ancestorsTree[node.parent]) {
             ancestorsTree[node.parent].children.push(node);
         }
     });
 
-    return Object.values(ancestorsTree).filter(node => !node.parent);
+    // استخراج الجذور (الأسلاف بدون والد)
+    roots = Object.values(ancestorsTree).filter(node => !node.parent);
+
+    console.log('الشجرة مكتملة:', ancestorsTree);
+    console.log('الجذور:', roots);
+    console.log('أقصى مستوى:', maxLevel);
+    console.log('عدد الصفوف المعالجة:', processedCount);
+    console.log('عدد الصفوف التي تم تخطيها:', skippedCount);
 }
 
-function addAncestorsToMap(nodes, parentCoords = null) {
+// دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
+function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = Infinity) {
     nodes.forEach(node => {
-        let avgCoords = null;
-        if (node.samples.length > 0) {
-            avgCoords = calculateWeightedCoordinates(node.samples);
-        } else if (parentCoords) {
-            avgCoords = parentCoords;
-        } else {
+        if (node.level > maxDisplayLevel) {
             return;
         }
 
-        if (avgCoords && avgCoords.lat && avgCoords.lon) {
-            const fontSize = 16 + (5 * (5 - node.level));
+        let avgCoords = null;
+        if (node.samples.length > 0) {
+            // حساب موقع السلف التقريبي باستخدام المتوسط البسيط
+            avgCoords = calculateAverageCoordinates(node.samples);
+        } else if (parentCoords) {
+            // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
+            avgCoords = parentCoords;
+        } else {
+            // إذا لم يكن هناك عينات ولا موقع أب، تخطى هذا السلف
+            return;
+        }
 
+        if (avgCoords) {
+            // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
+            const fontSize = Math.max(12, 24 - (node.level * 2)); // حجم الخط بين 12px و24px
+
+            // إنشاء أيقونة نصية لعرض اسم السلف
             const myIcon = L.divIcon({
                 className: 'ancestor-label',
-                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
+                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`,
+                iconSize: [100, 40],
+                iconAnchor: [50, 20]
             });
 
-            L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
+            // إضافة العلامة إلى الخريطة
+            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
+            allMarkers.push(marker);
 
+            // رسم خط بين السلف والأب (إذا كان موجوداً)
             if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
-                L.polyline([
+                const polyline = L.polyline([
                     [parentCoords.lat, parentCoords.lon],
                     [avgCoords.lat, avgCoords.lon]
                 ], { color: 'blue' }).addTo(map);
+                allPolylines.push(polyline);
             }
 
-            addAncestorsToMap(node.children, avgCoords);
+            // استدعاء الدالة بشكل متكرر للأبناء
+            addAncestorsToMap(node.children, avgCoords, maxDisplayLevel);
         }
     });
 }
 
-function loadCSV(url, weight) {
-    return fetch(url)
-        .then(response => response.text())
-        .then(csvText => {
-            const parsed = Papa.parse(csvText, {
-                header: true,
-                delimiter: ',',
-                skipEmptyLines: true,
-                dynamicTyping: true
-            });
-            parsed.data.forEach(row => {
-                row.weight = weight;
-            });
-            return parsed.data;
-        });
+// دالة لتحديث الخريطة بناءً على مستوى السلف المختار
+function updateMap(level = Infinity) {
+    // إزالة جميع العلامات والخطوط السابقة
+    allMarkers.forEach(marker => map.removeLayer(marker));
+    allPolylines.forEach(polyline => map.removeLayer(polyline));
+    allMarkers = [];
+    allPolylines = [];
+
+    console.log(`تحديث الخريطة للمستوى: ${level}`);
+
+    // إضافة الأسلاف إلى الخريطة حتى المستوى المحدد
+    addAncestorsToMap(roots, null, level);
 }
 
-Promise.all([
-    loadCSV(csvUrl1, 1),
-    loadCSV(csvUrl2, 2)
-])
-.then(([data1, data2]) => {
-    const combinedData = data1.concat(data2);
-    const roots = buildAncestorsTree(combinedData);
-    addAncestorsToMap(roots);
-})
-.catch(error => {
-    console.error('خطأ في تحميل ملفات CSV:', error);
-});
+// تحميل ومعالجة ملف CSV
+fetch(csvUrl)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`خطأ في HTTP! الحالة: ${response.status}`);
+        }
+        return response.text();
+    })
+    .then(csvText => {
+        Papa.parse(csvText, {
+            header: true,
+            delimiter: ',',
+            skipEmptyLines: true,
+            complete: function(results) {
+                const data = results.data;
+                console.log('البيانات المحملة:', data);
+
+                // بناء هيكل الأسلاف
+                buildAncestorsTree(data);
+
+                // عرض عدد الصفوف المعالجة والمخلوطة
+                document.getElementById('processedCount').textContent = processedCount;
+                document.getElementById('skippedCount').textContent = skippedCount;
+
+                // إضافة الأسلاف إلى الخريطة في المستوى الأولي (كل المستويات)
+                updateMap();
+            }
+        });
+    })
+    .catch(error => {
+        console.error('خطأ في تحميل ملف CSV:', error);
+    });
+
+// (اختياري) يمكنك إضافة دالة لمنع تداخل النصوص هنا، ولكنها تتطلب خوارزميات متقدمة أو استخدام مكتبات إضافية.
 </script>
 </body>
 </html>
+
 
