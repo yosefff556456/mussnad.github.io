@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 <head>
     <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
@@ -19,11 +19,18 @@
             color: black;
             text-shadow: 1px 1px 2px white;
         }
+        #slider-container {
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
 
 <h2>خريطة الأسلاف التفاعلية</h2>
+<div id="slider-container">
+    مستوى الأسلاف: <input type="range" id="ancestorSlider" min="0" max="5" value="0" step="1">
+    <span id="currentLevel">0</span>
+</div>
 <div id="map"></div>
 
 <!-- تحميل مكتبة Leaflet -->
@@ -41,6 +48,12 @@ const map = L.map('map').setView([16.6161, 43.0556], 6);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
+
+// متغيرات عامة
+let allMarkers = [];
+let allPolylines = [];
+let maxLevel = 0;
+let roots = [];
 
 // دالة لحساب المتوسط الموزون للإحداثيات
 function calculateWeightedCoordinates(samples) {
@@ -65,36 +78,55 @@ function buildAncestorsTree(data) {
 
     data.forEach(item => {
         const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'];
-        let lon = item['Longitude'];
+        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
+        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
 
-        // استبعاد الأسلاف بدون إحداثيات
-        if (!lat || !lon) return;
+        // **تعديل: التحقق من صحة الإحداثيات**
+        if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
 
-        // استبعاد الأسلاف الذين تحتوي أسماؤهم على *
-        if (ancestorsStr.includes('*')) return;
+            // **تعديل: إزالة العينات التي لا تحتوي على إحداثيات**
+            const sample = { lat: lat, lon: lon, weight: 1 };
 
-        const ancestorList = ancestorsStr.split('>');
-        // إزالة أي عناصر فارغة
-        const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+            const ancestorList = ancestorsStr.split('>');
+            // إزالة أي عناصر فارغة وإزالة الأسلاف الذين يحتوي اسمهم على (*)
+            const filteredAncestorList = ancestorList.filter(ancestor => {
+                ancestor = ancestor.trim();
+                return ancestor !== '' && !ancestor.includes('*');
+            });
 
-        filteredAncestorList.forEach((ancestor, index) => {
-            const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
-            if (!ancestorsTree[ancestorKey]) {
-                ancestorsTree[ancestorKey] = {
-                    name: ancestor,
-                    parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
-                    samples: [],
-                    children: [],
-                    level: index // مستوى السلف في الشجرة
-                };
+            // **تخطي إذا كانت القائمة فارغة بعد التصفية**
+            if (filteredAncestorList.length === 0) {
+                return;
             }
-            // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
-            if (index === filteredAncestorList.length - 1) {
-                ancestorsTree[ancestorKey].samples.push({ lat: parseFloat(lat), lon: parseFloat(lon), weight: 1 });
-            }
-        });
+
+            filteredAncestorList.forEach((ancestor, index) => {
+                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
+                if (!ancestorsTree[ancestorKey]) {
+                    ancestorsTree[ancestorKey] = {
+                        name: ancestor,
+                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
+                        samples: [],
+                        children: [],
+                        level: index // مستوى السلف في الشجرة
+                    };
+                    if (index > maxLevel) {
+                        maxLevel = index;
+                    }
+                }
+                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
+                if (index === filteredAncestorList.length - 1) {
+                    ancestorsTree[ancestorKey].samples.push(sample);
+                }
+            });
+        }
     });
+
+    // **تعديل: إزالة الأسلاف الذين لا يمتلكون عينات بعد التصفية**
+    for (let key in ancestorsTree) {
+        if (ancestorsTree[key].samples.length === 0) {
+            delete ancestorsTree[key];
+        }
+    }
 
     // بناء العلاقات بين الأسلاف
     Object.values(ancestorsTree).forEach(node => {
@@ -104,14 +136,16 @@ function buildAncestorsTree(data) {
     });
 
     // استخراج الجذور (الأسلاف بدون والد)
-    const roots = Object.values(ancestorsTree).filter(node => !node.parent);
-
-    return roots;
+    roots = Object.values(ancestorsTree).filter(node => !node.parent);
 }
 
-// دالة لإضافة الأسلاف إلى الخريطة
-function addAncestorsToMap(nodes, parentCoords = null) {
+// دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
+function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
     nodes.forEach(node => {
+        if (node.level > maxDisplayLevel) {
+            return;
+        }
+
         let avgCoords = null;
         if (node.samples.length > 0) {
             // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
@@ -136,6 +170,7 @@ function addAncestorsToMap(nodes, parentCoords = null) {
 
             // إضافة العلامة إلى الخريطة
             const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
+            allMarkers.push(marker);
 
             // رسم خط بين السلف والأب (إذا كان موجوداً)
             if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
@@ -143,12 +178,25 @@ function addAncestorsToMap(nodes, parentCoords = null) {
                     [parentCoords.lat, parentCoords.lon],
                     [avgCoords.lat, avgCoords.lon]
                 ], { color: 'blue' }).addTo(map);
+                allPolylines.push(polyline);
             }
 
             // استدعاء الدالة بشكل متكرر للأبناء
-            addAncestorsToMap(node.children, avgCoords);
+            addAncestorsToMap(node.children, avgCoords, maxDisplayLevel);
         }
     });
+}
+
+// دالة لتحديث الخريطة بناءً على مستوى السلف المختار
+function updateMap(level) {
+    // إزالة جميع العلامات والخطوط السابقة
+    allMarkers.forEach(marker => map.removeLayer(marker));
+    allPolylines.forEach(polyline => map.removeLayer(polyline));
+    allMarkers = [];
+    allPolylines = [];
+
+    // إضافة الأسلاف إلى الخريطة حتى المستوى المحدد
+    addAncestorsToMap(roots, null, level);
 }
 
 // تحميل ومعالجة ملف CSV
@@ -157,20 +205,32 @@ fetch(csvUrl)
     .then(csvText => {
         Papa.parse(csvText, {
             header: true,
-            delimiter: '.',
+            delimiter: ',',
             complete: function(results) {
                 const data = results.data;
                 // بناء هيكل الأسلاف
-                const roots = buildAncestorsTree(data);
+                buildAncestorsTree(data);
 
-                // إضافة الأسلاف إلى الخريطة
-                addAncestorsToMap(roots);
+                // تحديث الحد الأقصى للشريط بناءً على أقصى مستوى
+                const ancestorSlider = document.getElementById('ancestorSlider');
+                ancestorSlider.max = maxLevel;
+
+                // إضافة الأسلاف إلى الخريطة في المستوى الأولي
+                updateMap(0);
             }
         });
     })
     .catch(error => {
         console.error('خطأ في تحميل ملف CSV:', error);
     });
+
+// استماع لتغيير قيمة الشريط
+document.getElementById('ancestorSlider').addEventListener('input', function() {
+    const level = parseInt(this.value);
+    document.getElementById('currentLevel').textContent = level;
+    updateMap(level);
+});
 </script>
 </body>
 </html>
+
