@@ -68,28 +68,32 @@ function buildAncestorsTree(data) {
         let lat = item['Latitude'];
         let lon = item['Longitude'];
 
-        if (ancestorsStr && lat && lon) {
-            const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة
-            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+        // استبعاد الأسلاف بدون إحداثيات
+        if (!lat || !lon) return;
 
-            filteredAncestorList.forEach((ancestor, index) => {
-                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
-                if (!ancestorsTree[ancestorKey]) {
-                    ancestorsTree[ancestorKey] = {
-                        name: ancestor,
-                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
-                        samples: [],
-                        children: [],
-                        level: index // مستوى السلف في الشجرة
-                    };
-                }
-                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
-                if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
-                }
-            });
-        }
+        // استبعاد الأسلاف الذين تحتوي أسماؤهم على *
+        if (ancestorsStr.includes('*')) return;
+
+        const ancestorList = ancestorsStr.split('>');
+        // إزالة أي عناصر فارغة
+        const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+
+        filteredAncestorList.forEach((ancestor, index) => {
+            const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
+            if (!ancestorsTree[ancestorKey]) {
+                ancestorsTree[ancestorKey] = {
+                    name: ancestor,
+                    parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
+                    samples: [],
+                    children: [],
+                    level: index // مستوى السلف في الشجرة
+                };
+            }
+            // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
+            if (index === filteredAncestorList.length - 1) {
+                ancestorsTree[ancestorKey].samples.push({ lat: parseFloat(lat), lon: parseFloat(lon), weight: 1 });
+            }
+        });
     });
 
     // بناء العلاقات بين الأسلاف
