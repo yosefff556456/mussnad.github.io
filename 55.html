@@ -105,7 +105,7 @@
         var markers = [];
         var polylines = [];
 
-        // دالة لمعالجة البيانات من كل ملف CSV
+        // دالة لمعالجة البيانات من كل ملف CSV باستخدام متوسط مرجح
         function processData(data, weight) {
             data.forEach(function(row) {
                 var ancestors = row.Ancestors.split('>');
@@ -119,46 +119,55 @@
                             name: name,
                             children: [],
                             parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
-                            latitudes: [], // لتخزين جميع إحداثيات خط العرض
-                            longitudes: []  // لتخزين جميع إحداثيات خط الطول
+                            sumLat: 0, // مجموع الإحداثيات مضروبًا في الوزن
+                            sumLng: 0,
+                            totalWeight: 0 // مجموع الأوزان
                         };
                         ancestorList.push(currentPath);
                     }
 
                     // إضافة إحداثيات السلف إذا كانت موجودة
                     if (row.Latitude && row.Longitude) {
-                        tree[currentPath].latitudes.push(parseFloat(row.Latitude) * weight);
-                        tree[currentPath].longitudes.push(parseFloat(row.Longitude) * weight);
+                        var lat = parseFloat(row.Latitude);
+                        var lng = parseFloat(row.Longitude);
+                        tree[currentPath].sumLat += lat * weight;
+                        tree[currentPath].sumLng += lng * weight;
+                        tree[currentPath].totalWeight += weight;
                     }
 
                     // ربط الأب بالأبناء
                     if (index > 0) {
                         var parentPath = ancestors.slice(0, index).join('>');
-                        tree[parentPath].children.push(currentPath);
-                        tree[currentPath].parents.push(parentPath);
+                        if (!tree[parentPath].children.includes(currentPath)) {
+                            tree[parentPath].children.push(currentPath);
+                        }
+                        if (!tree[currentPath].parents.includes(parentPath)) {
+                            tree[currentPath].parents.push(parentPath);
+                        }
                     }
                 });
             });
         }
 
-        // دالة لحساب متوسط الإحداثيات
-        function calculateAverage(latitudes, longitudes) {
-            var sumLat = latitudes.reduce((a, b) => a + b, 0);
-            var sumLng = longitudes.reduce((a, b) => a + b, 0);
-            var count = latitudes.length > 0 ? latitudes.length : 1; // تجنب القسمة على صفر
-            return {
-                lat: sumLat / count,
-                lng: sumLng / count
-            };
+        // دالة لحساب المتوسط المرجح للإحداثيات
+        function calculateWeightedAverage(node) {
+            if (node.totalWeight > 0) {
+                return {
+                    lat: node.sumLat / node.totalWeight,
+                    lng: node.sumLng / node.totalWeight
+                };
+            } else {
+                return null;
+            }
         }
 
         // دالة لمعالجة البيانات بعد تحميل كلا الملفين
         function finalizeData() {
-            // حساب المتوسط الحسابي للإحداثيات لكل سلف
+            // حساب المتوسط المرجح للإحداثيات لكل سلف
             Object.keys(tree).forEach(function(path) {
                 var node = tree[path];
-                if (node.latitudes.length > 0 && node.longitudes.length > 0) {
-                    var avg = calculateAverage(node.latitudes, node.longitudes);
+                var avg = calculateWeightedAverage(node);
+                if (avg) {
                     node.lat = avg.lat;
                     node.lng = avg.lng;
                 } else {
@@ -277,9 +286,11 @@
             });
 
             // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
-            var allMarkers = markers.map(function(m) { return m.marker; });
-            var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
-            map.fitBounds(group.getBounds().pad(0.5));
+            if (markers.length > 0) {
+                var allLatLng = markers.map(function(m) { return m.marker.getLatLng(); });
+                var group = new L.featureGroup(allLatLng.map(function(latlng) { return L.marker(latlng); }));
+                map.fitBounds(group.getBounds().pad(0.5));
+            }
         }
 
         // دالة لبدء تحميل البيانات بعد تحديد الوزن
