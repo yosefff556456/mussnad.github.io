@@ -39,7 +39,7 @@
 <!-- كود JavaScript -->
 <script>
 // رابط ملف CSV
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtUvyg4cAJ-_URVq0oQCmE3qYiVbbjwR25Gbm3b8vAewHkuukIrCdcO1FB-ZzHk6t19tljHp2mcQmh/pub?output=csv';
+const csvUrl = 'data.csv'; // رابط ملف CSV الذي يحتوي على البيانات
 
 // إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
@@ -208,7 +208,7 @@ fetch(csvUrl)
             delimiter: ',',
             complete: function(results) {
                 const data = results.data;
-                
+
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
 
