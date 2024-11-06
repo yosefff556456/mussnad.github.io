@@ -65,8 +65,8 @@ function buildAncestorsTree(data) {
 
     data.forEach(item => {
         const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
-        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
+        let lat = item['Latitude'];
+        let lon = item['Longitude'];
 
         if (ancestorsStr && lat && lon) {
             const ancestorList = ancestorsStr.split('>');
