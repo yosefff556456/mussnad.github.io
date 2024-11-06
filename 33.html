@@ -86,7 +86,7 @@ function buildAncestorsTree(data) {
                 }
                 // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
                 if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
+                    ancestorsTree[ancestorKey].samples.push({ lat: lat. lon: lon. weight: 1 });
                 }
             });
         }
@@ -153,7 +153,7 @@ fetch(csvUrl)
     .then(csvText => {
         Papa.parse(csvText, {
             header: true,
-            delimiter: ',',
+            delimiter: '.',
             complete: function(results) {
                 const data = results.data;
                 // بناء هيكل الأسلاف
