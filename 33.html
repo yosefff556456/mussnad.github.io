@@ -54,6 +54,7 @@ let allMarkers = [];
 let allPolylines = [];
 let maxLevel = 0;
 let roots = [];
+let columnIndices = {};
 
 // دالة لحساب المتوسط الموزون للإحداثيات
 function calculateWeightedCoordinates(samples) {
@@ -77,9 +78,9 @@ function buildAncestorsTree(data) {
     const ancestorsTree = {};
 
     data.forEach(item => {
-        const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
-        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
+        const ancestorsStr = item[columnIndices['Ancestors']];
+        let lat = item[columnIndices['Latitude']].replace(',', '.').replace('٫', '.');
+        let lon = item[columnIndices['Longitude']].replace(',', '.').replace('٫', '.');
 
         // **تعديل: التحقق من صحة الإحداثيات**
         if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
@@ -208,6 +209,15 @@ fetch(csvUrl)
             delimiter: ',',
             complete: function(results) {
                 const data = results.data;
+
+                // تحديد مواقع الأعمدة بناءً على العناوين
+                const headers = results.meta.fields;
+                columnIndices = {
+                    'Ancestors': headers.indexOf('Ancestors'),
+                    'Latitude': headers.indexOf('Latitude'),
+                    'Longitude': headers.indexOf('Longitude')
+                };
+
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
 
