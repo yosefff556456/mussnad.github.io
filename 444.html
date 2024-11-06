@@ -2,118 +2,209 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية متقدمة باستخدام Leaflet</title>
+    <title>عرض سلف J-Y5320 وأسلافه على خريطة</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
         #map {
-            height: 100%;
+            height: 800px;
             width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl; /* لجعل النصوص تتناسب مع اللغة العربية */
+        }
+        h2 {
+            text-align: center;
+        }
+        .label-text {
+            background-color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
+    <h2>عرض سلف J-Y5320 وأسلافه على خريطة</h2>
+    <div id="map"></div>
 
-<div id="map"></div>
+    <!-- مكتبة Leaflet -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- مكتبة PapaParse لقراءة ملفات CSV -->
+    <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
+    <script>
+        // تهيئة الخريطة
+        var map = L.map('map').setView([30, 30], 2); // ضبط الإحداثيات الافتراضية
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-<script>
-// إعداد خريطة ليفليت
-var map = L.map('map').setView([23.3432, 45.1404], 6);
+        // إضافة طبقة الخريطة (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-// إضافة خريطة الأساس
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-}).addTo(map);
+        // رابط ملف CSV الذي قدمته
+        var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
 
-// تحميل البيانات من ملف JSON
-fetch('gg.json') // تأكد من أن مسار ملف JSON صحيح
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // تحويل البيانات إلى مصفوفة نقاط للحرارة وتحديد الوزن
-        var heatData = data.map(item => {
-            if (item.latitude && item.longitude && item.num) {
-                // استخراج الرقم بين القوسين من حقل "num"
-                let match = item.num.match(/\((\d+)\)/);
-                let weight = match ? parseInt(match[1]) : 1; // إذا لم يكن الرقم موجودًا، يُستخدم 1 كوزن افتراضي
-                let effectiveWeight = weight === 0 ? 1 : 1 / weight; // استخدام معكوس الوزن
+        // السلف المطلوب عرضه
+        var targetAncestor = 'J-Y5320';
 
-                return {
-                    coords: [item.latitude, item.longitude, item.intensity || 0.5],
-                    weight: effectiveWeight
-                };
-            } else {
-                console.warn('موقع غير صالح أو وزن مفقود:', item);
-                return null;
-            }
-        }).filter(item => item !== null);
+        // تحميل ملف CSV
+        Papa.parse(csvUrl, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                var data = results.data;
+                var nodes = {}; // لتخزين معلومات السلف
+                var parentChildrenMap = {}; // لتخزين العلاقات بين الأب والأبناء
 
-        // حساب الموقع المتوسط بناءً على الوزن
-        let totalLat = 0, totalLng = 0, totalWeight = 0;
+                // تصفية البيانات لتشمل فقط السلسلة التي تحتوي على targetAncestor
+                var relevantData = data.filter(function(row) {
+                    var ancestors = row.Ancestors.split('>');
+                    return ancestors.includes(targetAncestor);
+                });
 
-        heatData.forEach(item => {
-            totalLat += item.coords[0] * item.weight;
-            totalLng += item.coords[1] * item.weight;
-            totalWeight += item.weight;
-        });
+                // بناء nodes وتحديد العلاقات بين الأب والأبناء
+                relevantData.forEach(function(row) {
+                    var ancestors = row.Ancestors.split('>');
+                    for (var i = 0; i < ancestors.length; i++) {
+                        var ancestorPath = ancestors.slice(0, i + 1).join('>');
+                        var ancestorName = ancestors[i];
 
-        if (totalWeight > 0) {
-            let avgLat = totalLat / totalWeight;
-            let avgLng = totalLng / totalWeight;
+                        if (!nodes[ancestorPath]) {
+                            nodes[ancestorPath] = {
+                                name: ancestorName,
+                                lat: row.Latitude ? parseFloat(row.Latitude) : null,
+                                lng: row.Longitude ? parseFloat(row.Longitude) : null,
+                                children: []
+                            };
+                        }
 
-            // تعيين أيقونة مخصصة للموقع المتوسط
-            var customIcon = L.icon({
-                iconUrl: 'https://example.com/path/to/icon.png', // ضع مسار الأيقونة هنا
-                iconSize: [40, 40], // حجم الأيقونة
-                iconAnchor: [20, 40], // موضع الأيقونة
-                popupAnchor: [0, -40] // موضع النافذة المنبثقة
-            });
+                        if (i < ancestors.length - 1) {
+                            var childPath = ancestors.slice(0, i + 2).join('>');
+                            nodes[ancestorPath].children.push(childPath);
+                        }
+                    }
+                });
 
-            // إضافة نقطة الموقع المتوسط كعلامة مميزة على الخريطة
-            var centerMarker = L.marker([avgLat, avgLng], { icon: customIcon, title: "الموقع المتوسط" }).addTo(map);
-            centerMarker.bindPopup("الموقع المتوسط باستخدام الوزن").openPopup();
-
-            // توسيط الخريطة على النقطة المركزية
-            map.setView([avgLat, avgLng], 7);
-        }
-
-        // إضافة طبقة الحرارة
-        var heatPoints = heatData.map(item => item.coords);
-        if (heatPoints.length > 0) {
-            L.heatLayer(heatPoints, {
-                radius: 60,
-                blur: 45,
-                maxZoom: 15,
-                minOpacity: 0.2,
-                max: 1.5,
-                gradient: {
-                    0.2: '#1a9850',
-                    0.4: '#91cf60',
-                    0.6: '#d9ef8b',
-                    0.7: '#fee08b',
-                    0.8: '#fc8d59',
-                    0.9: '#d73027',
-                    1.0: '#7f0000'
+                // بناء خريطة العلاقات الأب-ابن
+                for (var path in nodes) {
+                    var node = nodes[path];
+                    node.children.forEach(function(childPath) {
+                        if (!parentChildrenMap[path]) {
+                            parentChildrenMap[path] = [];
+                        }
+                        parentChildrenMap[path].push(childPath);
+                    });
                 }
-            }).addTo(map);
-        } else {
-            console.warn('لا توجد نقاط حرارة صالحة لإضافتها.');
-        }
-    })
-    .catch(error => console.error('Error loading JSON:', error));
 
-</script>
+                // دالة لتقدير الإحداثيات بناءً على أبناء السلف
+                function estimateCoordinates(path) {
+                    if (nodes[path].lat !== null && nodes[path].lng !== null) {
+                        return; // إذا كانت الإحداثيات موجودة، لا حاجة للتقدير
+                    }
 
+                    var children = parentChildrenMap[path];
+                    if (!children || children.length === 0) {
+                        return; // لا يوجد أبناء لتقدير الإحداثيات
+                    }
+
+                    var sumLat = 0, sumLng = 0, count = 0;
+                    children.forEach(function(childPath) {
+                        if (nodes[childPath].lat !== null && nodes[childPath].lng !== null) {
+                            sumLat += nodes[childPath].lat;
+                            sumLng += nodes[childPath].lng;
+                            count++;
+                        }
+                    });
+
+                    if (count > 0) {
+                        nodes[path].lat = sumLat / count;
+                        nodes[path].lng = sumLng / count;
+                    }
+                }
+
+                // عملية التقدير التكرارية للأجداد بدون إحداثيات
+                var updated;
+                do {
+                    updated = false;
+                    for (var path in nodes) {
+                        if (nodes[path].lat === null || nodes[path].lng === null) {
+                            var beforeLat = nodes[path].lat;
+                            var beforeLng = nodes[path].lng;
+                            estimateCoordinates(path);
+                            if (nodes[path].lat !== beforeLat || nodes[path].lng !== beforeLng) {
+                                updated = true;
+                            }
+                        }
+                    }
+                } while (updated);
+
+                // الآن جميع الأنساب يجب أن تمتلك إحداثيات أو لا يمكن تقديرها
+                // إنشاء مصفوفة للإحداثيات بالترتيب من الأجداد إلى السلف المستهدف
+                var allPaths = Object.keys(nodes).filter(function(path) {
+                    return path.split('>').includes(targetAncestor);
+                });
+
+                // بناء المسارات المرتبة
+                var orderedPaths = allPaths.map(function(path) {
+                    return path.split('>');
+                });
+
+                // اختيار المسار الذي ينتهي بـ targetAncestor
+                // إذا كان هناك أكثر من مسار، سنقوم بدمجها بطريقة ما
+                // لكن عادةً يكون هناك مسار واحد رئيسي
+
+                // لإنشاء خط هجرة مستمر، سنحتاج إلى تحديد تسلسل زمني أو منطقي
+                // إذا لم يكن هناك معلومات إضافية، سنفترض الترتيب من الجذر إلى الهدف
+
+                // العثور على المسار الرئيسي (أول مسار يحتوي على الجذر J1)
+                var mainPath = orderedPaths.find(function(pathArray) {
+                    return pathArray[0] === 'J1';
+                });
+
+                if (!mainPath) {
+                    console.error("لم يتم العثور على مسار يبدأ بـ 'J1'.");
+                    return;
+                }
+
+                // إنشاء مصفوفة للإحداثيات بالترتيب من الأجداد إلى السلف المستهدف
+                var latlngs = [];
+                var markers = [];
+
+                mainPath.forEach(function(name, index) {
+                    var path = mainPath.slice(0, index + 1).join('>');
+                    var node = nodes[path];
+                    if (node.lat !== null && node.lng !== null) {
+                        latlngs.push([node.lat, node.lng]);
+
+                        // إنشاء علامة نصية
+                        var label = L.marker([node.lat, node.lng], {
+                            icon: L.divIcon({
+                                className: 'label-text',
+                                html: node.name,
+                                iconSize: [100, 40],
+                                iconAnchor: [50, 20],
+                                direction: 'right'
+                            })
+                        }).addTo(map);
+                        markers.push(label);
+                    }
+                });
+
+                // رسم خط الهجرة المستمر
+                var polyline = L.polyline(latlngs, {color: 'blue'}).addTo(map);
+
+                // ضبط عرض الخريطة بحيث يتناسب مع العلامات المضافة
+                var group = new L.featureGroup(markers);
+                map.fitBounds(group.getBounds().pad(0.5));
+            },
+            error: function(error) {
+                console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
+            }
+        });
+    </script>
 </body>
 </html>
+
