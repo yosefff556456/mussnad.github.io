@@ -1,5 +1,6 @@
 
-<!DOCTYPE html>
+
+     <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
@@ -25,11 +26,11 @@
             top: 60px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px 25px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
             z-index: 1000;
-            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
         #slider {
             width: 300px;
@@ -42,30 +43,13 @@
             font-size: 12px;
             white-space: nowrap;
         }
-        #reloadButton {
-            padding: 5px 10px;
-            font-size: 14px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-        #reloadButton:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>
     <h2>عرض جميع الأنساب على خريطة مع وزن الإحداثيات</h2>
     <div id="controls">
         <label for="slider">عدد الأنساب المعروضة: <span id="sliderValue">10</span></label><br>
-        <input type="range" id="slider" min="1" max="100" value="10"><br><br>
-        
-        <label for="weightInput">وزن الملف الإضافي: </label>
-        <input type="number" id="weightInput" min="1" value="2"><br><br>
-        
-        <button id="reloadButton">إعادة تحميل البيانات</button>
+        <input type="range" id="slider" min="1" max="100" value="10">
     </div>
     <div id="map"></div>
 
@@ -102,10 +86,8 @@
 
         var tree = {}; // هيكل الشجرة
         var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
-        var markers = [];
-        var polylines = [];
 
-        // دالة لمعالجة البيانات من كل ملف CSV باستخدام متوسط مرجح
+        // دالة لمعالجة البيانات من كل ملف CSV
         function processData(data, weight) {
             data.forEach(function(row) {
                 var ancestors = row.Ancestors.split('>');
@@ -119,55 +101,55 @@
                             name: name,
                             children: [],
                             parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
-                            sumLat: 0, // مجموع الإحداثيات مضروبًا في الوزن
-                            sumLng: 0,
-                            totalWeight: 0 // مجموع الأوزان
+                            latitudes: [], // لتخزين جميع إحداثيات خط العرض
+                            longitudes: []  // لتخزين جميع إحداثيات خط الطول
                         };
                         ancestorList.push(currentPath);
                     }
 
                     // إضافة إحداثيات السلف إذا كانت موجودة
                     if (row.Latitude && row.Longitude) {
-                        var lat = parseFloat(row.Latitude);
-                        var lng = parseFloat(row.Longitude);
-                        tree[currentPath].sumLat += lat * weight;
-                        tree[currentPath].sumLng += lng * weight;
-                        tree[currentPath].totalWeight += weight;
+                        tree[currentPath].latitudes.push(parseFloat(row.Latitude) * weight);
+                        tree[currentPath].longitudes.push(parseFloat(row.Longitude) * weight);
                     }
 
                     // ربط الأب بالأبناء
                     if (index > 0) {
                         var parentPath = ancestors.slice(0, index).join('>');
-                        if (!tree[parentPath].children.includes(currentPath)) {
-                            tree[parentPath].children.push(currentPath);
-                        }
-                        if (!tree[currentPath].parents.includes(parentPath)) {
-                            tree[currentPath].parents.push(parentPath);
-                        }
+                        tree[parentPath].children.push(currentPath);
+                        tree[currentPath].parents.push(parentPath);
                     }
                 });
             });
         }
 
-        // دالة لحساب المتوسط المرجح للإحداثيات
-        function calculateWeightedAverage(node) {
-            if (node.totalWeight > 0) {
-                return {
-                    lat: node.sumLat / node.totalWeight,
-                    lng: node.sumLng / node.totalWeight
-                };
-            } else {
-                return null;
-            }
+        // تحميل كلا الملفين
+        loadCSV(csvUrl1, 1, function(data1, weight1) {
+            processData(data1, weight1);
+            loadCSV(csvUrl2, 2, function(data2, weight2) {
+                processData(data2, weight2);
+                finalizeData();
+            });
+        });
+
+        // دالة لحساب متوسط الإحداثيات
+        function calculateAverage(latitudes, longitudes) {
+            var sumLat = latitudes.reduce((a, b) => a + b, 0);
+            var sumLng = longitudes.reduce((a, b) => a + b, 0);
+            var count = latitudes.length > 0 ? latitudes.length : 1; // تجنب القسمة على صفر
+            return {
+                lat: sumLat / count,
+                lng: sumLng / count
+            };
         }
 
         // دالة لمعالجة البيانات بعد تحميل كلا الملفين
         function finalizeData() {
-            // حساب المتوسط المرجح للإحداثيات لكل سلف
+            // حساب المتوسط الحسابي للإحداثيات لكل سلف
             Object.keys(tree).forEach(function(path) {
                 var node = tree[path];
-                var avg = calculateWeightedAverage(node);
-                if (avg) {
+                if (node.latitudes.length > 0 && node.longitudes.length > 0) {
+                    var avg = calculateAverage(node.latitudes, node.longitudes);
                     node.lat = avg.lat;
                     node.lng = avg.lng;
                 } else {
@@ -212,6 +194,9 @@
             });
 
             // إنشاء الماركيرات والخطوط وترتيبها
+            var markers = [];
+            var polylines = [];
+
             ancestorList.forEach(function(path, index) {
                 var node = tree[path];
                 if (node.lat !== null && node.lng !== null) {
@@ -286,49 +271,10 @@
             });
 
             // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
-            if (markers.length > 0) {
-                var allLatLng = markers.map(function(m) { return m.marker.getLatLng(); });
-                var group = new L.featureGroup(allLatLng.map(function(latlng) { return L.marker(latlng); }));
-                map.fitBounds(group.getBounds().pad(0.5));
-            }
+            var allMarkers = markers.map(function(m) { return m.marker; });
+            var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
+            map.fitBounds(group.getBounds().pad(0.5));
         }
-
-        // دالة لبدء تحميل البيانات بعد تحديد الوزن
-        function initialize() {
-            var weightAdditional = parseFloat(document.getElementById('weightInput').value) || 1;
-
-            loadCSV(csvUrl1, 1, function(data1, weight1) {
-                processData(data1, weight1);
-                loadCSV(csvUrl2, weightAdditional, function(data2, weight2) {
-                    processData(data2, weight2);
-                    finalizeData();
-                });
-            });
-        }
-
-        // بدء تحميل البيانات عند تحميل الصفحة
-        window.onload = initialize;
-
-        // إضافة مستمع لحدث الضغط على زر إعادة التحميل
-        document.getElementById('reloadButton').addEventListener('click', function() {
-            // إزالة الماركيرات والخطوط الحالية من الخريطة
-            markers.forEach(function(m) {
-                map.removeLayer(m.marker);
-            });
-            polylines.forEach(function(p) {
-                map.removeLayer(p.polyline);
-            });
-
-            // إعادة تهيئة الهياكل والبيانات
-            tree = {};
-            ancestorList = [];
-            markers = [];
-            polylines = [];
-
-            // إعادة تحميل البيانات
-            initialize();
-        });
     </script>
 </body>
 </html>
-
