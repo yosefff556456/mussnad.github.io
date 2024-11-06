@@ -54,7 +54,6 @@ let allMarkers = [];
 let allPolylines = [];
 let maxLevel = 0;
 let roots = [];
-let columnIndices = {};
 
 // دالة لحساب المتوسط الموزون للإحداثيات
 function calculateWeightedCoordinates(samples) {
@@ -78,9 +77,9 @@ function buildAncestorsTree(data) {
     const ancestorsTree = {};
 
     data.forEach(item => {
-        const ancestorsStr = item[columnIndices['Ancestors']];
-        let lat = item[columnIndices['Latitude']].replace(',', '.').replace('٫', '.');
-        let lon = item[columnIndices['Longitude']].replace(',', '.').replace('٫', '.');
+        const ancestorsStr = item[0]; // العمود الأول للأسلاف
+        let lat = item[1].replace(',', '.').replace('٫', '.'); // العمود الثاني للإحداثيات العرضية
+        let lon = item[2].replace(',', '.').replace('٫', '.'); // العمود الثالث للإحداثيات الطولية
 
         // **تعديل: التحقق من صحة الإحداثيات**
         if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
@@ -205,19 +204,11 @@ fetch(csvUrl)
     .then(response => response.text())
     .then(csvText => {
         Papa.parse(csvText, {
-            header: true,
+            header: false,
             delimiter: ',',
             complete: function(results) {
                 const data = results.data;
-
-                // تحديد مواقع الأعمدة بناءً على العناوين
-                const headers = results.meta.fields;
-                columnIndices = {
-                    'Ancestors': headers.indexOf('Ancestors'),
-                    'Latitude': headers.indexOf('Latitude'),
-                    'Longitude': headers.indexOf('Longitude')
-                };
-
+                
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
 
