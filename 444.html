@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>عرض سلف J-Y5320 وأسلافه على خريطة</title>
+    <title>عرض جميع الأنساب على خريطة</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #map {
@@ -12,9 +12,26 @@
         body {
             font-family: Arial, sans-serif;
             direction: rtl; /* لجعل النصوص تتناسب مع اللغة العربية */
+            margin: 0;
+            padding: 0;
         }
         h2 {
             text-align: center;
+            margin: 10px 0;
+        }
+        #controls {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        #slider {
+            width: 300px;
         }
         .label-text {
             background-color: white;
@@ -27,7 +44,11 @@
     </style>
 </head>
 <body>
-    <h2>عرض سلف J-Y5320 وأسلافه على خريطة</h2>
+    <h2>عرض جميع الأنساب على خريطة</h2>
+    <div id="controls">
+        <label for="slider">عدد الأنساب المعروضة: <span id="sliderValue">10</span></label><br>
+        <input type="range" id="slider" min="1" max="100" value="10">
+    </div>
     <div id="map"></div>
 
     <!-- مكتبة Leaflet -->
@@ -46,18 +67,16 @@
         // رابط ملف CSV الذي قدمته
         var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
 
-        // السلف المطلوب عرضه
-        var targetAncestor = 'J-Y5320';
-
         // تحميل ملف CSV
         Papa.parse(csvUrl, {
             download: true,
             header: true,
             complete: function(results) {
                 var data = results.data;
-                var nodes = {}; // لتخزين معلومات الأنساب
                 var tree = {}; // هيكل الشجرة
+                var nodes = {}; // لتخزين معلومات الأنساب
                 var connections = []; // لتخزين العلاقات بين الأنساب
+                var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
 
                 // بناء هيكل الشجرة وتخزين الإحداثيات إذا كانت موجودة
                 data.forEach(function(row) {
@@ -73,6 +92,10 @@
                                 lat: row.Latitude && row.Longitude ? parseFloat(row.Latitude) : null,
                                 lng: row.Latitude && row.Longitude ? parseFloat(row.Longitude) : null
                             };
+                            // إضافة السلسلة إلى nodes
+                            nodes[currentPath] = tree[currentPath];
+                            // إضافة السلسلة إلى قائمة الأنساب
+                            ancestorList.push(currentPath);
                         }
                         // ربط الأب بالأبناء
                         if (index > 0) {
@@ -82,68 +105,20 @@
                     });
                 });
 
-                // تصفية الأنساب ذات الصلة بـ targetAncestor
-                Object.keys(tree).forEach(function(path) {
-                    if (path.includes(targetAncestor)) {
-                        nodes[path] = tree[path];
-                    }
+                // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق الشجرة
+                ancestorList.sort(function(a, b) {
+                    return a.split('>').length - b.split('>').length;
                 });
 
                 // وظيفة لتقدير إحداثيات الأنساب بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
-                function estimateCoordinates(path) {
-                    var node = tree[path];
-                    if (node.lat !== null && node.lng !== null) {
-                        return; // إذا كان هناك إحداثيات، لا حاجة للتقدير
-                    }
-                    if (node.children.length === 0) {
-                        return; // لا يمكن تقدير بدون أبناء
-                    }
-                    var sumLat = 0, sumLng = 0, count = 0;
-                    node.children.forEach(function(childPath) {
-                        var child = tree[childPath];
-                        if (child.lat !== null && child.lng !== null) {
-                            sumLat += child.lat;
-                            sumLng += child.lng;
-                            count++;
-                        }
-                    });
-                    if (count > 0) {
-                        node.lat = sumLat / count;
-                        node.lng = sumLng / count;
-                        nodes[path].lat = node.lat;
-                        nodes[path].lng = node.lng;
-                    }
-                }
-
-                // تقدير إحداثيات جميع الأنساب بدون إحداثيات بترتيب تصاعدي من الأجداد إلى السلف المستهدف
-                var paths = Object.keys(tree).filter(path => path.includes(targetAncestor));
-                paths.sort(function(a, b) {
-                    return a.split('>').length - b.split('>').length;
-                });
-                paths.forEach(function(path) {
-                    if (nodes[path]) {
-                        estimateCoordinates(path);
-                    }
-                });
-
-                // جمع جميع الأنساب المتعلقة بـ targetAncestor
-                var relevantNodes = {};
-                Object.keys(tree).forEach(function(path) {
-                    if (path.includes(targetAncestor)) {
-                        relevantNodes[path] = tree[path];
-                    }
-                });
-
-                // تقدير الإحداثيات للأجداد بدون إحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
-                var updated;
-                do {
-                    updated = false;
-                    Object.keys(relevantNodes).forEach(function(path) {
-                        var node = relevantNodes[path];
+                function estimateCoordinates() {
+                    var updated = false;
+                    ancestorList.forEach(function(path) {
+                        var node = nodes[path];
                         if ((node.lat === null || node.lng === null) && node.children.length > 0) {
                             var sumLat = 0, sumLng = 0, count = 0;
                             node.children.forEach(function(childPath) {
-                                var child = relevantNodes[childPath];
+                                var child = nodes[childPath];
                                 if (child.lat !== null && child.lng !== null) {
                                     sumLat += child.lat;
                                     sumLng += child.lng;
@@ -157,52 +132,92 @@
                             }
                         }
                     });
-                } while (updated);
+                    return updated;
+                }
 
-                // إضافة الأنساب مع إحداثياتها إلى الخريطة
-                Object.keys(relevantNodes).forEach(function(path) {
-                    var node = relevantNodes[path];
+                // تقدير الإحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
+                while (estimateCoordinates()) {}
+
+                // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
+                var maxSliderValue = ancestorList.length;
+                document.getElementById('slider').max = maxSliderValue;
+
+                // تخزين الماركيرات والخطوط
+                var markers = [];
+                var polylines = [];
+
+                // إنشاء الماركيرات والخطوط وترتيبها
+                ancestorList.forEach(function(path, index) {
+                    var node = nodes[path];
                     if (node.lat !== null && node.lng !== null) {
-                        // إضافة نص كعلامة
-                        L.marker([node.lat, node.lng], {
+                        // إنشاء ماركر نصي
+                        var marker = L.marker([node.lat, node.lng], {
                             icon: L.divIcon({
                                 className: 'label-text',
                                 html: node.name,
                                 iconSize: [100, 40],
-                                iconAnchor: [50, 20],
-                                direction: 'right'
+                                iconAnchor: [50, 20]
                             })
-                        }).addTo(map);
+                        });
 
-                        // ربط الأب بالابن
-                        if (node.parent && relevantNodes[node.parent] && relevantNodes[node.parent].lat && relevantNodes[node.parent].lng) {
-                            connections.push([node.parent, path]);
+                        markers.push({
+                            marker: marker,
+                            index: index + 1 // ترتيب الأنساب يبدأ من 1
+                        });
+
+                        // إنشاء خط ربط بالوالد
+                        if (node.parent && nodes[node.parent].lat !== null && nodes[node.parent].lng !== null) {
+                            var polyline = L.polyline([
+                                [nodes[node.parent].lat, nodes[node.parent].lng],
+                                [node.lat, node.lng]
+                            ], {color: 'blue'});
+                            polylines.push({
+                                polyline: polyline,
+                                index: index + 1 // ترتيب الأنساب يبدأ من 1
+                            });
                         }
                     }
                 });
 
-                // رسم الخطوط بين الأنساب
-                connections.forEach(function(connection) {
-                    var parentPath = connection[0];
-                    var childPath = connection[1];
-                    var parent = relevantNodes[parentPath];
-                    var child = relevantNodes[childPath];
-                    if (parent && child && parent.lat && parent.lng && child.lat && child.lng) {
-                        L.polyline([[parent.lat, parent.lng], [child.lat, child.lng]], {color: 'blue'}).addTo(map);
-                    }
+                // وظيفة لتحديث الخريطة بناءً على قيمة شريط التمرير
+                function updateMap(value) {
+                    // إزالة جميع الماركيرات والخطوط الحالية
+                    markers.forEach(function(m) {
+                        map.removeLayer(m.marker);
+                    });
+                    polylines.forEach(function(p) {
+                        map.removeLayer(p.polyline);
+                    });
+
+                    // إضافة الماركيرات والخطوط حتى القيمة المحددة
+                    markers.forEach(function(m) {
+                        if (m.index <= value) {
+                            m.marker.addTo(map);
+                        }
+                    });
+                    polylines.forEach(function(p) {
+                        if (p.index <= value) {
+                            p.polyline.addTo(map);
+                        }
+                    });
+                }
+
+                // ضبط الشريط التمرير ليبدأ من القيمة 1
+                document.getElementById('slider').value = 1;
+                document.getElementById('sliderValue').innerText = 1;
+                updateMap(1);
+
+                // إضافة مستمع لحدث تغيير قيمة الشريط التمرير
+                document.getElementById('slider').addEventListener('input', function(e) {
+                    var value = parseInt(e.target.value);
+                    document.getElementById('sliderValue').innerText = value;
+                    updateMap(value);
                 });
 
-                // ضبط عرض الخريطة بحيث يتناسب مع العلامات المضافة
-                var markers = Object.keys(relevantNodes).map(function(path) {
-                    var node = relevantNodes[path];
-                    if (node.lat !== null && node.lng !== null) {
-                        return L.marker([node.lat, node.lng]);
-                    }
-                }).filter(marker => marker !== undefined);
-                if (markers.length > 0) {
-                    var group = new L.featureGroup(markers);
-                    map.fitBounds(group.getBounds().pad(0.5));
-                }
+                // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
+                var allMarkers = markers.map(function(m) { return m.marker; });
+                var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
+                map.fitBounds(group.getBounds().pad(0.5));
             },
             error: function(error) {
                 console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
@@ -211,3 +226,4 @@
     </script>
 </body>
 </html>
+
