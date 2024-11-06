@@ -60,15 +60,12 @@ function buildAncestorsTree(data) {
         let lat = item['Latitude'] ? item['Latitude'].replace(',', '.').replace('٫', '.') : '';
         let lon = item['Longitude'] ? item['Longitude'].replace(',', '.').replace('٫', '.') : '';
 
-        if (!lat || !lon) {
+        // تخطي الصفوف التي تحتوي على إحداثيات فارغة أو تحورات تحتوي على علامة النجمة (*)
+        if (!lat || !lon || ancestorsStr.includes('*')) {
             return;
         }
 
         const ancestorList = ancestorsStr.split('>').map(ancestor => ancestor.trim());
-
-        if (ancestorList.some(ancestor => ancestor.includes('*'))) {
-            return;
-        }
 
         ancestorList.forEach((ancestor, index) => {
             const ancestorKey = ancestorList.slice(0, index + 1).join('>');
@@ -161,3 +158,4 @@ Promise.all([
 </script>
 </body>
 </html>
+
