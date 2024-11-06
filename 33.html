@@ -51,6 +51,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
 
+// إضافة علامة اختبارية للتأكد من أن الخريطة تعمل
+L.marker([16.6161, 43.0556]).addTo(map)
+    .bindPopup('موقع اختبار')
+    .openPopup();
+
 // متغيرات عامة
 let allMarkers = [];
 let allPolylines = [];
@@ -73,7 +78,10 @@ function calculateAverageCoordinates(samples) {
             count += 1;
         }
     });
-    if (count === 0) return null;
+    if (count === 0) {
+        console.warn('لا توجد عينات صالحة لحساب المتوسط.');
+        return null;
+    }
     return {
         lat: totalLat / count,
         lon: totalLon / count
@@ -266,4 +274,3 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
-
