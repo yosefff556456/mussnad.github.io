@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -99,13 +100,13 @@
                             name: name,
                             children: [],
                             parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
-                            latitudes: [], // لتخزين جميع إحداثيات خط العرض مع الوزن
-                            longitudes: []  // لتخزين جميع إحداثيات خط الطول مع الوزن
+                            latitudes: [], // لتخزين جميع إحداثيات خط العرض
+                            longitudes: []  // لتخزين جميع إحداثيات خط الطول
                         };
                         ancestorList.push(currentPath);
                     }
 
-                    // إضافة إحداثيات السلف إذا كانت موجودة مع الوزن المناسب
+                    // إضافة إحداثيات السلف إذا كانت موجودة
                     if (row.Latitude && row.Longitude) {
                         tree[currentPath].latitudes.push(parseFloat(row.Latitude) * weight);
                         tree[currentPath].longitudes.push(parseFloat(row.Longitude) * weight);
@@ -121,10 +122,10 @@
             });
         }
 
-        // تحميل كلا الملفين مع الوزن المناسب (1 للأساسي و4 للإضافي)
-        loadCSV(csvUrl1, 1, function(data1, weight1) {
+        // تحميل كلا الملفين
+        loadCSV(csvUrl1, 2, function(data1, weight1) {
             processData(data1, weight1);
-            loadCSV(csvUrl2, 4, function(data2, weight2) {
+            loadCSV(csvUrl2, 1, function(data2, weight2) {
                 processData(data2, weight2);
                 finalizeData();
             });
@@ -272,7 +273,7 @@
             var allMarkers = markers.map(function(m) { return m.marker; });
             var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
             map.fitBounds(group.getBounds().pad(0.5));
-        </script>
-    </body>
+        }
+    </script>
+</body>
 </html>
-
