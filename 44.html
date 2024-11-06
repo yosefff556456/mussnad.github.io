@@ -4,9 +4,7 @@
     <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- تحميل مكتبة Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <!-- تحميل مكتبة PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         #map {
@@ -26,24 +24,18 @@
 <h2>خريطة الأسلاف التفاعلية</h2>
 <div id="map"></div>
 
-<!-- تحميل مكتبة Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
-<!-- كود JavaScript -->
 <script>
-// روابط ملفات CSV
-const csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuMXx0shOoaXKp9nxINFg5TI7C30bKfIXEkYl_dBsDcmgeXCYzgzZiMrkLnKwkqA/pub?output=csv'; // الملف الأول
-const csvUrl2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_OnJg9i2DLOh8DSYejqL8fsDnSwa2-YTD63Nkq7JccI7VApcTsm7WiJe6eVRUOQ/pub?output=csv'; // استبدل هذا بالرابط الفعلي للملف الثاني
+const csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuMXx0shOoaXKp9nxINFg5TI7C30bKfIXEkYl_dBsDcmgeXCYzgzZiMrkLnKwkqA/pub?output=csv';
+const csvUrl2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_OnJg9i2DLOh8DSYejqL8fsDnSwa2-YTD63Nkq7JccI7VApcTsm7WiJe6eVRUOQ/pub?output=csv';
 
-// إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
 
-// إضافة طبقة الخريطة
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; مساهمة OpenStreetMap'
 }).addTo(map);
 
-// دالة لحساب المتوسط الموزون للإحداثيات
 function calculateWeightedCoordinates(samples) {
     let totalLat = 0;
     let totalLon = 0;
@@ -60,7 +52,6 @@ function calculateWeightedCoordinates(samples) {
     };
 }
 
-// بناء هيكل الأسلاف
 function buildAncestorsTree(data) {
     const ancestorsTree = {};
 
@@ -69,16 +60,14 @@ function buildAncestorsTree(data) {
         let lat = item['Latitude'] ? item['Latitude'].replace(',', '.').replace('٫', '.') : '';
         let lon = item['Longitude'] ? item['Longitude'].replace(',', '.').replace('٫', '.') : '';
 
-        // تحقق من وجود إحداثيات صالحة
         if (!lat || !lon) {
-            return; // تخطى هذا الصف إذا كانت الإحداثيات فارغة
+            return;
         }
 
         const ancestorList = ancestorsStr.split('>').map(ancestor => ancestor.trim());
 
-        // تحقق مما إذا كان أي من الأسلاف يحتوي على علامة النجمة (*)
         if (ancestorList.some(ancestor => ancestor.includes('*'))) {
-            return; // تخطى هذا الصف إذا كان هناك سلف يحتوي على *
+            return;
         }
 
         ancestorList.forEach((ancestor, index) => {
@@ -89,72 +78,57 @@ function buildAncestorsTree(data) {
                     parent: index > 0 ? ancestorList.slice(0, index).join('>') : null,
                     samples: [],
                     children: [],
-                    level: index // مستوى السلف في الشجرة
+                    level: index
                 };
             }
-            // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
             if (index === ancestorList.length - 1) {
                 ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: item.weight });
             }
         });
     });
 
-    // بناء العلاقات بين الأسلاف
     Object.values(ancestorsTree).forEach(node => {
         if (node.parent && ancestorsTree[node.parent]) {
             ancestorsTree[node.parent].children.push(node);
         }
     });
 
-    // استخراج الجذور (الأسلاف بدون والد)
-    const roots = Object.values(ancestorsTree).filter(node => !node.parent);
-
-    return roots;
+    return Object.values(ancestorsTree).filter(node => !node.parent);
 }
 
-// دالة لإضافة الأسلاف إلى الخريطة
 function addAncestorsToMap(nodes, parentCoords = null) {
     nodes.forEach(node => {
         let avgCoords = null;
         if (node.samples.length > 0) {
-            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
             avgCoords = calculateWeightedCoordinates(node.samples);
         } else if (parentCoords) {
-            // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
             avgCoords = parentCoords;
         } else {
-            // إذا لم يكن هناك عينات ولا موقع أب، تخطى هذا السلف
             return;
         }
 
-        if (avgCoords) {
-            // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
-            const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
+        if (avgCoords && avgCoords.lat && avgCoords.lon) {
+            const fontSize = 16 + (5 * (5 - node.level));
 
-            // إنشاء أيقونة نصية لعرض اسم السلف
             const myIcon = L.divIcon({
                 className: 'ancestor-label',
                 html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
             });
 
-            // إضافة العلامة إلى الخريطة
-            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
+            L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
 
-            // رسم خط بين السلف والأب (إذا كان موجوداً)
             if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
-                const polyline = L.polyline([
+                L.polyline([
                     [parentCoords.lat, parentCoords.lon],
                     [avgCoords.lat, avgCoords.lon]
                 ], { color: 'blue' }).addTo(map);
             }
 
-            // استدعاء الدالة بشكل متكرر للأبناء
             addAncestorsToMap(node.children, avgCoords);
         }
     });
 }
 
-// دالة لتحميل ومعالجة ملف CSV مع تعيين الوزن المناسب
 function loadCSV(url, weight) {
     return fetch(url)
         .then(response => response.text())
@@ -162,9 +136,9 @@ function loadCSV(url, weight) {
             const parsed = Papa.parse(csvText, {
                 header: true,
                 delimiter: ',',
-                skipEmptyLines: true
+                skipEmptyLines: true,
+                dynamicTyping: true
             });
-            // إضافة الوزن إلى كل صف
             parsed.data.forEach(row => {
                 row.weight = weight;
             });
@@ -172,18 +146,13 @@ function loadCSV(url, weight) {
         });
 }
 
-// تحميل ومعالجة كلا ملفي CSV
 Promise.all([
-    loadCSV(csvUrl1, 1), // الوزن 1 للملف الأول
-    loadCSV(csvUrl2, 2)  // الوزن 2 للملف الثاني
+    loadCSV(csvUrl1, 1),
+    loadCSV(csvUrl2, 2)
 ])
 .then(([data1, data2]) => {
-    // دمج البيانات من كلا الملفين
     const combinedData = data1.concat(data2);
-    // بناء هيكل الأسلاف
     const roots = buildAncestorsTree(combinedData);
-
-    // إضافة الأسلاف إلى الخريطة
     addAncestorsToMap(roots);
 })
 .catch(error => {
