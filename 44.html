@@ -1,236 +1,61 @@
 <!DOCTYPE html>
-<html dir="rtl">
+<html lang="en">
 <head>
-    <title>خريطة الأسلاف التفاعلية</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- تحميل مكتبة Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <!-- تحميل مكتبة PapaParse -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <title>Genetic Ancestors Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xwE3ihzRw5fPqyfYVs58MkrY5b0q8Ie9CxTVvV8KMp8pBwrGh/hquU8UnI5R9NT+auktw3B5t5p0sLMtg3/9gA==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-dwZbM2Bvn5z2H8V8fx7PKMZQeaJzNh5gZW6kIoE5r5xVR9XjItpV1ls1QLhB3Mj5Bi8x9Vsb5V1qLPbZB6xMJQ==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
         #map {
-            height: 600px;
+            height: 100vh;
             width: 100%;
-        }
-        .ancestor-label {
-            font-weight: bold;
-            text-align: center;
-            color: black;
-            text-shadow: 1px 1px 2px white;
-        }
-        #slider-container {
-            margin: 10px;
         }
     </style>
 </head>
 <body>
+    <div id="map"></div>
+    <script>
+        // Create a Leaflet map to visualize genetic ancestors based on their locations
+        // The CSV file structure: Ancestors, Latitude, Longitude
 
-<h2>خريطة الأسلاف التفاعلية</h2>
-<div id="slider-container">
-    مستوى الأسلاف: <input type="range" id="ancestorSlider" min="0" max="5" value="0" step="1">
-    <span id="currentLevel">0</span>
-</div>
-<div id="map"></div>
+        // Load Leaflet
+        let map = L.map('map').setView([20, 30], 2);
 
-<!-- تحميل مكتبة Leaflet -->
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+        // Add a base layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-<!-- كود JavaScript -->
-<script>
-// رابط ملف CSV
-const csvUrl = 'data.csv'; // رابط ملف CSV الذي يحتوي على البيانات
+        // Function to parse the CSV file and add markers for each ancestor
+        function plotAncestorsFromCSV(csvUrl) {
+            Papa.parse(csvUrl, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    let data = results.data;
+                    data.forEach((row) => {
+                        let ancestors = row['Ancestors'];
+                        let latitude = parseFloat(row['Latitude']);
+                        let longitude = parseFloat(row['Longitude']);
 
-// إنشاء الخريطة
-const map = L.map('map').setView([16.6161, 43.0556], 6);
-
-// إضافة طبقة الخريطة
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; مساهمة OpenStreetMap'
-}).addTo(map);
-
-// متغيرات عامة
-let allMarkers = [];
-let allPolylines = [];
-let maxLevel = 0;
-let roots = [];
-
-// دالة لحساب المتوسط الموزون للإحداثيات
-function calculateWeightedCoordinates(samples) {
-    let totalLat = 0;
-    let totalLon = 0;
-    let totalWeight = 0;
-    samples.forEach(sample => {
-        const weight = sample.weight;
-        totalLat += parseFloat(sample.lat) * weight;
-        totalLon += parseFloat(sample.lon) * weight;
-        totalWeight += weight;
-    });
-    return {
-        lat: totalLat / totalWeight,
-        lon: totalLon / totalWeight
-    };
-}
-
-// بناء هيكل الأسلاف
-function buildAncestorsTree(data) {
-    const ancestorsTree = {};
-
-    data.forEach(item => {
-        const ancestorsStr = item[0]; // العمود الأول للأسلاف
-        let lat = item[1].replace(',', '.').replace('٫', '.'); // العمود الثاني للإحداثيات العرضية
-        let lon = item[2].replace(',', '.').replace('٫', '.'); // العمود الثالث للإحداثيات الطولية
-
-        // **تعديل: التحقق من صحة الإحداثيات**
-        if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
-
-            // **تعديل: إزالة العينات التي لا تحتوي على إحداثيات**
-            const sample = { lat: lat, lon: lon, weight: 1 };
-
-            const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة وإزالة الأسلاف الذين يحتوي اسمهم على (*)
-            const filteredAncestorList = ancestorList.filter(ancestor => {
-                ancestor = ancestor.trim();
-                return ancestor !== '' && !ancestor.includes('*');
-            });
-
-            // **تخطي إذا كانت القائمة فارغة بعد التصفية**
-            if (filteredAncestorList.length === 0) {
-                return;
-            }
-
-            filteredAncestorList.forEach((ancestor, index) => {
-                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
-                if (!ancestorsTree[ancestorKey]) {
-                    ancestorsTree[ancestorKey] = {
-                        name: ancestor,
-                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
-                        samples: [],
-                        children: [],
-                        level: index // مستوى السلف في الشجرة
-                    };
-                    if (index > maxLevel) {
-                        maxLevel = index;
-                    }
-                }
-                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
-                if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push(sample);
+                        if (!isNaN(latitude) && !isNaN(longitude)) {
+                            let splitAncestors = ancestors.split('>');
+                            let lastAncestor = splitAncestors[splitAncestors.length - 1];
+                            let marker = L.marker([latitude, longitude]).addTo(map);
+                            marker.bindPopup(`<b>Ancestor:</b> ${lastAncestor}<br><b>Full Path:</b> ${ancestors}`);
+                        }
+                    });
                 }
             });
         }
-    });
 
-    // **تعديل: إزالة الأسلاف الذين لا يمتلكون عينات بعد التصفية**
-    for (let key in ancestorsTree) {
-        if (ancestorsTree[key].samples.length === 0) {
-            delete ancestorsTree[key];
-        }
-    }
+        // CSV URL
+        let csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
 
-    // بناء العلاقات بين الأسلاف
-    Object.values(ancestorsTree).forEach(node => {
-        if (node.parent && ancestorsTree[node.parent]) {
-            ancestorsTree[node.parent].children.push(node);
-        }
-    });
-
-    // استخراج الجذور (الأسلاف بدون والد)
-    roots = Object.values(ancestorsTree).filter(node => !node.parent);
-}
-
-// دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
-function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
-    nodes.forEach(node => {
-        if (node.level > maxDisplayLevel) {
-            return;
-        }
-
-        let avgCoords = null;
-        if (node.samples.length > 0) {
-            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
-            avgCoords = calculateWeightedCoordinates(node.samples);
-        } else if (parentCoords) {
-            // إذا لم يكن لديه عينات مباشرة، استخدم موقع الأب
-            avgCoords = parentCoords;
-        } else {
-            // إذا لم يكن هناك عينات ولا موقع أب، تخطى هذا السلف
-            return;
-        }
-
-        if (avgCoords) {
-            // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
-            const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
-
-            // إنشاء أيقونة نصية لعرض اسم السلف
-            const myIcon = L.divIcon({
-                className: 'ancestor-label',
-                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
-            });
-
-            // إضافة العلامة إلى الخريطة
-            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
-            allMarkers.push(marker);
-
-            // رسم خط بين السلف والأب (إذا كان موجوداً)
-            if (parentCoords && (avgCoords.lat !== parentCoords.lat || avgCoords.lon !== parentCoords.lon)) {
-                const polyline = L.polyline([
-                    [parentCoords.lat, parentCoords.lon],
-                    [avgCoords.lat, avgCoords.lon]
-                ], { color: 'blue' }).addTo(map);
-                allPolylines.push(polyline);
-            }
-
-            // استدعاء الدالة بشكل متكرر للأبناء
-            addAncestorsToMap(node.children, avgCoords, maxDisplayLevel);
-        }
-    });
-}
-
-// دالة لتحديث الخريطة بناءً على مستوى السلف المختار
-function updateMap(level) {
-    // إزالة جميع العلامات والخطوط السابقة
-    allMarkers.forEach(marker => map.removeLayer(marker));
-    allPolylines.forEach(polyline => map.removeLayer(polyline));
-    allMarkers = [];
-    allPolylines = [];
-
-    // إضافة الأسلاف إلى الخريطة حتى المستوى المحدد
-    addAncestorsToMap(roots, null, level);
-}
-
-// تحميل ومعالجة ملف CSV
-fetch(csvUrl)
-    .then(response => response.text())
-    .then(csvText => {
-        Papa.parse(csvText, {
-            header: false,
-            delimiter: ',',
-            complete: function(results) {
-                const data = results.data;
-
-                // بناء هيكل الأسلاف
-                buildAncestorsTree(data);
-
-                // تحديث الحد الأقصى للشريط بناءً على أقصى مستوى
-                const ancestorSlider = document.getElementById('ancestorSlider');
-                ancestorSlider.max = maxLevel;
-
-                // إضافة الأسلاف إلى الخريطة في المستوى الأولي
-                updateMap(0);
-            }
-        });
-    })
-    .catch(error => {
-        console.error('خطأ في تحميل ملف CSV:', error);
-    });
-
-// استماع لتغيير قيمة الشريط
-document.getElementById('ancestorSlider').addEventListener('input', function() {
-    const level = parseInt(this.value);
-    document.getElementById('currentLevel').textContent = level;
-    updateMap(level);
-});
-</script>
+        // Plot the ancestors on the map
+        plotAncestorsFromCSV(csvUrl);
+    </script>
 </body>
 </html>
