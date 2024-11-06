@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- تحميل مكتبة Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-sA+e2eQTr+T0r9sVSSK1H6CYPsVE5AjfZ1s8FUbE3pg=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <!-- تحميل مكتبة PapaParse -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-bCzlE1o1u2GnQ4NK28G/dMFg8jO4N1NqO6dQ7gh3wX+jUlNxWk2FLyLc1W1iLSpUe14KbvD1ubI3YPoOfYCbVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
         #map {
             height: 600px;
@@ -22,15 +22,6 @@
         #slider-container {
             margin: 10px;
         }
-        /* تحسين تصميم شريط التمرير */
-        input[type=range] {
-            width: 300px;
-        }
-        /* تنسيق رسائل التحذير */
-        #error-messages {
-            color: red;
-            margin: 10px;
-        }
     </style>
 </head>
 <body>
@@ -40,16 +31,15 @@
     مستوى الأسلاف: <input type="range" id="ancestorSlider" min="0" max="5" value="0" step="1">
     <span id="currentLevel">0</span>
 </div>
-<div id="error-messages"></div>
 <div id="map"></div>
 
 <!-- تحميل مكتبة Leaflet -->
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-o9N1jZT2jgzrYvPLXMCjgkEDKZ5Oq0mJ6btYkTQ8S00=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
 <!-- كود JavaScript -->
 <script>
 // رابط ملف CSV
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT814bjh5fLeXDgXa_M2B_kh2dd3Nlh5uN7xLKqeVwk3RA710VKXxkrQj216de7wQfnG_ZWfOuN75xZ/pub?output=csv';
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQDCdi78eR-yuhmPnizzeXvWwZbM1Bj35NJtEMJ1l58Ctwa2Or3miMdKqWG9US9Rg/pub?output=csv';
 
 // إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
@@ -64,7 +54,6 @@ let allMarkers = [];
 let allPolylines = [];
 let maxLevel = 0;
 let roots = [];
-const errorMessages = [];
 
 // دالة لحساب المتوسط الموزون للإحداثيات
 function calculateWeightedCoordinates(samples) {
@@ -89,22 +78,13 @@ function buildAncestorsTree(data) {
 
     data.forEach(item => {
         const ancestorsStr = item['Ancestors'];
-        let latStr = item['Latitude'] ? item['Latitude'].toString().replace(',', '.').replace('٫', '.') : '';
-        let lonStr = item['Longitude'] ? item['Longitude'].toString().replace(',', '.').replace('٫', '.') : '';
+        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
+        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
 
-        if (ancestorsStr && latStr && lonStr) {
-            const lat = parseFloat(latStr);
-            const lon = parseFloat(lonStr);
-
-            if (isNaN(lat) || isNaN(lon)) {
-                console.warn(`إحداثيات غير صالحة في الصف: ${JSON.stringify(item)}`);
-                errorMessages.push(`إحداثيات غير صالحة للسلف: ${ancestorsStr}`);
-                return; // تخطي هذا الصف
-            }
-
+        if (ancestorsStr && lat && lon) {
             const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة وتقليم المسافات
-            const filteredAncestorList = ancestorList.map(a => a.trim()).filter(ancestor => ancestor !== '');
+            // إزالة أي عناصر فارغة
+            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
 
             filteredAncestorList.forEach((ancestor, index) => {
                 const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
@@ -125,9 +105,6 @@ function buildAncestorsTree(data) {
                     ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
                 }
             });
-        } else if (ancestorsStr) {
-            console.warn(`صف يحتوي على بيانات ناقصة: ${JSON.stringify(item)}`);
-            errorMessages.push(`بيانات ناقصة للسلف: ${ancestorsStr}`);
         }
     });
 
@@ -171,10 +148,8 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
                 html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
             });
 
-            // إضافة العلامة إلى الخريطة مع نافذة منبثقة
-            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon })
-                .bindPopup(`<strong>${node.name}</strong><br>المستوى: ${node.level}`)
-                .addTo(map);
+            // إضافة العلامة إلى الخريطة
+            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
             allMarkers.push(marker);
 
             // رسم خط بين السلف والأب (إذا كان موجوداً)
@@ -206,17 +181,11 @@ function updateMap(level) {
 
 // تحميل ومعالجة ملف CSV
 fetch(csvUrl)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-        return response.text();
-    })
+    .then(response => response.text())
     .then(csvText => {
         Papa.parse(csvText, {
             header: true,
             delimiter: ',',
-            skipEmptyLines: true,
             complete: function(results) {
                 const data = results.data;
                 // بناء هيكل الأسلاف
@@ -228,19 +197,11 @@ fetch(csvUrl)
 
                 // إضافة الأسلاف إلى الخريطة في المستوى الأولي
                 updateMap(0);
-
-                // عرض رسائل التحذير إذا وجدت
-                if (errorMessages.length > 0) {
-                    const errorDiv = document.getElementById('error-messages');
-                    errorDiv.innerHTML = `<strong>تحذيرات:</strong><ul>${errorMessages.map(msg => `<li>${msg}</li>`).join('')}</ul>`;
-                }
             }
         });
     })
     .catch(error => {
         console.error('خطأ في تحميل ملف CSV:', error);
-        const errorDiv = document.getElementById('error-messages');
-        errorDiv.innerHTML = `<strong>خطأ في تحميل ملف CSV:</strong> ${error.message}`;
     });
 
 // استماع لتغيير قيمة الشريط
@@ -252,4 +213,3 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
-
