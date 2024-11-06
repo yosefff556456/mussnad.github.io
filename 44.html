@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- تحميل مكتبة Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha512-sA+qxB9XqMojA6fW7DSXUBJU6ed5LSaHEr5d/zNfVHmyy5V88cDK/2gmU/lRv7i52Tcbx4TRSQe1hV8o3lr9Kg==" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <!-- تحميل مكتبة PapaParse -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
@@ -78,8 +78,8 @@ function buildAncestorsTree(data) {
 
     data.forEach(item => {
         const ancestorsStr = item[0]; // العمود الأول للأسلاف
-        let lat = item[1].replace(',', '.').replace('٫', '.'); // العمود الثاني للإحداثيات العرضية
-        let lon = item[2].replace(',', '.').replace('٫', '.'); // العمود الثالث للإحداثيات الطولية
+        let lat = item[1] && item[1].trim() ? item[1].replace(',', '.').replace('٫', '.') : null; // العمود الثاني للإحداثيات العرضية
+        let lon = item[2] && item[2].trim() ? item[2].replace(',', '.').replace('٫', '.') : null; // العمود الثالث للإحداثيات الطولية
 
         // **تعديل: التحقق من صحة الإحداثيات**
         if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
@@ -234,4 +234,5 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
+
 
