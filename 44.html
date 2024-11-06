@@ -16,6 +16,13 @@
         h2 {
             text-align: center;
         }
+        .label-text {
+            background-color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -47,91 +54,98 @@
             header: true,
             complete: function(results) {
                 var data = results.data;
-                var tree = {};
-                var nodes = {};
-                var relevantPaths = new Set();
+                var nodes = {}; // لتخزين معلومات السلف
+                var paths = []; // لتخزين المسارات المتعلقة بالسلف المستهدف
 
-                // أولاً، العثور على جميع المسارات التي تحتوي على السلف المستهدف
+                // أولاً، العثور على جميع السلاسل التي تنتهي بـ targetAncestor
                 data.forEach(function(row) {
                     var ancestors = row.Ancestors.split('>');
                     if (ancestors.includes(targetAncestor)) {
-                        // إضافة جميع الأجزاء من بداية السلسلة حتى السلف المستهدف
                         var index = ancestors.indexOf(targetAncestor);
-                        var path = ancestors.slice(0, index + 1).join('>');
-                        relevantPaths.add(path);
+                        var path = ancestors.slice(0, index + 1); // من البداية حتى السلف المستهدف
+                        paths.push(path);
                     }
                 });
 
-                // بناء الهيكل الشجري وتخزين الإحداثيات فقط للمسارات ذات الصلة
-                data.forEach(function(row) {
-                    var ancestors = row.Ancestors.split('>');
-                    // تحقق مما إذا كانت هذه السلسلة جزءًا من المسارات ذات الصلة
-                    for (var i = 1; i <= ancestors.length; i++) {
-                        var subPath = ancestors.slice(0, i).join('>');
-                        if (relevantPaths.has(subPath)) {
-                            // إذا كانت هذه السلسلة تتضمن السلف المستهدف
-                            if (i === ancestors.length && row.Latitude && row.Longitude) {
-                                nodes[subPath] = {
-                                    name: ancestors[i - 1],
-                                    lat: parseFloat(row.Latitude),
-                                    lng: parseFloat(row.Longitude)
-                                };
-                            }
+                // إذا كان هناك أكثر من مسار، يمكن اختيار واحد أو التعامل معهم جميعاً
+                // سنختار أول مسار موجود
+                if (paths.length === 0) {
+                    console.error("لم يتم العثور على السلف المستهدف في البيانات.");
+                    return;
+                }
+
+                var selectedPath = paths[0]; // اختيار المسار الأول
+
+                // بناء كائن nodes مع السلسلة المحددة
+                selectedPath.forEach(function(name, index) {
+                    // إيجاد الصف الذي يتطابق مع السلسلة حتى هذا الاسم
+                    var path = selectedPath.slice(0, index + 1).join('>');
+                    var row = data.find(function(r) {
+                        var ancestors = r.Ancestors.split('>');
+                        var currentPath = ancestors.slice(0, index + 1).join('>');
+                        return currentPath === path;
+                    });
+
+                    if (row) {
+                        if (row.Latitude && row.Longitude) {
+                            nodes[path] = {
+                                name: name,
+                                lat: parseFloat(row.Latitude),
+                                lng: parseFloat(row.Longitude)
+                            };
+                        } else {
+                            nodes[path] = {
+                                name: name,
+                                lat: null,
+                                lng: null
+                            };
                         }
                     }
                 });
 
-                // تقدير المواقع للأجداد بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
-                data.forEach(function(row) {
-                    var ancestors = row.Ancestors.split('>');
-                    for (var i = 0; i < ancestors.length -1; i++) {
-                        var ancestorPath = ancestors.slice(0, i+1).join('>');
-                        if (ancestorPath !== targetAncestor && relevantPaths.has(ancestorPath) && !nodes[ancestorPath]) {
-                            // ابحث عن جميع الأبناء المباشرين
-                            var children = data.filter(function(childRow) {
-                                return childRow.Ancestors.startsWith(ancestorPath + '>');
-                            });
-                            var sumLat = 0, sumLng = 0, count = 0;
-                            children.forEach(function(child) {
-                                if (child.Latitude && child.Longitude) {
-                                    sumLat += parseFloat(child.Latitude);
-                                    sumLng += parseFloat(child.Longitude);
-                                    count++;
-                                }
-                            });
-                            if (count > 0) {
-                                nodes[ancestorPath] = {
-                                    name: ancestors[i],
-                                    lat: sumLat / count,
-                                    lng: sumLng / count
-                                };
-                            }
+                // تقدير الإحداثيات للأجداد بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
+                // نبدأ من الأسفل (الأبناء) ونتجه للأعلى (الأجداد)
+                for (var i = selectedPath.length -1; i >=0; i--) {
+                    var path = selectedPath.slice(0, i +1).join('>');
+                    if (nodes[path].lat === null || nodes[path].lng === null) {
+                        // العثور على الأبناء المباشرين
+                        var childPath = selectedPath.slice(0, i +2).join('>'); // السلسلة التالية
+                        if (nodes[childPath] && nodes[childPath].lat !== null && nodes[childPath].lng !== null) {
+                            nodes[path].lat = nodes[childPath].lat;
+                            nodes[path].lng = nodes[childPath].lng;
                         }
-                    }
-                });
-
-                // إضافة العلامات والخطوط إلى الخريطة
-                for (var path in nodes) {
-                    var node = nodes[path];
-                    // إضافة علامة مع نص
-                    var marker = L.marker([node.lat, node.lng]).addTo(map)
-                        .bindPopup(node.name)
-                        .bindTooltip(node.name, {permanent: true, direction: 'right'});
-
-                    // رسم الخطوط بناءً على العلاقة الشجرية
-                    var ancestors = path.split('>');
-                    if (ancestors.length > 1) {
-                        var parentPath = ancestors.slice(0, -1).join('>');
-                        if (nodes[parentPath]) {
-                            var parent = nodes[parentPath];
-                            L.polyline([[parent.lat, parent.lng], [node.lat, node.lng]], {color: 'blue'}).addTo(map);
-                        }
+                        // في حال وجود أكثر من ابن، يمكن تعديل الكود لحساب المتوسط
+                        // لكن هنا نفترض وجود ابن واحد
                     }
                 }
 
+                // إنشاء مصفوفة للإحداثيات بالترتيب من الأجداد إلى السلف المستهدف
+                var latlngs = [];
+                selectedPath.forEach(function(name, index) {
+                    var path = selectedPath.slice(0, index +1).join('>');
+                    var node = nodes[path];
+                    if (node.lat && node.lng) {
+                        latlngs.push([node.lat, node.lng]);
+
+                        // إنشاء علامة نصية
+                        var label = L.marker([node.lat, node.lng], {
+                            icon: L.divIcon({
+                                className: 'label-text',
+                                html: node.name,
+                                iconSize: [100, 40],
+                                iconAnchor: [50, 20],
+                                direction: 'right'
+                            })
+                        }).addTo(map);
+                    }
+                });
+
+                // رسم خط الهجرة المستمر
+                var polyline = L.polyline(latlngs, {color: 'blue'}).addTo(map);
+
                 // ضبط عرض الخريطة بحيث يتناسب مع العلامات المضافة
-                var group = new L.featureGroup(Object.values(nodes).map(function(node) {
-                    return L.marker([node.lat, node.lng]);
+                var group = new L.featureGroup(latlngs.map(function(latlng) {
+                    return L.marker(latlng);
                 }));
                 map.fitBounds(group.getBounds().pad(0.5));
             },
