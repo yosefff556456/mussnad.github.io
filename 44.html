@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>عرض الأنساب على خريطة</title>
+    <title>عرض سلف J-Y5320 وأسلافه على خريطة</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         #map {
@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <h2>عرض الأنساب على خريطة</h2>
+    <h2>عرض سلف J-Y5320 وأسلافه على خريطة</h2>
     <div id="map"></div>
 
     <!-- مكتبة Leaflet -->
@@ -38,6 +38,9 @@
         // رابط ملف CSV الذي قدمته
         var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
 
+        // السلف المطلوب عرضه
+        var targetAncestor = 'J-Y5320';
+
         // تحميل ملف CSV
         Papa.parse(csvUrl, {
             download: true,
@@ -46,28 +49,36 @@
                 var data = results.data;
                 var tree = {};
                 var nodes = {};
+                var relevantPaths = new Set();
 
-                // بناء الهيكل الشجري وتخزين الإحداثيات
+                // أولاً، العثور على جميع المسارات التي تحتوي على السلف المستهدف
                 data.forEach(function(row) {
                     var ancestors = row.Ancestors.split('>');
-                    var currentPath = '';
-                    ancestors.forEach(function(name, index) {
-                        currentPath = index === 0 ? name : currentPath + '>' + name;
-                        if (!tree[currentPath]) {
-                            tree[currentPath] = {
-                                name: name,
-                                children: {},
-                                path: currentPath
-                            };
+                    if (ancestors.includes(targetAncestor)) {
+                        // إضافة جميع الأجزاء من بداية السلسلة حتى السلف المستهدف
+                        var index = ancestors.indexOf(targetAncestor);
+                        var path = ancestors.slice(0, index + 1).join('>');
+                        relevantPaths.add(path);
+                    }
+                });
+
+                // بناء الهيكل الشجري وتخزين الإحداثيات فقط للمسارات ذات الصلة
+                data.forEach(function(row) {
+                    var ancestors = row.Ancestors.split('>');
+                    // تحقق مما إذا كانت هذه السلسلة جزءًا من المسارات ذات الصلة
+                    for (var i = 1; i <= ancestors.length; i++) {
+                        var subPath = ancestors.slice(0, i).join('>');
+                        if (relevantPaths.has(subPath)) {
+                            // إذا كانت هذه السلسلة تتضمن السلف المستهدف
+                            if (i === ancestors.length && row.Latitude && row.Longitude) {
+                                nodes[subPath] = {
+                                    name: ancestors[i - 1],
+                                    lat: parseFloat(row.Latitude),
+                                    lng: parseFloat(row.Longitude)
+                                };
+                            }
                         }
-                        if (index === ancestors.length -1 && row.Latitude && row.Longitude) {
-                            nodes[currentPath] = {
-                                name: name,
-                                lat: parseFloat(row.Latitude),
-                                lng: parseFloat(row.Longitude)
-                            };
-                        }
-                    });
+                    }
                 });
 
                 // تقدير المواقع للأجداد بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
@@ -75,7 +86,7 @@
                     var ancestors = row.Ancestors.split('>');
                     for (var i = 0; i < ancestors.length -1; i++) {
                         var ancestorPath = ancestors.slice(0, i+1).join('>');
-                        if (!nodes[ancestorPath]) {
+                        if (ancestorPath !== targetAncestor && relevantPaths.has(ancestorPath) && !nodes[ancestorPath]) {
                             // ابحث عن جميع الأبناء المباشرين
                             var children = data.filter(function(childRow) {
                                 return childRow.Ancestors.startsWith(ancestorPath + '>');
@@ -107,7 +118,7 @@
                         .bindPopup(node.name)
                         .bindTooltip(node.name, {permanent: true, direction: 'right'});
 
-                    // رسم الخطوط بناءً على العلاقة الشجري
+                    // رسم الخطوط بناءً على العلاقة الشجرية
                     var ancestors = path.split('>');
                     if (ancestors.length > 1) {
                         var parentPath = ancestors.slice(0, -1).join('>');
@@ -117,6 +128,12 @@
                         }
                     }
                 }
+
+                // ضبط عرض الخريطة بحيث يتناسب مع العلامات المضافة
+                var group = new L.featureGroup(Object.values(nodes).map(function(node) {
+                    return L.marker([node.lat, node.lng]);
+                }));
+                map.fitBounds(group.getBounds().pad(0.5));
             },
             error: function(error) {
                 console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
@@ -125,4 +142,3 @@
     </script>
 </body>
 </html>
-
