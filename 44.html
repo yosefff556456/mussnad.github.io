@@ -201,23 +201,49 @@ function updateMap(level) {
 
 // تحميل ومعالجة ملف CSV
 fetch(csvUrl)
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+    })
     .then(csvText => {
         Papa.parse(csvText, {
             header: false,
             delimiter: ',',
+            skipEmptyLines: true, // تخطي الصفوف الفارغة
             complete: function(results) {
                 const data = results.data;
+                console.log('تم تحميل وتحليل بيانات CSV بنجاح:', data);
 
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
+                console.log('تم بناء هيكل الأسلاف:', roots);
+
+                // التحقق من وجود البيانات
+                if (!data || data.length === 0) {
+                    console.error('البيانات المستلمة من CSV فارغة.');
+                    return;
+                }
+
+                // التحقق من وجود جذور
+                if (roots.length === 0) {
+                    console.error('لم يتم العثور على أي جذور في هيكل الأسلاف.');
+                    return;
+                }
 
                 // تحديث الحد الأقصى للشريط بناءً على أقصى مستوى
                 const ancestorSlider = document.getElementById('ancestorSlider');
                 ancestorSlider.max = maxLevel;
 
+                // عرض المستوى الحالي
+                document.getElementById('currentLevel').textContent = 0;
+
                 // إضافة الأسلاف إلى الخريطة في المستوى الأولي
                 updateMap(0);
+            },
+            error: function(err) {
+                console.error('خطأ أثناء تحليل CSV:', err);
             }
         });
     })
@@ -234,5 +260,3 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
-
-
