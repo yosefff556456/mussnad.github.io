@@ -46,13 +46,15 @@
 
                         if (ancestors && !isNaN(latitude) && !isNaN(longitude)) {
                             let splitAncestors = ancestors.split('>');
-                            splitAncestors.forEach((ancestor) => {
-                                if (!ancestorLocations[ancestor]) {
-                                    ancestorLocations[ancestor] = { latSum: 0, lngSum: 0, count: 0 };
+                            splitAncestors.forEach((ancestor, index) => {
+                                if (index === splitAncestors.length - 1) {
+                                    if (!ancestorLocations[ancestor]) {
+                                        ancestorLocations[ancestor] = { latSum: 0, lngSum: 0, count: 0 };
+                                    }
+                                    ancestorLocations[ancestor].latSum += latitude;
+                                    ancestorLocations[ancestor].lngSum += longitude;
+                                    ancestorLocations[ancestor].count += 1;
                                 }
-                                ancestorLocations[ancestor].latSum += latitude;
-                                ancestorLocations[ancestor].lngSum += longitude;
-                                ancestorLocations[ancestor].count += 1;
                             });
                         }
                     });
@@ -73,11 +75,10 @@
         }
 
         // CSV URL
-        let csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
+        let csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?gid=0&single=true&output=csv';
 
         // Plot the ancestors on the map
         plotAncestorsFromCSV(csvUrl);
     </script>
 </body>
 </html>
-
