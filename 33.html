@@ -159,7 +159,7 @@ function buildAncestorsTree(data) {
 }
 
 // دالة لإضافة الأسلاف إلى الخريطة حتى مستوى معين
-function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
+function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = Infinity) {
     nodes.forEach(node => {
         if (node.level > maxDisplayLevel) {
             return;
@@ -209,7 +209,7 @@ function addAncestorsToMap(nodes, parentCoords = null, maxDisplayLevel = 0) {
 }
 
 // دالة لتحديث الخريطة بناءً على مستوى السلف المختار
-function updateMap(level) {
+function updateMap(level = Infinity) {
     // إزالة جميع العلامات والخطوط السابقة
     allMarkers.forEach(marker => map.removeLayer(marker));
     allPolylines.forEach(polyline => map.removeLayer(polyline));
@@ -242,22 +242,12 @@ fetch(csvUrl)
                 // بناء هيكل الأسلاف
                 buildAncestorsTree(data);
 
-                // تحديث عدد الصفوف المعالجة والمخلوطة
+                // عرض عدد الصفوف المعالجة والمخلوطة
                 document.getElementById('processedCount').textContent = processedCount;
                 document.getElementById('skippedCount').textContent = skippedCount;
 
-                // تحديث الحد الأقصى للشريط بناءً على أقصى مستوى
-                const ancestorSlider = document.getElementById('ancestorSlider');
-                ancestorSlider.max = maxLevel;
-                ancestorSlider.value = 0; // تعيين القيمة الابتدائية إلى 0
-
-                // عرض المستوى الحالي في شريط التقدم لتأكيد الإعداد الصحيح
-                document.getElementById('currentLevel').textContent = 0;
-
-                console.log('حد أقصى للشريط:', maxLevel);
-
-                // إضافة الأسلاف إلى الخريطة في المستوى الأولي
-                updateMap(0);
+                // إضافة الأسلاف إلى الخريطة في المستوى الأولي (كل المستويات)
+                updateMap();
             }
         });
     })
@@ -265,12 +255,7 @@ fetch(csvUrl)
         console.error('خطأ في تحميل ملف CSV:', error);
     });
 
-// استماع لتغيير قيمة الشريط
-document.getElementById('ancestorSlider').addEventListener('input', function() {
-    const level = parseInt(this.value);
-    document.getElementById('currentLevel').textContent = level;
-    updateMap(level);
-});
+// (اختياري) يمكنك إضافة دالة لمنع تداخل النصوص هنا، ولكنها تتطلب خوارزميات متقدمة أو استخدام مكتبات إضافية.
 </script>
 </body>
 </html>
