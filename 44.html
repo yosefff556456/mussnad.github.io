@@ -1,119 +1,211 @@
-import requests
-from bs4 import BeautifulSoup
-import json
-
-# طلب الطفرة من المستخدم
-snp_marker = input("أدخل الطفرة (SNP) المطلوبة (مثل J-Y10887): ").strip()
-
-# بناء رابط الصفحة
-url = f'https://www.yfull.com/tree/{snp_marker}/'
-
-# تحميل محتوى الصفحة
-response = requests.get(url)
-if response.status_code == 200:
-    html_content = response.text
-else:
-    print("خطأ في تحميل الصفحة. تأكد من أن الطفرة صحيحة.")
-    exit()
-
-# مسار ملف JSON الذي يحتوي على أكواد المناطق وإحداثياتها
-json_file_path = 'region_coordinates.json'
-
-# قراءة ملف JSON
-with open(json_file_path, 'r', encoding='utf-8') as json_file:
-    region_coordinates = json.load(json_file)
-
-soup = BeautifulSoup(html_content, 'html.parser')
-
-def extract_coordinates():
-    # البحث عن جميع العناصر التي تمثل الأشخاص
-    person_items = soup.find_all('li', attrs={'valsampleid': True})
-    
-    # قائمة لتخزين الإحداثيات
-    coordinates_list = []
-    
-    for person in person_items:
-        # استخراج كود المنطقة
-        b_tag = person.find('b', text=lambda x: x and '[' in x and ']' in x)
-        if b_tag:
-            region_code_full = b_tag.text.strip()
-            # استخراج النص بين القوسين المربعين
-            start = region_code_full.find('[') + 1
-            end = region_code_full.find(']')
-            region_code = region_code_full[start:end]
-            
-            # الحصول على الإحداثيات من ملف JSON
-            coordinates = region_coordinates.get(region_code)
-            if coordinates:
-                if isinstance(coordinates, str):
-                    lat_long = coordinates.split(',')
-                    if len(lat_long) == 2:
-                        latitude = float(lat_long[0].strip())
-                        longitude = float(lat_long[1].strip())
-                        coordinates_list.append([latitude, longitude])
-                else:
-                    latitude = coordinates.get('latitude')
-                    longitude = coordinates.get('longitude')
-                    if latitude and longitude:
-                        coordinates_list.append([float(latitude), float(longitude)])
-            else:
-                # إذا لم يتم العثور على الإحداثيات، يمكن تجاهل هذا العنصر
-                continue
-    return coordinates_list
-
-# استخراج الإحداثيات
-coordinates = extract_coordinates()
-
-if not coordinates:
-    print("لم يتم العثور على إحداثيات لعرضها على الخريطة.")
-    exit()
-
-# حفظ الإحداثيات في ملف JavaScript
-js_data = f"var heatmapData = {json.dumps(coordinates)};"
-
-with open('heatmap_data.js', 'w', encoding='utf-8') as js_file:
-    js_file.write(js_data)
-
-print("تم استخراج الإحداثيات وحفظها في الملف: heatmap_data.js")
-
-# إنشاء ملف HTML للخريطة
-html_content = '''
 <!DOCTYPE html>
 <html>
 <head>
-    <title>خريطة الحرارة للطفرة {snp_marker}</title>
-    <meta charset="utf-8" />
+    <title>خريطة الأسلاف التفاعلية</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- تحميل مكتبة Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- تحميل مكتبة PapaParse -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        #mapid {{ height: 600px; }}
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        .ancestor-label {
+            font-weight: bold;
+            text-align: center;
+            color: black;
+            text-shadow: 1px 1px 2px white;
+        }
+        .highlighted-ancestor-label {
+            font-weight: bold;
+            text-align: center;
+            color: red; /* لون النص المختلف */
+            text-shadow: 1px 1px 2px white;
+            border: 2px solid red; /* إطار ملون */
+            border-radius: 5px;
+            padding: 2px;
+        }
     </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-     integrity="sha512-xodZBntMnuCAL0zzJH5wU3sP6ih7qo+4ySJrR+SvbQ8QevtykHMf1mxG8j6n8AbT3cZrA3PPY1JX9Hh5Qw5u1A=="
-     crossorigin=""/>
 </head>
 <body>
-    <h3>خريطة الحرارة للطفرة {snp_marker}</h3>
-    <div id="mapid"></div>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-     integrity="sha512-gZwIG9x3wUXgLybN0QqKD1XnEh6p1Vioe9FAIUKSdBl+zX3xI5pVQDlyf3YhX3cNjzrFmd5xRz7qZ5aE2r3zsw=="
-     crossorigin=""></script>
-    <script src="heatmap_data.js"></script>
-    <!-- إضافة مكتبة Leaflet.heat -->
-    <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
-    <script>
-        var map = L.map('mapid').setView([20.0, 45.0], 5);  // يمكنك تعديل مركز الخريطة ومستوى التكبير
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {{
-            maxZoom: 18,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }}).addTo(map);
 
-        // استخدام البيانات من heatmap_data.js
-        var heat = L.heatLayer(heatmapData, {{radius: 25}}).addTo(map);
-    </script>
+<h2>خريطة الأسلاف التفاعلية</h2>
+<div id="map"></div>
+
+<!-- تحميل مكتبة Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<!-- كود JavaScript -->
+<script>
+// رابط ملف CSV
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSpMbhaSndsY1yipwmmM1nBlu3lbTrx1XUTrant5BrPmE_LoZQdKQPUwowoFf39Xw/pub?output=csv';
+
+// إنشاء الخريطة
+const map = L.map('map').setView([16.6161, 43.0556], 6);
+
+// إضافة طبقة الخريطة
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; مساهمة OpenStreetMap'
+}).addTo(map);
+
+// دالة لحساب المتوسط الموزون للإحداثيات
+function calculateWeightedCoordinates(samples) {
+    let totalLat = 0;
+    let totalLon = 0;
+    let totalWeight = 0;
+    samples.forEach(sample => {
+        const weight = sample.weight;
+        totalLat += parseFloat(sample.lat) * weight;
+        totalLon += parseFloat(sample.lon) * weight;
+        totalWeight += weight;
+    });
+    return {
+        lat: totalLat / totalWeight,
+        lon: totalLon / totalWeight
+    };
+}
+
+// بناء هيكل الأسلاف
+function buildAncestorsTree(data) {
+    const ancestorsTree = {};
+
+    data.forEach(item => {
+        const ancestorsStr = item['Ancestors'];
+        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
+        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
+
+        if (ancestorsStr && lat && lon) {
+            const ancestorList = ancestorsStr.split('>');
+            // إزالة أي عناصر فارغة
+            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
+
+            filteredAncestorList.forEach((ancestor, index) => {
+                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
+                if (!ancestorsTree[ancestorKey]) {
+                    ancestorsTree[ancestorKey] = {
+                        name: ancestor,
+                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
+                        samples: [],
+                        children: [],
+                        level: index // مستوى السلف في الشجرة
+                    };
+                }
+                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
+                if (index === filteredAncestorList.length - 1) {
+                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
+                }
+            });
+        }
+    });
+
+    // بناء العلاقات بين الأسلاف
+    Object.values(ancestorsTree).forEach(node => {
+        if (node.parent && ancestorsTree[node.parent]) {
+            ancestorsTree[node.parent].children.push(node);
+        }
+    });
+
+    // استخراج الجذور (الأسلاف بدون والد)
+    const roots = Object.values(ancestorsTree).filter(node => !node.parent);
+
+    return ancestorsTree;
+}
+
+// دالة لإيجاد مسار إلى سلف معين
+function findPathToAncestor(ancestorsTree, targetName) {
+    for (const key in ancestorsTree) {
+        if (ancestorsTree[key].name === targetName) {
+            const path = [];
+            let current = ancestorsTree[key];
+            while (current) {
+                path.unshift(current);
+                current = current.parent ? ancestorsTree[current.parent] : null;
+            }
+            return path;
+        }
+    }
+    return [];
+}
+
+// دالة لإضافة الأسلاف إلى الخريطة
+function addAncestorsToMap(ancestorsTree, pathToTarget) {
+    const migrationPathCoords = [];
+
+    Object.values(ancestorsTree).forEach(node => {
+        let avgCoords = null;
+        if (node.samples.length > 0) {
+            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
+            avgCoords = calculateWeightedCoordinates(node.samples);
+        }
+
+        if (avgCoords) {
+            // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
+            const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
+
+            // تحديد ما إذا كان هذا السلف هو الهدف
+            const isTarget = pathToTarget.includes(node);
+
+            // إنشاء أيقونة نصية لعرض اسم السلف
+            const myIcon = L.divIcon({
+                className: isTarget ? 'highlighted-ancestor-label' : 'ancestor-label',
+                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
+            });
+
+            // إضافة العلامة إلى الخريطة
+            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
+
+            // إذا كان السلف جزءًا من مسار الهجرة، أضف إحداثياته إلى المصفوفة
+            if (isTarget) {
+                migrationPathCoords.push([avgCoords.lat, avgCoords.lon]);
+            }
+
+            // إضافة الإحداثيات إلى مسار الهجرة إذا كان السلف جزءًا من المسار
+            if (pathToTarget.includes(node)) {
+                migrationPathCoords.push([avgCoords.lat, avgCoords.lon]);
+            }
+        }
+    });
+
+    // رسم مسار الهجرة إذا كان هناك مسار
+    if (migrationPathCoords.length > 1) {
+        const migrationPath = L.polyline(migrationPathCoords, { color: 'red', weight: 3, dashArray: '5, 10' }).addTo(map);
+
+        // تحريك الخريطة ليشمل كامل مسار الهجرة
+        map.fitBounds(migrationPath.getBounds());
+    }
+}
+
+// تحميل ومعالجة ملف CSV
+fetch(csvUrl)
+    .then(response => response.text())
+    .then(csvText => {
+        Papa.parse(csvText, {
+            header: true,
+            delimiter: ',',
+            complete: function(results) {
+                const data = results.data;
+                // بناء هيكل الأسلاف
+                const ancestorsTree = buildAncestorsTree(data);
+
+                // إيجاد المسار إلى "J-Y5320"
+                const pathToJY5320 = findPathToAncestor(ancestorsTree, 'J-Y5320');
+
+                if (pathToJY5320.length === 0) {
+                    console.error('لم يتم العثور على السلف "J-Y5320" في البيانات.');
+                    return;
+                }
+
+                // إضافة الأسلاف إلى الخريطة مع تمييز المسار
+                addAncestorsToMap(ancestorsTree, pathToJY5320);
+            }
+        });
+    })
+    .catch(error => {
+        console.error('خطأ في تحميل ملف CSV:', error);
+    });
+</script>
 </body>
 </html>
-'''.format(snp_marker=snp_marker)
-
-with open('heatmap.html', 'w', encoding='utf-8') as html_file:
-    html_file.write(html_content)
-
-print("تم إنشاء ملف الخريطة وحفظه في: heatmap.html")
