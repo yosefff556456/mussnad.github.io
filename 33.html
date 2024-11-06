@@ -39,7 +39,7 @@
 <!-- كود JavaScript -->
 <script>
 // رابط ملف CSV
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-fdrB32KhwzMRLUMO4kN0zeq02OeTzy6U6vERViS_LR7BqiClF-tAuG3LokBJ9IdTNKVbvFUEcxdt/pub?output=csv';
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQtUvyg4cAJ-_URVq0oQCmE3qYiVbbjwR25Gbm3b8vAewHkuukIrCdcO1FB-ZzHk6t19tljHp2mcQmh/pub?output=csv';
 
 // إنشاء الخريطة
 const map = L.map('map').setView([16.6161, 43.0556], 6);
@@ -78,8 +78,8 @@ function buildAncestorsTree(data) {
 
     data.forEach(item => {
         const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'].replace('.', '.').replace('.', '.');
-        let lon = item['Longitude'].replace('.', '.').replace('.', '.');
+        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
+        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
 
         // **تعديل: التحقق من صحة الإحداثيات**
         if (ancestorsStr && lat && lon && !isNaN(lat) && !isNaN(lon)) {
@@ -233,4 +233,3 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
-
