@@ -127,56 +127,39 @@ function findPathToAncestor(ancestorsTree, targetName) {
     return [];
 }
 
-// دالة لإضافة الأسلاف إلى الخريطة
-function addAncestorsToMap(ancestorsTree, pathToTarget) {
+// دالة لإضافة الأسلاف إلى الخريطة وتحريك العلامة
+function addAncestorsToMap(pathToTarget) {
+    if (pathToTarget.length === 0) {
+        console.error('لا يوجد مسار إلى السلف المستهدف.');
+        return;
+    }
+
     const migrationPathCoords = [];
-    const markers = [];
+    const ancestorCoords = [];
 
-    pathToTarget.forEach((node, index) => {
-        let avgCoords = null;
+    // جمع إحداثيات المسار
+    pathToTarget.forEach(node => {
         if (node.samples.length > 0) {
-            // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
-            avgCoords = calculateWeightedCoordinates(node.samples);
-        }
-
-        if (avgCoords) {
-            // تحديد حجم النص بناءً على مستوى السلف (أقدمية السلف)
-            const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
-
-            // تحديد ما إذا كان هذا السلف هو الهدف
-            const isTarget = (node.name === 'J-Y5320');
-
-            // إنشاء أيقونة نصية لعرض اسم السلف
-            const myIcon = L.divIcon({
-                className: isTarget ? 'highlighted-ancestor-label' : 'ancestor-label',
-                html: `<div style="font-size: ${fontSize}px;">${node.name}</div>`
+            const coords = calculateWeightedCoordinates(node.samples);
+            migrationPathCoords.push([coords.lat, coords.lon]);
+            ancestorCoords.push({
+                name: node.name,
+                lat: coords.lat,
+                lon: coords.lon,
+                isTarget: node.name === 'J-Y5320'
             });
-
-            // إضافة العلامة إلى الخريطة
-            const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
-            markers.push(marker);
-
-            // إضافة الإحداثيات إلى مسار الهجرة
-            migrationPathCoords.push([avgCoords.lat, avgCoords.lon]);
         }
     });
 
     // رسم مسار الهجرة
-    if (migrationPathCoords.length > 1) {
-        const migrationPath = L.polyline(migrationPathCoords, { color: 'blue', weight: 3 }).addTo(map);
-        map.fitBounds(migrationPath.getBounds());
-    }
+    const migrationPath = L.polyline(migrationPathCoords, { color: 'blue', weight: 3 }).addTo(map);
+    map.fitBounds(migrationPath.getBounds());
 
-    // بدء حركة العلامة المتحركة عبر المسار
-    animateMarker(migrationPathCoords);
-}
+    // إعداد العلامة المتحركة
+    let currentIndex = 0;
 
-// دالة لتحريك العلامة عبر المسار
-function animateMarker(coords) {
-    if (coords.length === 0) return;
-
-    // إنشاء علامة متحركة
-    const movingMarker = L.marker(coords[0], { 
+    // إنشاء العلامة المتحركة
+    const movingMarker = L.marker(migrationPathCoords[0], { 
         icon: L.icon({
             iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
             iconSize: [25, 41],
@@ -187,15 +170,36 @@ function animateMarker(coords) {
         })
     }).addTo(map);
 
-    let currentIndex = 0;
-
+    // دالة لتحريك العلامة وإضافة العلامات عند كل سلف
     function moveMarker() {
         currentIndex++;
-        if (currentIndex >= coords.length) {
+        if (currentIndex >= migrationPathCoords.length) {
             clearInterval(interval);
             return;
         }
-        movingMarker.setLatLng(coords[currentIndex]);
+
+        // تحريك العلامة إلى الموقع التالي
+        movingMarker.setLatLng(migrationPathCoords[currentIndex]);
+
+        // إضافة علامة السلف عند هذا الموقع
+        const ancestor = ancestorCoords[currentIndex];
+        const isTarget = ancestor.isTarget;
+
+        // إنشاء أيقونة نصية لعرض اسم السلف
+        const myIcon = L.divIcon({
+            className: isTarget ? 'highlighted-ancestor-label' : 'ancestor-label',
+            html: `<div style="font-size: ${16 + (5 * (5 - pathToTarget[currentIndex].level)}px;">${ancestor.name}</div>`
+        });
+
+        // إضافة العلامة إلى الخريطة
+        L.marker([ancestor.lat, ancestor.lon], { icon: myIcon }).addTo(map);
+
+        // يمكن إضافة Popup لعرض معلومات إضافية إذا رغبت
+        /*
+        L.marker([ancestor.lat, ancestor.lon], { icon: myIcon })
+            .addTo(map)
+            .bindPopup(`<b>${ancestor.name}</b><br>معلومات إضافية هنا.`);
+        */
     }
 
     // تحريك العلامة كل ثانية (1000 مللي ثانية)
@@ -222,8 +226,8 @@ fetch(csvUrl)
                     return;
                 }
 
-                // إضافة الأسلاف إلى الخريطة مع تمييز المسار
-                addAncestorsToMap(ancestorsTree, pathToJY5320);
+                // إضافة الأسلاف إلى الخريطة وتحريك العلامة
+                addAncestorsToMap(pathToJY5320);
             }
         });
     })
@@ -233,3 +237,4 @@ fetch(csvUrl)
 </script>
 </body>
 </html>
+
