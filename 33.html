@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- تحميل مكتبة Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-sA+e2eQTr+T0r9sVSSK1H6CYPsVE5AjfZ1s8FUbE3pg=" crossorigin=""/>
     <!-- تحميل مكتبة PapaParse -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-bCzlE1o1u2GnQ4NK28G/dMFg8jO4N1NqO6dQ7gh3wX+jUlNxWk2FLyLc1W1iLSpUe14KbvD1ubI3YPoOfYCbVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         #map {
             height: 600px;
@@ -44,7 +44,7 @@
 <div id="map"></div>
 
 <!-- تحميل مكتبة Leaflet -->
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-o9N1jZT2jgzrYvPLXMCjgkEDKZ5Oq0mJ6btYkTQ8S00=" crossorigin=""></script>
 
 <!-- كود JavaScript -->
 <script>
@@ -103,7 +103,7 @@ function buildAncestorsTree(data) {
             }
 
             const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة
+            // إزالة أي عناصر فارغة وتقليم المسافات
             const filteredAncestorList = ancestorList.map(a => a.trim()).filter(ancestor => ancestor !== '');
 
             filteredAncestorList.forEach((ancestor, index) => {
@@ -252,3 +252,4 @@ document.getElementById('ancestorSlider').addEventListener('input', function() {
 </script>
 </body>
 </html>
+
