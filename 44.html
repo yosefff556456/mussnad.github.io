@@ -108,9 +108,6 @@ function buildAncestorsTree(data) {
         }
     });
 
-    // استخراج الجذور (الأسلاف بدون والد)
-    const roots = Object.values(ancestorsTree).filter(node => !node.parent);
-
     return ancestorsTree;
 }
 
@@ -133,8 +130,9 @@ function findPathToAncestor(ancestorsTree, targetName) {
 // دالة لإضافة الأسلاف إلى الخريطة
 function addAncestorsToMap(ancestorsTree, pathToTarget) {
     const migrationPathCoords = [];
+    const markers = [];
 
-    Object.values(ancestorsTree).forEach(node => {
+    pathToTarget.forEach((node, index) => {
         let avgCoords = null;
         if (node.samples.length > 0) {
             // حساب موقع السلف التقريبي باستخدام المتوسط الموزون
@@ -146,7 +144,7 @@ function addAncestorsToMap(ancestorsTree, pathToTarget) {
             const fontSize = 16 + (5 * (5 - node.level)); // يمكنك تعديل هذه القيم حسب الرغبة
 
             // تحديد ما إذا كان هذا السلف هو الهدف
-            const isTarget = pathToTarget.includes(node);
+            const isTarget = (node.name === 'J-Y5320');
 
             // إنشاء أيقونة نصية لعرض اسم السلف
             const myIcon = L.divIcon({
@@ -156,26 +154,52 @@ function addAncestorsToMap(ancestorsTree, pathToTarget) {
 
             // إضافة العلامة إلى الخريطة
             const marker = L.marker([avgCoords.lat, avgCoords.lon], { icon: myIcon }).addTo(map);
+            markers.push(marker);
 
-            // إذا كان السلف جزءًا من مسار الهجرة، أضف إحداثياته إلى المصفوفة
-            if (isTarget) {
-                migrationPathCoords.push([avgCoords.lat, avgCoords.lon]);
-            }
-
-            // إضافة الإحداثيات إلى مسار الهجرة إذا كان السلف جزءًا من المسار
-            if (pathToTarget.includes(node)) {
-                migrationPathCoords.push([avgCoords.lat, avgCoords.lon]);
-            }
+            // إضافة الإحداثيات إلى مسار الهجرة
+            migrationPathCoords.push([avgCoords.lat, avgCoords.lon]);
         }
     });
 
-    // رسم مسار الهجرة إذا كان هناك مسار
+    // رسم مسار الهجرة
     if (migrationPathCoords.length > 1) {
-        const migrationPath = L.polyline(migrationPathCoords, { color: 'red', weight: 3, dashArray: '5, 10' }).addTo(map);
-
-        // تحريك الخريطة ليشمل كامل مسار الهجرة
+        const migrationPath = L.polyline(migrationPathCoords, { color: 'blue', weight: 3 }).addTo(map);
         map.fitBounds(migrationPath.getBounds());
     }
+
+    // بدء حركة العلامة المتحركة عبر المسار
+    animateMarker(migrationPathCoords);
+}
+
+// دالة لتحريك العلامة عبر المسار
+function animateMarker(coords) {
+    if (coords.length === 0) return;
+
+    // إنشاء علامة متحركة
+    const movingMarker = L.marker(coords[0], { 
+        icon: L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+            shadowSize: [41, 41]
+        })
+    }).addTo(map);
+
+    let currentIndex = 0;
+
+    function moveMarker() {
+        currentIndex++;
+        if (currentIndex >= coords.length) {
+            clearInterval(interval);
+            return;
+        }
+        movingMarker.setLatLng(coords[currentIndex]);
+    }
+
+    // تحريك العلامة كل ثانية (1000 مللي ثانية)
+    const interval = setInterval(moveMarker, 1000);
 }
 
 // تحميل ومعالجة ملف CSV
