@@ -65,7 +65,7 @@
         }).addTo(map);
 
         // روابط ملفات CSV
-        var csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv'; // استبدلها برابط ملف CSV الأساسي
+ var csvUrl1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv'; // استبدلها برابط ملف CSV الأساسي
         var csvUrl2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSGe3-PRkHipGFhbf_UwtAE86jhUQiVTAIon735l6cCFJYfIEUgkChCX0jQ6igP7w/pub?output=csv'; // استبدلها برابط ملف CSV الإضافي
 
         // تحميل ملفات CSV باستخدام PapaParse
@@ -99,13 +99,13 @@
                             name: name,
                             children: [],
                             parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
-                            latitudes: [], // لتخزين جميع إحداثيات خط العرض
-                            longitudes: []  // لتخزين جميع إحداثيات خط الطول
+                            latitudes: [], // لتخزين جميع إحداثيات خط العرض مع الوزن
+                            longitudes: []  // لتخزين جميع إحداثيات خط الطول مع الوزن
                         };
                         ancestorList.push(currentPath);
                     }
 
-                    // إضافة إحداثيات السلف إذا كانت موجودة
+                    // إضافة إحداثيات السلف إذا كانت موجودة مع الوزن المناسب
                     if (row.Latitude && row.Longitude) {
                         tree[currentPath].latitudes.push(parseFloat(row.Latitude) * weight);
                         tree[currentPath].longitudes.push(parseFloat(row.Longitude) * weight);
@@ -121,10 +121,10 @@
             });
         }
 
-        // تحميل كلا الملفين
+        // تحميل كلا الملفين مع الوزن المناسب (1 للأساسي و4 للإضافي)
         loadCSV(csvUrl1, 1, function(data1, weight1) {
             processData(data1, weight1);
-            loadCSV(csvUrl2, 2, function(data2, weight2) {
+            loadCSV(csvUrl2, 4, function(data2, weight2) {
                 processData(data2, weight2);
                 finalizeData();
             });
@@ -272,7 +272,7 @@
             var allMarkers = markers.map(function(m) { return m.marker; });
             var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
             map.fitBounds(group.getBounds().pad(0.5));
-        }
-    </script>
-</body>
+        </script>
+    </body>
 </html>
+
