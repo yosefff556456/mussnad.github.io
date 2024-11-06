@@ -35,6 +35,9 @@
                 header: true,
                 complete: function(results) {
                     let data = results.data;
+                    let ancestorLocations = {};
+
+                    // Calculate approximate location for each ancestor
                     data.forEach((row) => {
                         let ancestors = row['Ancestors'];
                         let latitude = parseFloat(row['Latitude']);
@@ -42,11 +45,28 @@
 
                         if (!isNaN(latitude) && !isNaN(longitude)) {
                             let splitAncestors = ancestors.split('>');
-                            let lastAncestor = splitAncestors[splitAncestors.length - 1];
-                            let marker = L.marker([latitude, longitude]).addTo(map);
-                            marker.bindPopup(`<b>Ancestor:</b> ${lastAncestor}<br><b>Full Path:</b> ${ancestors}`);
+                            splitAncestors.forEach((ancestor, index) => {
+                                if (!ancestorLocations[ancestor]) {
+                                    ancestorLocations[ancestor] = { latSum: 0, lngSum: 0, count: 0 };
+                                }
+                                ancestorLocations[ancestor].latSum += latitude;
+                                ancestorLocations[ancestor].lngSum += longitude;
+                                ancestorLocations[ancestor].count += 1;
+                            });
                         }
                     });
+
+                    // Plot markers for each ancestor based on average locations
+                    for (let ancestor in ancestorLocations) {
+                        let location = ancestorLocations[ancestor];
+                        let avgLat = location.latSum / location.count;
+                        let avgLng = location.lngSum / location.count;
+
+                        if (!isNaN(avgLat) && !isNaN(avgLng)) {
+                            let marker = L.marker([avgLat, avgLng]).addTo(map);
+                            marker.bindPopup(`<b>Ancestor:</b> ${ancestor}`);
+                        }
+                    }
                 }
             });
         }
@@ -59,3 +79,4 @@
     </script>
 </body>
 </html>
+
