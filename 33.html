@@ -65,31 +65,37 @@ function buildAncestorsTree(data) {
 
     data.forEach(item => {
         const ancestorsStr = item['Ancestors'];
-        let lat = item['Latitude'].replace(',', '.').replace('٫', '.');
-        let lon = item['Longitude'].replace(',', '.').replace('٫', '.');
+        let lat = item['Latitude'] ? item['Latitude'].replace(',', '.').replace('٫', '.') : '';
+        let lon = item['Longitude'] ? item['Longitude'].replace(',', '.').replace('٫', '.') : '';
 
-        if (ancestorsStr && lat && lon) {
-            const ancestorList = ancestorsStr.split('>');
-            // إزالة أي عناصر فارغة
-            const filteredAncestorList = ancestorList.filter(ancestor => ancestor.trim() !== '');
-
-            filteredAncestorList.forEach((ancestor, index) => {
-                const ancestorKey = filteredAncestorList.slice(0, index + 1).join('>');
-                if (!ancestorsTree[ancestorKey]) {
-                    ancestorsTree[ancestorKey] = {
-                        name: ancestor,
-                        parent: index > 0 ? filteredAncestorList.slice(0, index).join('>') : null,
-                        samples: [],
-                        children: [],
-                        level: index // مستوى السلف في الشجرة
-                    };
-                }
-                // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
-                if (index === filteredAncestorList.length - 1) {
-                    ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
-                }
-            });
+        // تحقق من وجود إحداثيات صالحة
+        if (!lat || !lon) {
+            return; // تخطى هذا الصف إذا كانت الإحداثيات فارغة
         }
+
+        const ancestorList = ancestorsStr.split('>').map(ancestor => ancestor.trim());
+
+        // تحقق مما إذا كان أي من الأسلاف يحتوي على علامة النجمة (*)
+        if (ancestorList.some(ancestor => ancestor.includes('*'))) {
+            return; // تخطى هذا الصف إذا كان هناك سلف يحتوي على *
+        }
+
+        ancestorList.forEach((ancestor, index) => {
+            const ancestorKey = ancestorList.slice(0, index + 1).join('>');
+            if (!ancestorsTree[ancestorKey]) {
+                ancestorsTree[ancestorKey] = {
+                    name: ancestor,
+                    parent: index > 0 ? ancestorList.slice(0, index).join('>') : null,
+                    samples: [],
+                    children: [],
+                    level: index // مستوى السلف في الشجرة
+                };
+            }
+            // إذا كان هذا هو السلف الأخير في القائمة، أضف العينة إليه
+            if (index === ancestorList.length - 1) {
+                ancestorsTree[ancestorKey].samples.push({ lat: lat, lon: lon, weight: 1 });
+            }
+        });
     });
 
     // بناء العلاقات بين الأسلاف
