@@ -67,68 +67,87 @@
         // رابط ملف CSV الذي قدمته
         var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv';
 
-        // تحميل ملف CSV
+        // تحميل ملف CSV باستخدام PapaParse
         Papa.parse(csvUrl, {
             download: true,
             header: true,
             complete: function(results) {
-                var data = results.data;
+                var data = results.data; // البيانات المحملة من CSV
                 var tree = {}; // هيكل الشجرة
-                var nodes = {}; // لتخزين معلومات الأنساب
+                var nodes = {}; // لتخزين معلومات الأنساب وإحداثياتها
                 var connections = []; // لتخزين العلاقات بين الأنساب
                 var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
 
-                // بناء هيكل الشجرة وتخزين الإحداثيات إذا كانت موجودة
+                // جمع إحداثيات كل سلف عبر جميع السلاسل
                 data.forEach(function(row) {
                     var ancestors = row.Ancestors.split('>');
                     var currentPath = '';
                     ancestors.forEach(function(name, index) {
                         currentPath = index === 0 ? name : currentPath + '>' + name;
+
+                        // إذا لم يتم تسجيل السلف بعد، نقوم بإنشائه
                         if (!tree[currentPath]) {
                             tree[currentPath] = {
                                 name: name,
                                 children: [],
-                                parent: index > 0 ? ancestors.slice(0, index).join('>') : null,
-                                lat: row.Latitude && row.Longitude ? parseFloat(row.Latitude) : null,
-                                lng: row.Latitude && row.Longitude ? parseFloat(row.Longitude) : null
+                                parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
+                                latitudes: [], // لتخزين جميع إحداثيات خط العرض
+                                longitudes: []  // لتخزين جميع إحداثيات خط الطول
                             };
-                            // إضافة السلسلة إلى nodes
-                            nodes[currentPath] = tree[currentPath];
-                            // إضافة السلسلة إلى قائمة الأنساب
                             ancestorList.push(currentPath);
                         }
+
+                        // إضافة إحداثيات السلف إذا كانت موجودة
+                        if (row.Latitude && row.Longitude) {
+                            tree[currentPath].latitudes.push(parseFloat(row.Latitude));
+                            tree[currentPath].longitudes.push(parseFloat(row.Longitude));
+                        }
+
                         // ربط الأب بالأبناء
                         if (index > 0) {
                             var parentPath = ancestors.slice(0, index).join('>');
                             tree[parentPath].children.push(currentPath);
+                            tree[currentPath].parents.push(parentPath);
                         }
                     });
                 });
 
-                // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق الشجرة
-                ancestorList.sort(function(a, b) {
-                    return a.split('>').length - b.split('>').length;
+                // حساب متوسط الإحداثيات لكل سلف
+                Object.keys(tree).forEach(function(path) {
+                    var node = tree[path];
+                    if (node.latitudes.length > 0 && node.longitudes.length > 0) {
+                        // حساب المتوسط الحسابي للإحداثيات
+                        var sumLat = node.latitudes.reduce((a, b) => a + b, 0);
+                        var sumLng = node.longitudes.reduce((a, b) => a + b, 0);
+                        node.lat = sumLat / node.latitudes.length;
+                        node.lng = sumLng / node.longitudes.length;
+                    } else {
+                        node.lat = null;
+                        node.lng = null;
+                    }
                 });
 
-                // وظيفة لتقدير إحداثيات الأنساب بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
+                // وظيفة لتقدير إحداثيات السلف بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
                 function estimateCoordinates() {
                     var updated = false;
-                    ancestorList.forEach(function(path) {
-                        var node = nodes[path];
-                        if ((node.lat === null || node.lng === null) && node.children.length > 0) {
-                            var sumLat = 0, sumLng = 0, count = 0;
-                            node.children.forEach(function(childPath) {
-                                var child = nodes[childPath];
-                                if (child.lat !== null && child.lng !== null) {
-                                    sumLat += child.lat;
-                                    sumLng += child.lng;
-                                    count++;
+                    Object.keys(tree).forEach(function(path) {
+                        var node = tree[path];
+                        if (node.lat === null || node.lng === null) {
+                            if (node.children.length > 0) {
+                                var sumLat = 0, sumLng = 0, count = 0;
+                                node.children.forEach(function(childPath) {
+                                    var child = tree[childPath];
+                                    if (child.lat !== null && child.lng !== null) {
+                                        sumLat += child.lat;
+                                        sumLng += child.lng;
+                                        count++;
+                                    }
+                                });
+                                if (count > 0) {
+                                    node.lat = sumLat / count;
+                                    node.lng = sumLng / count;
+                                    updated = true;
                                 }
-                            });
-                            if (count > 0) {
-                                node.lat = sumLat / count;
-                                node.lng = sumLng / count;
-                                updated = true;
                             }
                         }
                     });
@@ -138,17 +157,17 @@
                 // تقدير الإحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
                 while (estimateCoordinates()) {}
 
-                // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
-                var maxSliderValue = ancestorList.length;
-                document.getElementById('slider').max = maxSliderValue;
+                // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق السلسلة الأنسابية
+                ancestorList.sort(function(a, b) {
+                    return a.split('>').length - b.split('>').length;
+                });
 
-                // تخزين الماركيرات والخطوط
+                // إنشاء الماركيرات والخطوط وترتيبها
                 var markers = [];
                 var polylines = [];
 
-                // إنشاء الماركيرات والخطوط وترتيبها
                 ancestorList.forEach(function(path, index) {
-                    var node = nodes[path];
+                    var node = tree[path];
                     if (node.lat !== null && node.lng !== null) {
                         // إنشاء ماركر نصي
                         var marker = L.marker([node.lat, node.lng], {
@@ -165,19 +184,25 @@
                             index: index + 1 // ترتيب الأنساب يبدأ من 1
                         });
 
-                        // إنشاء خط ربط بالوالد
-                        if (node.parent && nodes[node.parent].lat !== null && nodes[node.parent].lng !== null) {
-                            var polyline = L.polyline([
-                                [nodes[node.parent].lat, nodes[node.parent].lng],
-                                [node.lat, node.lng]
-                            ], {color: 'blue'});
-                            polylines.push({
-                                polyline: polyline,
-                                index: index + 1 // ترتيب الأنساب يبدأ من 1
-                            });
-                        }
+                        // إنشاء خطوط ربط بين الأبناء والآباء
+                        node.parents.forEach(function(parentPath) {
+                            if (tree[parentPath].lat !== null && tree[parentPath].lng !== null) {
+                                var polyline = L.polyline([
+                                    [tree[parentPath].lat, tree[parentPath].lng],
+                                    [node.lat, node.lng]
+                                ], {color: 'blue'});
+                                polylines.push({
+                                    polyline: polyline,
+                                    index: index + 1 // ترتيب الأنساب يبدأ من 1
+                                });
+                            }
+                        });
                     }
                 });
+
+                // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
+                var maxSliderValue = markers.length;
+                document.getElementById('slider').max = maxSliderValue;
 
                 // وظيفة لتحديث الخريطة بناءً على قيمة شريط التمرير
                 function updateMap(value) {
@@ -226,4 +251,3 @@
     </script>
 </body>
 </html>
-
