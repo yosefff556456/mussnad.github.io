@@ -8,37 +8,23 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
     <style>
-        #progress-container {
+        #slider-container {
+            margin: 10px 0;
+        }
+        #map {
             width: 100%;
-            background-color: #e0e0e0;
-            margin: 10px 0;
-            height: 25px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        #progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #4caf50;
-            text-align: center;
-            color: white;
-            line-height: 25px;
-            font-weight: bold;
-        }
-        #info {
-            margin: 10px 0;
-            font-weight: bold;
+            height: 500px;
         }
     </style>
 </head>
 <body>
     <h1>تمثيل النقاط المركزية لكل سلف</h1>
-    <div id="progress-container">
-        <div id="progress-bar">0%</div>
+    <div id="slider-container">
+        <label for="ancestor-slider">اختر عدد الأسلاف لتمثيلهم:</label>
+        <input type="range" id="ancestor-slider" min="1" max="1" value="1" oninput="updateAncestorCount(this.value)">
+        <span id="selected-ancestor-count">1</span> / <span id="total-ancestor-count">0</span>
     </div>
-    <div id="info">الأسلاف المكتشفين: <span id="ancestor-count">0</span></div>
-    <button onclick="incrementProgress()">إضافة سلف مكتشف</button>
-    <div id="map" style="width: 100%; height: 500px;"></div>
+    <div id="map"></div>
 
     <script>
         // إعداد الخريطة باستخدام Leaflet
@@ -51,7 +37,7 @@
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
 
         let totalAncestors = 0;
-        let displayedAncestors = 0;
+        let ancestorsList = [];
 
         // جلب البيانات وتحليلها
         fetch(csvUrl)
@@ -80,12 +66,26 @@
                 });
             });
 
-            totalAncestors = Object.keys(ancestorsMap).length;
-            displayAncestorsCentroids(ancestorsMap);
+            // تحويل خريطة الأسلاف إلى قائمة
+            ancestorsList = Object.entries(ancestorsMap);
+            totalAncestors = ancestorsList.length;
+
+            // تحديث الحد الأقصى لشريط التقدم و عدد الأسلاف الكلي
+            document.getElementById("ancestor-slider").max = totalAncestors;
+            document.getElementById("total-ancestor-count").textContent = totalAncestors;
+
+            // تمثيل الأسلاف الأولية بناءً على القيمة الافتراضية
+            displayAncestorsCentroids(1);
         }
 
-        function displayAncestorsCentroids(ancestorsMap) {
-            Object.entries(ancestorsMap).forEach(([ancestor, coords]) => {
+        function displayAncestorsCentroids(count) {
+            map.eachLayer((layer) => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            ancestorsList.slice(0, count).forEach(([ancestor, coords]) => {
                 const avgLat = coords.latitudes.reduce((a, b) => a + b, 0) / coords.latitudes.length;
                 const avgLon = coords.longitudes.reduce((a, b) => a + b, 0) / coords.longitudes.length;
 
@@ -96,18 +96,9 @@
             });
         }
 
-        function incrementProgress() {
-            if (displayedAncestors < totalAncestors) {
-                displayedAncestors++;
-                updateProgressBar(displayedAncestors, totalAncestors);
-            }
-        }
-
-        function updateProgressBar(current, total) {
-            const percentage = (current / total) * 100;
-            document.getElementById('progress-bar').style.width = `${percentage}%`;
-            document.getElementById('progress-bar').textContent = `${Math.round(percentage)}%`;
-            document.getElementById('ancestor-count').textContent = current;
+        function updateAncestorCount(value) {
+            document.getElementById("selected-ancestor-count").textContent = value;
+            displayAncestorsCentroids(value);
         }
     </script>
 </body>
