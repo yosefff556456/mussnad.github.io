@@ -1,107 +1,102 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تمثيل النقاط المركزية للأسلاف</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
-    <style>
-        #slider-container { margin: 10px 0; }
-        #map { width: 100%; height: 500px; }
-    </style>
-</head>
-<body>
-    <h1>تمثيل النقاط المركزية لكل سلف</h1>
-    <div id="slider-container">
-        <label for="ancestor-slider">اختر عدد الأسلاف لتمثيلهم:</label>
-        <input type="range" id="ancestor-slider" min="1" max="1" value="1" oninput="updateAncestorCount(this.value)">
-        <span id="selected-ancestor-count">1</span> / <span id="total-ancestor-count">0</span>
-    </div>
-    <label>رابط البيانات القديمة:</label>
-    <input type="url" id="ancient-url" placeholder="أدخل رابط ملف الإحداثيات التاريخية" />
-    <button onclick="loadAncientData()">تحميل البيانات القديمة</button>
-    <div id="map"></div>
+import requests
+from bs4 import BeautifulSoup
+import json
+import pandas as pd
 
-    <script>
-        var map = L.map('map').setView([25, 45], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-        }).addTo(map);
+# الرابط المطلوب
+url = 'https://www.yfull.com/tree/J1/'
 
-        const modernCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
+# تحميل محتوى الصفحة
+response = requests.get(url)
+if response.status_code == 200:
+    html_content = response.text
+else:
+    print("خطأ في تحميل الصفحة. رمز الحالة:", response.status_code)
+    exit()
 
-        let totalAncestors = 0;
-        let ancestorsList = [];
-        let ancientData = [];
+# مسار ملف JSON الذي يحتوي على أكواد المناطق وإحداثياتها
+json_file_path = 'region_coordinates.json'
 
-        fetch(modernCsvUrl)
-            .then(response => response.text())
-            .then(data => Papa.parse(data, {
-                header: true,
-                complete: (results) => processAncestorsData(results.data, 'modern')
-            }));
+# قراءة ملف JSON
+with open(json_file_path, 'r', encoding='utf-8') as json_file:
+    region_coordinates = json.load(json_file)
 
-        function processAncestorsData(data, type) {
-            const ancestorsMap = {};
-            data.forEach(row => {
-                const ancestorsChain = row['Ancestors']?.split('>') || [];
-                const lat = parseFloat(row['Latitude']);
-                const lon = parseFloat(row['Longitude']);
-                ancestorsChain.forEach(ancestor => {
-                    if (!ancestorsMap[ancestor]) ancestorsMap[ancestor] = { latitudes: [], longitudes: [] };
-                    if (!isNaN(lat) && !isNaN(lon)) {
-                        ancestorsMap[ancestor].latitudes.push(lat);
-                        ancestorsMap[ancestor].longitudes.push(lon);
-                    }
-                });
-            });
-            if (type === 'modern') {
-                ancestorsList = Object.entries(ancestorsMap);
-                totalAncestors = ancestorsList.length;
-                document.getElementById("ancestor-slider").max = totalAncestors;
-                document.getElementById("total-ancestor-count").textContent = totalAncestors;
-                displayAncestorsCentroids(1);
-            } else {
-                ancientData = Object.entries(ancestorsMap);
-                displayAncestorsCentroids(parseInt(document.getElementById("ancestor-slider").value));
-            }
-        }
+soup = BeautifulSoup(html_content, 'html.parser')
 
-        function displayAncestorsCentroids(count) {
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker) map.removeLayer(layer);
-            });
+def get_lineage_and_tmrca(li_tag):
+    lineage = []
+    tmrca_values = []
+    while li_tag and li_tag.name != 'div':
+        if li_tag.name == 'li':
+            a_tag = li_tag.find('a')
+            tmrca_span = li_tag.find('span', text=lambda x: x and 'TMRCA' in x and 'ybp' in x)
+            if a_tag:
+                ancestor = a_tag.text.strip()
+                lineage.append(ancestor)
+                if tmrca_span:
+                    # استخراج الرقم بين "TMRCA" و "ybp"
+                    tmrca_text = tmrca_span.text.strip()
+                    start = tmrca_text.find('TMRCA') + len('TMRCA')
+                    end = tmrca_text.find('ybp')
+                    tmrca_value = tmrca_text[start:end].strip() if start != -1 and end != -1 else None
+                    tmrca_values.append(tmrca_value)
+                else:
+                    tmrca_values.append(None)
+        li_tag = li_tag.parent
+    return lineage[::-1], tmrca_values[::-1]  # نعكس القائمة للحصول على الترتيب من الجذر إلى الفرع
 
-            const combinedData = ancestorsList.slice(0, count).concat(ancientData);
+# البحث عن جميع العناصر التي تمثل الأشخاص
+person_items = soup.find_all('li', attrs={'valsampleid': True})
 
-            combinedData.forEach(([ancestor, coords]) => {
-                const avgLat = coords.latitudes.reduce((a, b) => a + b, 0) / coords.latitudes.length;
-                const avgLon = coords.longitudes.reduce((a, b) => a + b, 0) / coords.longitudes.length;
-                if (!isNaN(avgLat) && !isNaN(avgLon)) {
-                    L.marker([avgLat, avgLon]).addTo(map)
-                        .bindPopup(`<strong>${ancestor}</strong><br>النقطة المركزية:<br>Latitude: ${avgLat.toFixed(4)}, Longitude: ${avgLon.toFixed(4)}`);
-                }
-            });
-        }
+# قائمة لتخزين البيانات
+data_list = []
 
-        function updateAncestorCount(value) {
-            document.getElementById("selected-ancestor-count").textContent = value;
-            displayAncestorsCentroids(value);
-        }
+for person in person_items:
+    # استخراج كود المنطقة
+    b_tag = person.find('b', text=lambda x: x and '[' in x and ']' in x)
+    if b_tag:
+        region_code_full = b_tag.text.strip()
+        # استخراج النص بين القوسين المربعين
+        start = region_code_full.find('[') + 1
+        end = region_code_full.find(']')
+        region_code = region_code_full[start:end]
 
-        function loadAncientData() {
-            const url = document.getElementById("ancient-url").value;
-            if (url) {
-                fetch(url)
-                    .then(response => response.text())
-                    .then(data => Papa.parse(data, {
-                        header: true,
-                        complete: (results) => processAncestorsData(results.data, 'ancient')
-                    }));
-            }
-        }
-    </script>
-</body>
-</html>
+        # الحصول على الإحداثيات من ملف JSON
+        coordinates = region_coordinates.get(region_code)
+        if coordinates:
+            if isinstance(coordinates, str):
+                lat_long = coordinates.split(',')
+                if len(lat_long) == 2:
+                    latitude = lat_long[0].strip()
+                    longitude = lat_long[1].strip()
+                else:
+                    latitude = None
+                    longitude = None
+            else:
+                latitude = coordinates.get('latitude')
+                longitude = coordinates.get('longitude')
+        else:
+            latitude = None
+            longitude = None
+
+        # بناء سلسلة الأسلاف وقيم TMRCA
+        lineage, tmrca_values = get_lineage_and_tmrca(person)
+        lineage_str = '>'.join(lineage)
+        tmrca_str = '>'.join([tmrca if tmrca else '' for tmrca in tmrca_values])  # تحويل TMRCA إلى سلسلة
+
+        # إضافة البيانات إلى القائمة
+        data_list.append({
+            'Ancestors': lineage_str,
+            'TMRCA': tmrca_str,
+            'Latitude': latitude,
+            'Longitude': longitude
+        })
+
+# تحويل البيانات إلى DataFrame باستخدام pandas
+df = pd.DataFrame(data_list)
+
+# حفظ البيانات في ملف Excel
+excel_file_path = 'output_data_with_tmrca.xlsx'
+df.to_excel(excel_file_path, index=False)
+
+print("تم حفظ البيانات في الملف:", excel_file_path)
