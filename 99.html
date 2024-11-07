@@ -43,20 +43,22 @@ function calculateCentroids(data) {
     const centroids = {};
 
     data.forEach(row => {
-        const ancestors = row.Ancestors.split('>').map(a => a.trim());
+        const ancestors = row.Ancestors.split('>').map(a => a.trim()).filter(a => a !== "");
         const tmrcas = row.TMRCA.split('>').map(t => parseInt(t.trim())).filter(t => !isNaN(t));
         const latitude = parseFloat(row.Latitude);
         const longitude = parseFloat(row.Longitude);
 
         // إذا كانت الإحداثيات غير متوفرة أو غير صحيحة، نتخطى هذه الصف
         if (isNaN(latitude) || isNaN(longitude)) {
+            console.warn(`تم تخطي الصف بسبب إحداثيات غير صحيحة: Ancestors = ${row.Ancestors}, Latitude = ${row.Latitude}, Longitude = ${row.Longitude}`);
             return;
         }
 
         ancestors.forEach((ancestor, index) => {
             const tmrca = tmrcas[index];
             if (!tmrca) {
-                return; // إذا لم يكن هناك TMRCA لهذا المستوى، نتخطاه
+                // إذا لم يكن هناك TMRCA لهذا المستوى، نتخطاه
+                return;
             }
 
             if (!centroids[ancestor]) {
@@ -87,28 +89,37 @@ function calculateCentroids(data) {
         });
     }
 
+    console.log("السنترويدات المحسوبة:", centroidData);
     return centroidData;
 }
 
 // دالة لتهيئة الخريطة وعرض السنترويدات
 function initializeMap(centroids) {
+    if (centroids.length === 0) {
+        alert("لم يتم حساب أي سنترويدات. تأكد من صحة البيانات.");
+        return;
+    }
+
+    // تحديد النقطة الأولى كمركز مبدئي للخريطة
+    const initialCenter = [centroids[0].Centroid_Latitude, centroids[0].Centroid_Longitude];
+
     // إنشاء خريطة Leaflet وتعيين مركزها ومقياسها الابتدائي
-    const map = L.map('map').setView([30.0, 35.0], 2); // مركز عالمي
-    
+    const map = L.map('map').setView(initialCenter, 4); // يمكنك تغيير المقياس حسب الحاجة
+
     // إضافة طبقة خريطة OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-    
+
     // إنشاء طبقة للمجموعات (Layer Group)
     const centroidLayer = L.layerGroup().addTo(map);
-    
+
     // ألوان مخصصة للسنترويدات (يمكنك تعديلها أو توليدها ديناميكيًا)
     const colors = ['#E55451', 'cyan', 'green', 'purple', 'pink', 'orange', 'yellow', 'blue', 'brown', 'grey'];
-    
+
     centroids.forEach((centroid, index) => {
         const color = colors[index % colors.length]; // اختيار لون بناءً على الفهرس
-        
+
         // إنشاء علامة (Marker) باستخدام دائرة ملونة
         const marker = L.circleMarker([centroid.Centroid_Latitude, centroid.Centroid_Longitude], {
             radius: 8,
@@ -118,7 +129,7 @@ function initializeMap(centroids) {
             opacity: 1,
             fillOpacity: 0.8
         }).addTo(centroidLayer);
-        
+
         // إضافة نافذة منبثقة (Popup) بمعلومات السنترويد
         marker.bindPopup(`
             <div class="popup-content">
@@ -128,6 +139,10 @@ function initializeMap(centroids) {
             </div>
         `);
     });
+
+    // ضبط مستوى التكبير لتناسب جميع العلامات
+    const group = new L.featureGroup(centroidLayer.getLayers());
+    map.fitBounds(group.getBounds().pad(0.5));
 }
 
 // تحميل ومعالجة ملف CSV
@@ -136,18 +151,27 @@ Papa.parse(csvUrl, {
     header: true,
     skipEmptyLines: true,
     complete: function(results) {
+        if (results.errors.length) {
+            console.error("أخطاء في تحليل ملف CSV:", results.errors);
+            alert("حدثت مشكلة في تحميل أو تحليل ملف البيانات.");
+            return;
+        }
+
         const data = results.data.map(row => ({
             Ancestors: row.Ancestors,
             TMRCA: row.TMRCA,
             Latitude: row.Latitude,
             Longitude: row.Longitude
         }));
-        
+
+        console.log("البيانات المحملة:", data);
+
         const centroids = calculateCentroids(data);
         initializeMap(centroids);
     },
     error: function(error) {
         console.error('خطأ في تحميل أو تحليل ملف CSV:', error);
+        alert("حدث خطأ أثناء تحميل ملف البيانات.");
     }
 });
 </script>
