@@ -65,24 +65,43 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // رابط ملف CSV الذي قدمته
-        var csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv';
+        // روابط ملفات CSV
+        var csvUrls = [
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv', // الملف الأول
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vTg0hH5hBGLo4d83zuODbFLdF0RKFz-xKn2wFxnfWWMJPirCAf7aNgMOO35P3IwAw/pub?output=csv' // استبدل هذا بالرابط الخاص بالملف الثاني
+        ];
 
-        // تحميل ملف CSV باستخدام PapaParse
-        Papa.parse(csvUrl, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                var data = results.data; // البيانات المحملة من CSV
-                var tree = {}; // هيكل الشجرة
-                var nodes = {}; // لتخزين معلومات الأنساب وإحداثياتها
-                var connections = []; // لتخزين العلاقات بين الأنساب
-                var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
+        // دالة لتحميل ومعالجة ملف CSV
+        function loadCSV(url, callback) {
+            Papa.parse(url, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    callback(results.data);
+                },
+                error: function(error) {
+                    console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
+                }
+            });
+        }
 
-                // جمع إحداثيات كل سلف عبر جميع السلاسل
+        // تحميل كلا الملفين
+        loadCSV(csvUrls[0], function(data1) {
+            loadCSV(csvUrls[1], function(data2) {
+                processData(data1, data2);
+            });
+        });
+
+        function processData(data1, data2) {
+            var tree = {}; // هيكل الشجرة
+            var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
+
+            // دالة لمعالجة بيانات كل ملف
+            // multiplier يحدد وزن البيانات من الملف الثاني
+            function processFile(data, multiplier) {
                 data.forEach(function(row) {
                     var ancestors = row.Ancestors.split('>');
-                    var ages = row.Ages.split('>'); // فصل الأعمار باستخدام '>'
+                    var ages = row.Ages ? row.Ages.split('>') : []; // فصل الأعمار إذا كانت موجودة
                     var currentPath = '';
                     ancestors.forEach(function(name, index) {
                         currentPath = index === 0 ? name : currentPath + '>' + name;
@@ -100,9 +119,15 @@
                             ancestorList.push(currentPath);
                         }
 
-                        // إضافة عمر السلف
+                        // إضافة عمر السلف إذا كان موجودًا
                         if (ages[index]) {
-                            tree[currentPath].ages.push(parseFloat(ages[index]));
+                            var age = parseFloat(ages[index]);
+                            if (!isNaN(age)) {
+                                tree[currentPath].ages.push(age * multiplier); // تطبيق المضاعف على العمر
+                            }
+                        } else {
+                            // إذا لم يكن هناك عمر (من الملف الثاني)، نستخدم وزنًا ثابتًا
+                            tree[currentPath].ages.push(1 * multiplier); // الوزن الثابت يمكن تعديله حسب الحاجة
                         }
 
                         // إضافة إحداثيات السلف إذا كانت موجودة
@@ -114,158 +139,162 @@
                         // ربط الأب بالأبناء
                         if (index > 0) {
                             var parentPath = ancestors.slice(0, index).join('>');
-                            tree[parentPath].children.push(currentPath);
-                            tree[currentPath].parents.push(parentPath);
+                            if (!tree[parentPath].children.includes(currentPath)) {
+                                tree[parentPath].children.push(currentPath);
+                            }
+                            if (!tree[currentPath].parents.includes(parentPath)) {
+                                tree[currentPath].parents.push(parentPath);
+                            }
                         }
                     });
                 });
+            }
 
-                // حساب متوسط الإحداثيات لكل سلف مع الأخذ في الاعتبار الأعمار
+            // معالجة الملفين مع تعيين مضاعف لكل ملف
+            processFile(data1, 1); // الملف الأول بدون مضاعف
+            processFile(data2, 2); // الملف الثاني بمضاعف 2 (يمكنك تعديل المضاعف حسب الحاجة)
+
+            // حساب متوسط الإحداثيات لكل سلف مع الأخذ في الاعتبار الأوزان
+            Object.keys(tree).forEach(function(path) {
+                var node = tree[path];
+                if (node.latitudes.length > 0 && node.longitudes.length > 0 && node.ages.length > 0) {
+                    // حساب المتوسط الحسابي للإحداثيات مع وزن الأعمار
+                    var sumLat = 0;
+                    var sumLng = 0;
+                    var weightTotal = 0;
+                    node.latitudes.forEach(function(lat, idx) {
+                        var age = node.ages[idx] || 1; // استخدام الوزن كوزن، إذا لم يتوفر العمر افتراضيًا كـ1
+                        sumLat += lat * age;
+                        sumLng += node.longitudes[idx] * age;
+                        weightTotal += age;
+                    });
+                    node.lat = sumLat / weightTotal;
+                    node.lng = sumLng / weightTotal;
+                } else {
+                    node.lat = null;
+                    node.lng = null;
+                }
+            });
+
+            // وظيفة لتقدير إحداثيات السلف بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
+            function estimateCoordinates() {
+                var updated = false;
                 Object.keys(tree).forEach(function(path) {
                     var node = tree[path];
-                    if (node.latitudes.length > 0 && node.longitudes.length > 0) {
-                        // حساب المتوسط الحسابي للإحداثيات مع وزن الأعمار
-                        var sumLat = 0;
-                        var sumLng = 0;
-                        var weightTotal = 0;
-                        node.latitudes.forEach(function(lat, idx) {
-                            var age = node.ages[idx] || 1; // استخدام العمر كوزن، إذا لم يتوفر العمر افتراضيًا كـ1
-                            sumLat += lat * age;
-                            sumLng += node.longitudes[idx] * age;
-                            weightTotal += age;
-                        });
-                        node.lat = sumLat / weightTotal;
-                        node.lng = sumLng / weightTotal;
-                    } else {
-                        node.lat = null;
-                        node.lng = null;
-                    }
-                });
-
-                // وظيفة لتقدير إحداثيات السلف بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
-                function estimateCoordinates() {
-                    var updated = false;
-                    Object.keys(tree).forEach(function(path) {
-                        var node = tree[path];
-                        if (node.lat === null || node.lng === null) {
-                            if (node.children.length > 0) {
-                                var sumLat = 0, sumLng = 0, weightTotal = 0;
-                                node.children.forEach(function(childPath) {
-                                    var child = tree[childPath];
-                                    if (child.lat !== null && child.lng !== null) {
-                                        // يمكن استخدام عمر السلف كوزن أيضًا هنا إذا كان متاحًا
-                                        var childAge = child.ages.length > 0 ? child.ages[0] : 1;
-                                        sumLat += child.lat * childAge;
-                                        sumLng += child.lng * childAge;
-                                        weightTotal += childAge;
-                                    }
-                                });
-                                if (weightTotal > 0) {
-                                    node.lat = sumLat / weightTotal;
-                                    node.lng = sumLng / weightTotal;
-                                    updated = true;
+                    if (node.lat === null || node.lng === null) {
+                        if (node.children.length > 0) {
+                            var sumLat = 0, sumLng = 0, weightTotal = 0;
+                            node.children.forEach(function(childPath) {
+                                var child = tree[childPath];
+                                if (child.lat !== null && child.lng !== null && child.ages.length > 0) {
+                                    // استخدام عمر السلف كمضاعف
+                                    var childAge = child.ages.reduce((a, b) => a + b, 0);
+                                    sumLat += child.lat * childAge;
+                                    sumLng += child.lng * childAge;
+                                    weightTotal += childAge;
                                 }
+                            });
+                            if (weightTotal > 0) {
+                                node.lat = sumLat / weightTotal;
+                                node.lng = sumLng / weightTotal;
+                                updated = true;
                             }
                         }
-                    });
-                    return updated;
-                }
-
-                // تقدير الإحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
-                while (estimateCoordinates()) {}
-
-                // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق السلسلة الأنسابية
-                ancestorList.sort(function(a, b) {
-                    return a.split('>').length - b.split('>').length;
-                });
-
-                // إنشاء الماركيرات والخطوط وترتيبها
-                var markers = [];
-                var polylines = [];
-
-                ancestorList.forEach(function(path, index) {
-                    var node = tree[path];
-                    if (node.lat !== null && node.lng !== null) {
-                        // إنشاء ماركر نصي
-                        var marker = L.marker([node.lat, node.lng], {
-                            icon: L.divIcon({
-                                className: 'label-text',
-                                html: node.name,
-                                iconSize: [100, 40],
-                                iconAnchor: [50, 20]
-                            })
-                        });
-
-                        markers.push({
-                            marker: marker,
-                            index: index + 1 // ترتيب الأنساب يبدأ من 1
-                        });
-
-                        // إنشاء خطوط ربط بين الأبناء والآباء
-                        node.parents.forEach(function(parentPath) {
-                            if (tree[parentPath].lat !== null && tree[parentPath].lng !== null) {
-                                var polyline = L.polyline([
-                                    [tree[parentPath].lat, tree[parentPath].lng],
-                                    [node.lat, node.lng]
-                                ], {color: 'blue'});
-                                polylines.push({
-                                    polyline: polyline,
-                                    index: index + 1 // ترتيب الأنساب يبدأ من 1
-                                });
-                            }
-                        });
                     }
                 });
+                return updated;
+            }
 
-                // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
-                var maxSliderValue = markers.length;
-                document.getElementById('slider').max = maxSliderValue;
+            // تقدير الإحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
+            while (estimateCoordinates()) {}
 
-                // وظيفة لتحديث الخريطة بناءً على قيمة شريط التمرير
-                function updateMap(value) {
-                    // إزالة جميع الماركيرات والخطوط الحالية
-                    markers.forEach(function(m) {
-                        map.removeLayer(m.marker);
-                    });
-                    polylines.forEach(function(p) {
-                        map.removeLayer(p.polyline);
+            // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق السلسلة الأنسابية
+            ancestorList.sort(function(a, b) {
+                return a.split('>').length - b.split('>').length;
+            });
+
+            // إنشاء الماركيرات والخطوط وترتيبها
+            var markers = [];
+            var polylines = [];
+
+            ancestorList.forEach(function(path, index) {
+                var node = tree[path];
+                if (node.lat !== null && node.lng !== null) {
+                    // إنشاء ماركر نصي
+                    var marker = L.marker([node.lat, node.lng], {
+                        icon: L.divIcon({
+                            className: 'label-text',
+                            html: node.name,
+                            iconSize: [100, 40],
+                            iconAnchor: [50, 20]
+                        })
                     });
 
-                    // إضافة الماركيرات والخطوط حتى القيمة المحددة
-                    markers.forEach(function(m) {
-                        if (m.index <= value) {
-                            m.marker.addTo(map);
-                        }
+                    markers.push({
+                        marker: marker,
+                        index: index + 1 // ترتيب الأنساب يبدأ من 1
                     });
-                    polylines.forEach(function(p) {
-                        if (p.index <= value) {
-                            p.polyline.addTo(map);
+
+                    // إنشاء خطوط ربط بين الأبناء والآباء
+                    node.parents.forEach(function(parentPath) {
+                        if (tree[parentPath].lat !== null && tree[parentPath].lng !== null) {
+                            var polyline = L.polyline([
+                                [tree[parentPath].lat, tree[parentPath].lng],
+                                [node.lat, node.lng]
+                            ], {color: 'blue'});
+                            polylines.push({
+                                polyline: polyline,
+                                index: index + 1 // ترتيب الأنساب يبدأ من 1
+                            });
                         }
                     });
                 }
+            });
 
-                // ضبط الشريط التمرير ليبدأ من القيمة 1
-                document.getElementById('slider').value = 1;
-                document.getElementById('sliderValue').innerText = 1;
-                updateMap(1);
+            // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
+            var maxSliderValue = markers.length;
+            document.getElementById('slider').max = maxSliderValue;
 
-                // إضافة مستمع لحدث تغيير قيمة الشريط التمرير
-                document.getElementById('slider').addEventListener('input', function(e) {
-                    var value = parseInt(e.target.value);
-                    document.getElementById('sliderValue').innerText = value;
-                    updateMap(value);
+            // وظيفة لتحديث الخريطة بناءً على قيمة شريط التمرير
+            function updateMap(value) {
+                // إزالة جميع الماركيرات والخطوط الحالية
+                markers.forEach(function(m) {
+                    map.removeLayer(m.marker);
+                });
+                polylines.forEach(function(p) {
+                    map.removeLayer(p.polyline);
                 });
 
-                // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
-                var allMarkers = markers.map(function(m) { return m.marker; });
-                var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
-                map.fitBounds(group.getBounds().pad(0.5));
-            },
-            error: function(error) {
-                console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
+                // إضافة الماركيرات والخطوط حتى القيمة المحددة
+                markers.forEach(function(m) {
+                    if (m.index <= value) {
+                        m.marker.addTo(map);
+                    }
+                });
+                polylines.forEach(function(p) {
+                    if (p.index <= value) {
+                        p.polyline.addTo(map);
+                    }
+                });
             }
-        });
+
+            // ضبط الشريط التمرير ليبدأ من القيمة 1
+            document.getElementById('slider').value = 1;
+            document.getElementById('sliderValue').innerText = 1;
+            updateMap(1);
+
+            // إضافة مستمع لحدث تغيير قيمة الشريط التمرير
+            document.getElementById('slider').addEventListener('input', function(e) {
+                var value = parseInt(e.target.value);
+                document.getElementById('sliderValue').innerText = value;
+                updateMap(value);
+            });
+
+            // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
+            var allMarkers = markers.map(function(m) { return m.marker; });
+            var group = new L.featureGroup(allMarkers.map(function(marker) { return marker.getLatLng(); }));
+            map.fitBounds(group.getBounds().pad(0.5));
+        }
     </script>
 </body>
 </html>
-
