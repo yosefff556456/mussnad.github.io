@@ -12,10 +12,17 @@
             height: 600px;
             width: 100%;
         }
+        #sliderContainer {
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <div id="sliderContainer">
+        <input type="range" id="ancestorSlider" min="1" max="10" value="10" />
+        <label for="ancestorSlider">Number of Ancestors to Display: <span id="sliderValue">10</span></label>
+    </div>
     <script>
         // Create the Leaflet map
         var map = L.map('map').setView([30, 40], 4);
@@ -26,7 +33,9 @@
         }).addTo(map);
 
         // Fetch data from Google Sheets CSV
-        var sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv";
+        var sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
+
+        var ancestorMarkers = [];
 
         Papa.parse(sheetUrl, {
             download: true,
@@ -65,15 +74,43 @@
                     };
                 }
 
-                // Add centroids to the map
-                for (var ancestor in ancestorGroups) {
-                    var points = ancestorGroups[ancestor];
-                    if (points.length > 0) {
-                        var centroid = computeWeightedCentroid(points);
-                        var marker = L.marker([centroid.latitude, centroid.longitude]).addTo(map);
-                        marker.bindPopup("Ancestor: " + ancestor);
+                // Add centroids to the map based on slider value
+                function updateMap(numAncestors) {
+                    // Remove existing markers
+                    ancestorMarkers.forEach(function(marker) {
+                        map.removeLayer(marker);
+                    });
+                    ancestorMarkers = [];
+
+                    var ancestorsDisplayed = 0;
+                    for (var ancestor in ancestorGroups) {
+                        if (ancestorsDisplayed >= numAncestors) break;
+
+                        var points = ancestorGroups[ancestor];
+                        if (points.length > 0) {
+                            var centroid = computeWeightedCentroid(points);
+                            var marker = L.marker([centroid.latitude, centroid.longitude]).addTo(map);
+                            marker.bindPopup("Ancestor: " + ancestor);
+                            ancestorMarkers.push(marker);
+                            ancestorsDisplayed++;
+                        }
                     }
                 }
+
+                // Initial display of all ancestors
+                var slider = document.getElementById('ancestorSlider');
+                var sliderValueLabel = document.getElementById('sliderValue');
+                slider.max = Object.keys(ancestorGroups).length;
+                slider.value = slider.max;
+                sliderValueLabel.textContent = slider.value;
+                updateMap(slider.value);
+
+                // Update map when slider value changes
+                slider.addEventListener('input', function() {
+                    var numAncestors = parseInt(slider.value);
+                    sliderValueLabel.textContent = numAncestors;
+                    updateMap(numAncestors);
+                });
             }
         });
     </script>
