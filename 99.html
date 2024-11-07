@@ -1,102 +1,81 @@
-import requests
-from bs4 import BeautifulSoup
-import json
-import pandas as pd
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ancestor Centroid Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.3.0/papaparse.min.js"></script>
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // Create the Leaflet map
+        var map = L.map('map').setView([30, 40], 4);
 
-# الرابط المطلوب
-url = 'https://www.yfull.com/tree/J1/'
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-# تحميل محتوى الصفحة
-response = requests.get(url)
-if response.status_code == 200:
-    html_content = response.text
-else:
-    print("خطأ في تحميل الصفحة. رمز الحالة:", response.status_code)
-    exit()
+        // Fetch data from Google Sheets CSV
+        var sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv";
 
-# مسار ملف JSON الذي يحتوي على أكواد المناطق وإحداثياتها
-json_file_path = 'region_coordinates.json'
+        Papa.parse(sheetUrl, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                var data = results.data;
+                var ancestorGroups = {};
 
-# قراءة ملف JSON
-with open(json_file_path, 'r', encoding='utf-8') as json_file:
-    region_coordinates = json.load(json_file)
+                // Process data and group by ancestors
+                data.forEach(function(row) {
+                    var ancestors = row["Ancestors"];
+                    var tmrca = row["TMRCA"].split(">").map(Number);
+                    var latitude = parseFloat(row["Latitude"]);
+                    var longitude = parseFloat(row["Longitude"]);
 
-soup = BeautifulSoup(html_content, 'html.parser')
+                    if (!isNaN(latitude) && !isNaN(longitude)) {
+                        if (!ancestorGroups[ancestors]) {
+                            ancestorGroups[ancestors] = [];
+                        }
+                        ancestorGroups[ancestors].push({ latitude: latitude, longitude: longitude, tmrca: tmrca });
+                    }
+                });
 
-def get_lineage_and_tmrca(li_tag):
-    lineage = []
-    tmrca_values = []
-    while li_tag and li_tag.name != 'div':
-        if li_tag.name == 'li':
-            a_tag = li_tag.find('a')
-            tmrca_span = li_tag.find('span', text=lambda x: x and 'TMRCA' in x and 'ybp' in x)
-            if a_tag:
-                ancestor = a_tag.text.strip()
-                lineage.append(ancestor)
-                if tmrca_span:
-                    # استخراج الرقم بين "TMRCA" و "ybp"
-                    tmrca_text = tmrca_span.text.strip()
-                    start = tmrca_text.find('TMRCA') + len('TMRCA')
-                    end = tmrca_text.find('ybp')
-                    tmrca_value = tmrca_text[start:end].strip() if start != -1 and end != -1 else None
-                    tmrca_values.append(tmrca_value)
-                else:
-                    tmrca_values.append(None)
-        li_tag = li_tag.parent
-    return lineage[::-1], tmrca_values[::-1]  # نعكس القائمة للحصول على الترتيب من الجذر إلى الفرع
+                // Function to compute weighted centroid
+                function computeWeightedCentroid(points) {
+                    var sumLat = 0, sumLon = 0, weightTotal = 0;
+                    points.forEach(function(point) {
+                        var weight = point.tmrca[point.tmrca.length - 1]; // Use the last TMRCA value as weight
+                        sumLat += point.latitude * weight;
+                        sumLon += point.longitude * weight;
+                        weightTotal += weight;
+                    });
+                    return {
+                        latitude: sumLat / weightTotal,
+                        longitude: sumLon / weightTotal
+                    };
+                }
 
-# البحث عن جميع العناصر التي تمثل الأشخاص
-person_items = soup.find_all('li', attrs={'valsampleid': True})
-
-# قائمة لتخزين البيانات
-data_list = []
-
-for person in person_items:
-    # استخراج كود المنطقة
-    b_tag = person.find('b', text=lambda x: x and '[' in x and ']' in x)
-    if b_tag:
-        region_code_full = b_tag.text.strip()
-        # استخراج النص بين القوسين المربعين
-        start = region_code_full.find('[') + 1
-        end = region_code_full.find(']')
-        region_code = region_code_full[start:end]
-
-        # الحصول على الإحداثيات من ملف JSON
-        coordinates = region_coordinates.get(region_code)
-        if coordinates:
-            if isinstance(coordinates, str):
-                lat_long = coordinates.split(',')
-                if len(lat_long) == 2:
-                    latitude = lat_long[0].strip()
-                    longitude = lat_long[1].strip()
-                else:
-                    latitude = None
-                    longitude = None
-            else:
-                latitude = coordinates.get('latitude')
-                longitude = coordinates.get('longitude')
-        else:
-            latitude = None
-            longitude = None
-
-        # بناء سلسلة الأسلاف وقيم TMRCA
-        lineage, tmrca_values = get_lineage_and_tmrca(person)
-        lineage_str = '>'.join(lineage)
-        tmrca_str = '>'.join([tmrca if tmrca else '' for tmrca in tmrca_values])  # تحويل TMRCA إلى سلسلة
-
-        # إضافة البيانات إلى القائمة
-        data_list.append({
-            'Ancestors': lineage_str,
-            'TMRCA': tmrca_str,
-            'Latitude': latitude,
-            'Longitude': longitude
-        })
-
-# تحويل البيانات إلى DataFrame باستخدام pandas
-df = pd.DataFrame(data_list)
-
-# حفظ البيانات في ملف Excel
-excel_file_path = 'output_data_with_tmrca.xlsx'
-df.to_excel(excel_file_path, index=False)
-
-print("تم حفظ البيانات في الملف:", excel_file_path)
+                // Add centroids to the map
+                for (var ancestor in ancestorGroups) {
+                    var points = ancestorGroups[ancestor];
+                    if (points.length > 0) {
+                        var centroid = computeWeightedCentroid(points);
+                        var marker = L.marker([centroid.latitude, centroid.longitude]).addTo(map);
+                        marker.bindPopup("Ancestor: " + ancestor);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
