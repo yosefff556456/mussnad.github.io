@@ -1,119 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ancestor Centroid Map</title>
     <meta charset="utf-8" />
+    <title>حساب وعرض السنترويدات على خريطة</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.3.0/papaparse.min.js"></script>
+    
+    <!-- تضمين مكتبة Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-sA+e2YC+NmuZMBpRw6yjYkAxylKVY63fTnAbH6LC5M0="
+          crossorigin=""/>
+    
+    <!-- تضمين مكتبة Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-o9N1j4ZT+TeSrtMz4MYb0kIG4m4kCPDUnN1Mjnk0c6E="
+            crossorigin=""></script>
+    
+    <!-- تضمين مكتبة PapaParse لتحليل ملفات CSV -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-yEM0RrD3UIwTCx0mB9VGZVPRhLeogUFqLPc8AMePQwkQjHoSCAOD3mdWqgXx9EUBt2mFE4emAyKpbxOAwNk2yg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <style>
+        /* تنسيق الخريطة لتملأ الشاشة بالكامل */
         #map {
-            height: 600px;
+            height: 100vh;
             width: 100%;
         }
-        #sliderContainer {
-            margin: 20px;
+        /* تنسيق النافذة المنبثقة */
+        .popup-content {
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div id="map"></div>
-    <div id="sliderContainer">
-        <input type="range" id="ancestorSlider" min="1" max="10" value="10" />
-        <label for="ancestorSlider">Number of Ancestors to Display: <span id="sliderValue">10</span></label>
-    </div>
-    <script>
-        // Create the Leaflet map
-        var map = L.map('map').setView([30, 40], 4);
 
-        // Add OpenStreetMap tile layer
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+<div id="map"></div>
 
-        // Fetch data from Google Sheets CSV
-        var sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv";
+<script>
+// رابط ملف CSV
+const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv";
 
-        var ancestorMarkers = [];
+// دالة لحساب السنترويدات الموزونة لكل سلف
+function calculateCentroids(data) {
+    const centroids = {};
 
-        Papa.parse(sheetUrl, {
-            download: true,
-            header: true,
-            complete: function(results) {
-                var data = results.data;
-                var ancestorGroups = {};
+    data.forEach(row => {
+        const ancestors = row.Ancestors.split('>').map(a => a.trim());
+        const tmrcas = row.TMRCA.split('>').map(t => parseInt(t.trim())).filter(t => !isNaN(t));
+        const latitude = parseFloat(row.Latitude);
+        const longitude = parseFloat(row.Longitude);
 
-                // Process data and group by ancestors
-                data.forEach(function(row) {
-                    var ancestors = row["Ancestors"];
-                    var tmrca = row["TMRCA"].split(">").map(Number);
-                    var latitude = parseFloat(row["Latitude"]);
-                    var longitude = parseFloat(row["Longitude"]);
+        // إذا كانت الإحداثيات غير متوفرة أو غير صحيحة، نتخطى هذه الصف
+        if (isNaN(latitude) || isNaN(longitude)) {
+            return;
+        }
 
-                    if (!isNaN(latitude) && !isNaN(longitude)) {
-                        if (!ancestorGroups[ancestors]) {
-                            ancestorGroups[ancestors] = [];
-                        }
-                        ancestorGroups[ancestors].push({ latitude: latitude, longitude: longitude, tmrca: tmrca });
-                    }
-                });
-
-                // Function to compute weighted centroid
-                function computeWeightedCentroid(points) {
-                    var sumLat = 0, sumLon = 0, weightTotal = 0;
-                    points.forEach(function(point) {
-                        var weight = point.tmrca[point.tmrca.length - 1]; // Use the last TMRCA value as weight
-                        sumLat += point.latitude * weight;
-                        sumLon += point.longitude * weight;
-                        weightTotal += weight;
-                    });
-                    return {
-                        latitude: sumLat / weightTotal,
-                        longitude: sumLon / weightTotal
-                    };
-                }
-
-                // Add centroids to the map based on slider value
-                function updateMap(numAncestors) {
-                    // Remove existing markers
-                    ancestorMarkers.forEach(function(marker) {
-                        map.removeLayer(marker);
-                    });
-                    ancestorMarkers = [];
-
-                    var ancestorsDisplayed = 0;
-                    for (var ancestor in ancestorGroups) {
-                        if (ancestorsDisplayed >= numAncestors) break;
-
-                        var points = ancestorGroups[ancestor];
-                        if (points.length > 0) {
-                            var centroid = computeWeightedCentroid(points);
-                            var marker = L.marker([centroid.latitude, centroid.longitude]).addTo(map);
-                            marker.bindPopup("Ancestor: " + ancestor);
-                            ancestorMarkers.push(marker);
-                            ancestorsDisplayed++;
-                        }
-                    }
-                }
-
-                // Initial display of all ancestors
-                var slider = document.getElementById('ancestorSlider');
-                var sliderValueLabel = document.getElementById('sliderValue');
-                slider.max = Object.keys(ancestorGroups).length;
-                slider.value = slider.max;
-                sliderValueLabel.textContent = slider.value;
-                updateMap(slider.value);
-
-                // Update map when slider value changes
-                slider.addEventListener('input', function() {
-                    var numAncestors = parseInt(slider.value);
-                    sliderValueLabel.textContent = numAncestors;
-                    updateMap(numAncestors);
-                });
+        ancestors.forEach((ancestor, index) => {
+            const tmrca = tmrcas[index];
+            if (!tmrca) {
+                return; // إذا لم يكن هناك TMRCA لهذا المستوى، نتخطاه
             }
+
+            if (!centroids[ancestor]) {
+                centroids[ancestor] = {
+                    lat_sum: 0,
+                    lon_sum: 0,
+                    weight_sum: 0
+                };
+            }
+
+            centroids[ancestor].lat_sum += latitude * tmrca;
+            centroids[ancestor].lon_sum += longitude * tmrca;
+            centroids[ancestor].weight_sum += tmrca;
         });
-    </script>
+    });
+
+    // حساب المتوسط الموزون لكل سلف
+    const centroidData = [];
+    for (const ancestor in centroids) {
+        const data = centroids[ancestor];
+        const centroid_lat = data.weight_sum !== 0 ? data.lat_sum / data.weight_sum : 0;
+        const centroid_lon = data.weight_sum !== 0 ? data.lon_sum / data.weight_sum : 0;
+        centroidData.push({
+            Ancestor: ancestor,
+            Centroid_Latitude: centroid_lat,
+            Centroid_Longitude: centroid_lon,
+            TMRCA_Total: data.weight_sum
+        });
+    }
+
+    return centroidData;
+}
+
+// دالة لتهيئة الخريطة وعرض السنترويدات
+function initializeMap(centroids) {
+    // إنشاء خريطة Leaflet وتعيين مركزها ومقياسها الابتدائي
+    const map = L.map('map').setView([30.0, 35.0], 2); // مركز عالمي
+    
+    // إضافة طبقة خريطة OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    
+    // إنشاء طبقة للمجموعات (Layer Group)
+    const centroidLayer = L.layerGroup().addTo(map);
+    
+    // ألوان مخصصة للسنترويدات (يمكنك تعديلها أو توليدها ديناميكيًا)
+    const colors = ['#E55451', 'cyan', 'green', 'purple', 'pink', 'orange', 'yellow', 'blue', 'brown', 'grey'];
+    
+    centroids.forEach((centroid, index) => {
+        const color = colors[index % colors.length]; // اختيار لون بناءً على الفهرس
+        
+        // إنشاء علامة (Marker) باستخدام دائرة ملونة
+        const marker = L.circleMarker([centroid.Centroid_Latitude, centroid.Centroid_Longitude], {
+            radius: 8,
+            fillColor: color,
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        }).addTo(centroidLayer);
+        
+        // إضافة نافذة منبثقة (Popup) بمعلومات السنترويد
+        marker.bindPopup(`
+            <div class="popup-content">
+                <strong>السلف:</strong> ${centroid.Ancestor}<br>
+                <strong>إحداثيات السنترويد:</strong> (${centroid.Centroid_Latitude.toFixed(4)}, ${centroid.Centroid_Longitude.toFixed(4)})<br>
+                <strong>TMRCA الإجمالي:</strong> ${centroid.TMRCA_Total} سنة
+            </div>
+        `);
+    });
+}
+
+// تحميل ومعالجة ملف CSV
+Papa.parse(csvUrl, {
+    download: true,
+    header: true,
+    skipEmptyLines: true,
+    complete: function(results) {
+        const data = results.data.map(row => ({
+            Ancestors: row.Ancestors,
+            TMRCA: row.TMRCA,
+            Latitude: row.Latitude,
+            Longitude: row.Longitude
+        }));
+        
+        const centroids = calculateCentroids(data);
+        initializeMap(centroids);
+    },
+    error: function(error) {
+        console.error('خطأ في تحميل أو تحليل ملف CSV:', error);
+    }
+});
+</script>
+
 </body>
 </html>
-
