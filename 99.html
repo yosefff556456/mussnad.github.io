@@ -3,23 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تمثيل النقاط المركزية</title>
+    <title>تمثيل النقاط المركزية للأسلاف</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <style>
+        #progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+            height: 25px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #4caf50;
+            text-align: center;
+            color: white;
+            line-height: 25px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>تمثيل النقاط المركزية لكل سلف</h1>
+    <div id="progress-container">
+        <div id="progress-bar">0%</div>
+    </div>
     <div id="map" style="width: 100%; height: 500px;"></div>
 
     <script>
-        // إنشاء الخريطة باستخدام Leaflet
+        // إعداد الخريطة باستخدام Leaflet
         var map = L.map('map').setView([25, 45], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
         }).addTo(map);
 
-        // جلب البيانات من ملف Google Sheets باستخدام رابط CSV
+        // رابط CSV من Google Sheets
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
 
         fetch(csvUrl)
@@ -52,15 +74,27 @@
         }
 
         function calculateAndDisplayCentroids(ancestorsMap) {
+            const totalAncestors = Object.keys(ancestorsMap).length;
+            let displayedAncestors = 0;
+
             Object.entries(ancestorsMap).forEach(([ancestor, coords]) => {
                 const avgLat = coords.latitudes.reduce((a, b) => a + b, 0) / coords.latitudes.length;
                 const avgLon = coords.longitudes.reduce((a, b) => a + b, 0) / coords.longitudes.length;
 
                 if (!isNaN(avgLat) && !isNaN(avgLon)) {
                     L.marker([avgLat, avgLon]).addTo(map)
-                        .bindPopup(`<strong>${ancestor}</strong><br>Latitude: ${avgLat.toFixed(4)}, Longitude: ${avgLon.toFixed(4)}`);
+                        .bindPopup(`<strong>${ancestor}</strong><br>النقطة المركزية:<br>Latitude: ${avgLat.toFixed(4)}, Longitude: ${avgLon.toFixed(4)}`);
+                    
+                    displayedAncestors++;
+                    updateProgressBar(displayedAncestors, totalAncestors);
                 }
             });
+        }
+
+        function updateProgressBar(current, total) {
+            const percentage = (current / total) * 100;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            document.getElementById('progress-bar').textContent = `${Math.round(percentage)}%`;
         }
     </script>
 </body>
