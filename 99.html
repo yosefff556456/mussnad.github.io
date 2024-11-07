@@ -8,13 +8,8 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
     <style>
-        #slider-container {
-            margin: 10px 0;
-        }
-        #map {
-            width: 100%;
-            height: 500px;
-        }
+        #slider-container { margin: 10px 0; }
+        #map { width: 100%; height: 500px; }
     </style>
 </head>
 <body>
@@ -24,71 +19,66 @@
         <input type="range" id="ancestor-slider" min="1" max="1" value="1" oninput="updateAncestorCount(this.value)">
         <span id="selected-ancestor-count">1</span> / <span id="total-ancestor-count">0</span>
     </div>
+    <label>رابط البيانات القديمة:</label>
+    <input type="url" id="ancient-url" placeholder="أدخل رابط ملف الإحداثيات التاريخية" />
+    <button onclick="loadAncientData()">تحميل البيانات القديمة</button>
     <div id="map"></div>
 
     <script>
-        // إعداد الخريطة باستخدام Leaflet
         var map = L.map('map').setView([25, 45], 5);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
         }).addTo(map);
 
-        // رابط CSV من Google Sheets
-        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
+        const modernCsvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
 
         let totalAncestors = 0;
         let ancestorsList = [];
+        let ancientData = [];
 
-        // جلب البيانات وتحليلها
-        fetch(csvUrl)
+        fetch(modernCsvUrl)
             .then(response => response.text())
             .then(data => Papa.parse(data, {
                 header: true,
-                complete: (results) => processAncestorsData(results.data)
+                complete: (results) => processAncestorsData(results.data, 'modern')
             }));
 
-        function processAncestorsData(data) {
+        function processAncestorsData(data, type) {
             const ancestorsMap = {};
-
             data.forEach(row => {
                 const ancestorsChain = row['Ancestors']?.split('>') || [];
                 const lat = parseFloat(row['Latitude']);
                 const lon = parseFloat(row['Longitude']);
-
-                ancestorsChain.forEach((ancestor) => {
-                    if (!ancestorsMap[ancestor]) {
-                        ancestorsMap[ancestor] = { latitudes: [], longitudes: [] };
-                    }
+                ancestorsChain.forEach(ancestor => {
+                    if (!ancestorsMap[ancestor]) ancestorsMap[ancestor] = { latitudes: [], longitudes: [] };
                     if (!isNaN(lat) && !isNaN(lon)) {
                         ancestorsMap[ancestor].latitudes.push(lat);
                         ancestorsMap[ancestor].longitudes.push(lon);
                     }
                 });
             });
-
-            // تحويل خريطة الأسلاف إلى قائمة
-            ancestorsList = Object.entries(ancestorsMap);
-            totalAncestors = ancestorsList.length;
-
-            // تحديث الحد الأقصى لشريط التقدم و عدد الأسلاف الكلي
-            document.getElementById("ancestor-slider").max = totalAncestors;
-            document.getElementById("total-ancestor-count").textContent = totalAncestors;
-
-            // تمثيل الأسلاف الأولية بناءً على القيمة الافتراضية
-            displayAncestorsCentroids(1);
+            if (type === 'modern') {
+                ancestorsList = Object.entries(ancestorsMap);
+                totalAncestors = ancestorsList.length;
+                document.getElementById("ancestor-slider").max = totalAncestors;
+                document.getElementById("total-ancestor-count").textContent = totalAncestors;
+                displayAncestorsCentroids(1);
+            } else {
+                ancientData = Object.entries(ancestorsMap);
+                displayAncestorsCentroids(parseInt(document.getElementById("ancestor-slider").value));
+            }
         }
 
         function displayAncestorsCentroids(count) {
-            map.eachLayer((layer) => {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) map.removeLayer(layer);
             });
 
-            ancestorsList.slice(0, count).forEach(([ancestor, coords]) => {
+            const combinedData = ancestorsList.slice(0, count).concat(ancientData);
+
+            combinedData.forEach(([ancestor, coords]) => {
                 const avgLat = coords.latitudes.reduce((a, b) => a + b, 0) / coords.latitudes.length;
                 const avgLon = coords.longitudes.reduce((a, b) => a + b, 0) / coords.longitudes.length;
-
                 if (!isNaN(avgLat) && !isNaN(avgLon)) {
                     L.marker([avgLat, avgLon]).addTo(map)
                         .bindPopup(`<strong>${ancestor}</strong><br>النقطة المركزية:<br>Latitude: ${avgLat.toFixed(4)}, Longitude: ${avgLon.toFixed(4)}`);
@@ -99,6 +89,18 @@
         function updateAncestorCount(value) {
             document.getElementById("selected-ancestor-count").textContent = value;
             displayAncestorsCentroids(value);
+        }
+
+        function loadAncientData() {
+            const url = document.getElementById("ancient-url").value;
+            if (url) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => Papa.parse(data, {
+                        header: true,
+                        complete: (results) => processAncestorsData(results.data, 'ancient')
+                    }));
+            }
         }
     </script>
 </body>
