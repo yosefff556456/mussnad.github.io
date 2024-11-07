@@ -25,6 +25,10 @@
             line-height: 25px;
             font-weight: bold;
         }
+        #info {
+            margin: 10px 0;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -32,6 +36,8 @@
     <div id="progress-container">
         <div id="progress-bar">0%</div>
     </div>
+    <div id="info">الأسلاف المكتشفين: <span id="ancestor-count">0</span></div>
+    <button onclick="incrementProgress()">إضافة سلف مكتشف</button>
     <div id="map" style="width: 100%; height: 500px;"></div>
 
     <script>
@@ -44,6 +50,10 @@
         // رابط CSV من Google Sheets
         const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFNxgPvdQonP4rHmJNXHIK_3LkMbCF5lNJafbPTORnu6ey_CLBRPN5CQXEPeIH6A/pub?output=csv";
 
+        let totalAncestors = 0;
+        let displayedAncestors = 0;
+
+        // جلب البيانات وتحليلها
         fetch(csvUrl)
             .then(response => response.text())
             .then(data => Papa.parse(data, {
@@ -70,13 +80,11 @@
                 });
             });
 
-            calculateAndDisplayCentroids(ancestorsMap);
+            totalAncestors = Object.keys(ancestorsMap).length;
+            displayAncestorsCentroids(ancestorsMap);
         }
 
-        function calculateAndDisplayCentroids(ancestorsMap) {
-            const totalAncestors = Object.keys(ancestorsMap).length;
-            let displayedAncestors = 0;
-
+        function displayAncestorsCentroids(ancestorsMap) {
             Object.entries(ancestorsMap).forEach(([ancestor, coords]) => {
                 const avgLat = coords.latitudes.reduce((a, b) => a + b, 0) / coords.latitudes.length;
                 const avgLon = coords.longitudes.reduce((a, b) => a + b, 0) / coords.longitudes.length;
@@ -84,17 +92,22 @@
                 if (!isNaN(avgLat) && !isNaN(avgLon)) {
                     L.marker([avgLat, avgLon]).addTo(map)
                         .bindPopup(`<strong>${ancestor}</strong><br>النقطة المركزية:<br>Latitude: ${avgLat.toFixed(4)}, Longitude: ${avgLon.toFixed(4)}`);
-                    
-                    displayedAncestors++;
-                    updateProgressBar(displayedAncestors, totalAncestors);
                 }
             });
+        }
+
+        function incrementProgress() {
+            if (displayedAncestors < totalAncestors) {
+                displayedAncestors++;
+                updateProgressBar(displayedAncestors, totalAncestors);
+            }
         }
 
         function updateProgressBar(current, total) {
             const percentage = (current / total) * 100;
             document.getElementById('progress-bar').style.width = `${percentage}%`;
             document.getElementById('progress-bar').textContent = `${Math.round(percentage)}%`;
+            document.getElementById('ancestor-count').textContent = current;
         }
     </script>
 </body>
