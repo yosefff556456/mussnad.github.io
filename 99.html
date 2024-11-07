@@ -42,15 +42,15 @@ const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKq
 function calculateCentroids(data) {
     const centroids = {};
 
-    data.forEach(row => {
+    data.forEach((row, rowIndex) => {
         const ancestors = row.Ancestors.split('>').map(a => a.trim()).filter(a => a !== "");
         const tmrcas = row.TMRCA.split('>').map(t => parseInt(t.trim())).filter(t => !isNaN(t));
         const latitude = parseFloat(row.Latitude);
         const longitude = parseFloat(row.Longitude);
 
-        // إذا كانت الإحداثيات غير متوفرة أو غير صحيحة، نتخطى هذه الصف
+        // التحقق من صحة الإحداثيات
         if (isNaN(latitude) || isNaN(longitude)) {
-            console.warn(`تم تخطي الصف بسبب إحداثيات غير صحيحة: Ancestors = ${row.Ancestors}, Latitude = ${row.Latitude}, Longitude = ${row.Longitude}`);
+            console.warn(`تم تخطي الصف رقم ${rowIndex + 2} بسبب إحداثيات غير صحيحة: Latitude = ${row.Latitude}, Longitude = ${row.Longitude}`);
             return;
         }
 
