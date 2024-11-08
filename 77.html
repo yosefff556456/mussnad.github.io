@@ -1,177 +1,198 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة حرارية باستخدام Leaflet</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- Leaflet.heat CSS (لا توجد، يتم استخدام JS فقط) -->
+    <title>حساب السنتروايد وعرض الخريطة</title>
     <style>
-        #map {
-            height: 600px;
-            width: 100%;
-        }
+        #map { height: 600px; width: 100%; }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input[type="text"] { width: 80%; padding: 8px; margin: 5px 0; }
+        button { padding: 10px 20px; }
     </style>
 </head>
 <body>
+    <h2>تحميل ملفات CSV من روابط</h2>
+    <label for="url1">رابط الملف الأول (Ancestors وAges):</label><br>
+    <input type="text" id="url1" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv" /><br><br>
+    
+    <label for="url2">رابط الملف الثاني (Ancestors وLatitude وLongitude):</label><br>
+    <input type="text" id="url2" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vTg0hH5hBGLo4d83zuODbFLdF0RKFz-xKn2wFxnfWWMJPirCAf7aNgMOO35P3IwAw/pub?output=csv" /><br><br>
+    
+    <button onclick="processFiles()">حساب وعرض السنتروايد</button>
+    
+    <h2>الخريطة</h2>
+    <div id="map"></div>
 
-<div id="map"></div>
+    <!-- تضمين المكتبات هنا -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-sA+e2N5pLkG4bAn+jAuPzkJlUqkf0s3bYV8mBM3B6AU="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-o9N1j6L0j2h3ReMKrIgX5hK4FJFd2VQ+J3ZbBTYI4Us="
+     crossorigin=""></script>
 
-<!-- تضمين مكتبات JavaScript الضرورية -->
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- Leaflet.heat JS -->
-<script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
-<!-- PapaParse JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script>
+        // دالة لجلب ملف CSV من رابط ومعالجته
+        async function fetchCSV(url) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`خطأ في جلب الملف من الرابط: ${url}`);
+            }
+            const text = await response.text();
+            const data = XLSX.read(text, { type: 'string' });
+            const firstSheetName = data.SheetNames[0];
+            const worksheet = data.Sheets[firstSheetName];
+            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            return json;
+        }
 
-<script>
-// إعداد الخريطة باستخدام Leaflet
-var map = L.map('map').setView([20, 0], 2); // مركز الخريطة على خط الاستواء
+        // دالة لمعالجة البيانات واستخراج السلف النهائي
+        function processData(data1, data2) {
+            // تحويل بيانات الملف الثاني إلى خريطة للوصول السريع
+            const ancestorCoordMap = {};
+            // افترض أن الأعمدة هي: Ancestors, Latitude, Longitude
+            for (let i = 1; i < data2.length; i++) {
+                const row = data2[i];
+                const ancestor = row[0];
+                const latitude = parseFloat(row[1]);
+                const longitude = parseFloat(row[2]);
+                if (ancestor && !isNaN(latitude) && !isNaN(longitude)) {
+                    ancestorCoordMap[ancestor] = { latitude, longitude };
+                }
+            }
 
-// إضافة طبقة خرائط OpenStreetMap
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+            const terminalClades = [];
 
-// روابط ملفات CSV المحولة من Excel
-const firstFileURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv'; // استبدلها برابط الملف الأول
-const secondFileURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTg0hH5hBGLo4d83zuODbFLdF0RKFz-xKn2wFxnfWWMJPirCAf7aNgMOO35P3IwAw/pub?output=csv'; // استبدلها برابط الملف الثاني
+            // افترض أن الأعمدة في الملف الأول هي: Ancestors, Ages
+            for (let i = 1; i < data1.length; i++) {
+                const row = data1[i];
+                const ancestors = row[0];
+                const ages = row[1];
+                if (!ancestors || !ages) continue;
 
-// دالة لتحميل ومعالجة البيانات
-function loadData() {
-    // تحميل الملف الأول
-    Papa.parse(firstFileURL, {
-        download: true,
-        header: true,
-        complete: function(results1) {
-            const data1 = results1.data;
-            // استخراج السلف الأخير والأعمار
-            const lastAncestors = data1.map(row => {
-                if (!row['Ancestors'] || !row['Ages']) return null;
-                const ancestors = row['Ancestors'].split('>');
-                const lastAncestor = ancestors[ancestors.length - 1].replace('*', '').trim(); // إزالة النجمة إن وجدت
-                const ages = row['Ages'].split('>');
-                const ageArray = ages.map(age => parseInt(age, 10)).filter(age => !isNaN(age));
-                const weight = Math.max(...ageArray); // اختيار أكبر عمر كوزن
-                return { ancestor: lastAncestor, weight: weight };
-            }).filter(item => item !== null);
-    
-            // تحميل الملف الثاني
-            Papa.parse(secondFileURL, {
-                download: true,
-                header: true,
-                complete: function(results2) {
-                    const data2 = results2.data;
-                    // إنشاء خريطة لربط السلف بأحداثياتهم
-                    const ancestorCoords = {};
-                    data2.forEach(row => {
-                        if (!row['Ancestors'] || !row['Latitude'] || !row['Longitude']) return;
-                        const ancestors = row['Ancestors'].split('>');
-                        const lastAncestor = ancestors[ancestors.length - 1].replace('*', '').trim();
-                        const lat = parseFloat(row['Latitude']);
-                        const lon = parseFloat(row['Longitude']);
-                        if (!isNaN(lat) && !isNaN(lon)) {
-                            ancestorCoords[lastAncestor] = { lat: lat, lon: lon };
-                        }
-                    });
-    
-                    // ربط السلف بالأحداثيات وحساب الأوزان النهائية
-                    const weightedPoints = lastAncestors.map(item => {
-                        const coords = ancestorCoords[item.ancestor];
-                        if (coords) {
-                            return {
-                                ancestor: item.ancestor,
-                                lat: coords.lat,
-                                lon: coords.lon,
-                                weight: item.weight * 2 // مضاعفة الوزن كما طلبت
-                            };
-                        } else {
-                            console.warn(`لا توجد إحداثيات للسلف: ${item.ancestor}`);
-                            return null;
-                        }
-                    }).filter(item => item !== null);
-    
-                    // إعداد طبقة النقاط والسينترويد
-                    var heatPoints = [];
-                    var markersGroup = L.layerGroup().addTo(map); // مجموعة العلامات الأصلية
-    
-                    // عرض النقاط الأصلية على الخريطة
-                    weightedPoints.forEach(point => {
-                        // إضافة النقاط إلى طبقة النقاط
-                        L.circleMarker([point.lat, point.lon], {
-                            radius: 5,
-                            fillColor: 'blue',
-                            color: '#000',
-                            weight: 1,
-                            opacity: 1,
-                            fillOpacity: 0.8
-                        }).addTo(markersGroup)
-                        .bindPopup(`السلف: ${point.ancestor}<br>الوزن: ${point.weight}`);
-    
-                        // إضافة النقاط إلى طبقة الحرارة
-                        heatPoints.push([point.lat, point.lon, point.weight]);
-                    });
-    
-                    // إضافة طبقة الحرارة
-                    var heat = L.heatLayer(heatPoints, {
-                        radius: 25,
-                        blur: 15,
-                        maxZoom: 17,
-                        // gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'} // يمكنك تخصيص الألوان هنا
-                    }).addTo(map);
-    
-                    // حساب السينترويد
-                    const centroid = computeWeightedCentroid(weightedPoints);
-                    if (centroid) {
-                        // عرض السينترويد على الخريطة
-                        L.marker([centroid.lat, centroid.lon], {
-                            icon: L.icon({
-                                iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png', // أيقونة السينترويد، يمكنك تغييرها
-                                iconSize: [25, 41],
-                                iconAnchor: [12, 41],
-                                popupAnchor: [1, -34],
-                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-                                shadowSize: [41, 41]
-                            })
-                        }).addTo(map)
-                        .bindPopup(`السينترويد<br>Latitude: ${centroid.lat.toFixed(6)}, Longitude: ${centroid.lon.toFixed(6)}`)
-                        .openPopup();
-    
-                        // تحريك الخريطة إلى السينترويد
-                        map.setView([centroid.lat, centroid.lon], 5);
+                // استخراج السلف النهائي
+                const ancestorParts = ancestors.split('>');
+                let terminalAncestor = ancestorParts[ancestorParts.length - 1].trim();
+                // إزالة العلامة '*' إن وجدت
+                terminalAncestor = terminalAncestor.replace('*', '').trim();
+
+                // استخراج العمر النهائي
+                const ageParts = ages.split('>');
+                const terminalAgeStr = ageParts[ageParts.length - 1].trim();
+                const terminalAge = parseFloat(terminalAgeStr);
+
+                if (!isNaN(terminalAge)) {
+                    // جلب الإحداثيات من الملف الثاني
+                    const coords = ancestorCoordMap[terminalAncestor];
+                    if (coords) {
+                        terminalClades.push({
+                            ancestor: terminalAncestor,
+                            latitude: coords.latitude,
+                            longitude: coords.longitude,
+                            weight: terminalAge // الوزن من الأعمار
+                        });
                     }
                 }
-            });
+            }
+
+            // الآن، معالجة الملف الثاني لإضافة الأوزان المزدوجة
+            for (let i = 1; i < data2.length; i++) {
+                const row = data2[i];
+                const ancestor = row[0];
+                const latitude = parseFloat(row[1]);
+                const longitude = parseFloat(row[2]);
+                if (ancestor && ancestorCoordMap[ancestor] && !terminalClades.find(c => c.ancestor === ancestor)) {
+                    // إضافة السلف النهائي من الملف الثاني بوزن مزدوج
+                    terminalClades.push({
+                        ancestor: ancestor,
+                        latitude: latitude,
+                        longitude: longitude,
+                        weight: 2 // ضعف الوزن
+                    });
+                }
+            }
+
+            return terminalClades;
         }
-    }
 
-    // دالة لحساب السينترويد باستخدام الأوزان
-    function computeWeightedCentroid(points) {
-        if (points.length === 0) return null;
+        // دالة لحساب السنتروايد الوزني
+        function computeWeightedCentroid(data) {
+            let sumLat = 0;
+            let sumLon = 0;
+            let totalWeight = 0;
 
-        let sumLat = 0;
-        let sumLon = 0;
-        let totalWeight = 0;
+            data.forEach(point => {
+                sumLat += point.latitude * point.weight;
+                sumLon += point.longitude * point.weight;
+                totalWeight += point.weight;
+            });
 
-        points.forEach(point => {
-            sumLat += point.lat * point.weight;
-            sumLon += point.lon * point.weight;
-            totalWeight += point.weight;
-        });
+            return {
+                latitude: sumLat / totalWeight,
+                longitude: sumLon / totalWeight
+            };
+        }
 
-        if (totalWeight === 0) return null;
+        // دالة لعرض النقاط والسنتروايد على خريطة Leaflet
+        function displayMap(data, centroid) {
+            // تهيئة الخريطة
+            const map = L.map('map').setView([centroid.latitude, centroid.longitude], 5);
 
-        return {
-            lat: sumLat / totalWeight,
-            lon: sumLon / totalWeight
-        };
-    }
+            // إضافة طبقة الخرائط الأساسية
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
 
-    // تنفيذ الكود بعد تحميل الصفحة بالكامل
-    document.addEventListener('DOMContentLoaded', loadData);
-</script>
+            // إضافة النقاط
+            data.forEach(point => {
+                L.circleMarker([point.latitude, point.longitude], {
+                    radius: 5,
+                    fillColor: '#3388ff',
+                    color: '#fff',
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).bindPopup(`سلف: ${point.ancestor}<br>وزن: ${point.weight}`).addTo(map);
+            });
 
+            // إضافة السنتروايد
+            L.marker([centroid.latitude, centroid.longitude], {
+                icon: L.icon({
+                    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+                    shadowSize: [41, 41]
+                })
+            }).addTo(map).bindPopup(`سنتروايد: (${centroid.latitude.toFixed(5)}, ${centroid.longitude.toFixed(5)})`).openPopup();
+        }
+
+        // دالة لمعالجة الملفات من إدخال المستخدم (URLs)
+        async function processFiles() {
+            const url1 = document.getElementById('url1').value.trim();
+            const url2 = document.getElementById('url2').value.trim();
+
+            if (!url1 || !url2) {
+                alert('يرجى إدخال روابط كلا الملفين.');
+                return;
+            }
+
+            try {
+                const data1 = await fetchCSV(url1);
+                const data2 = await fetchCSV(url2);
+                const processedData = processData(data1, data2);
+                if (processedData.length === 0) {
+                    alert('لم يتم العثور على بيانات بعد المعالجة.');
+                    return;
+                }
+                const centroid = computeWeightedCentroid(processedData);
+                displayMap(processedData, centroid);
+            } catch (error) {
+                console.error('خطأ في تحميل أو معالجة الملفات:', error);
+                alert('حدث خطأ أثناء تحميل أو معالجة الملفات. تحقق من الروابط وحاول مرة أخرى.');
+            }
+        }
+    </script>
 </body>
 </html>
