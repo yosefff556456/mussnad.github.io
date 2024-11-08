@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لعبة الثعبان المحسنة</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #gameContainer {
+            position: relative;
+            margin: 20px auto;
+            width: 600px;
+            height: 600px;
+            border: 2px solid #fff;
+            background-color: #000;
+        }
+        canvas {
+            background-color: #111;
+        }
+        #scoreBoard {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        #gameOver {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            border: 2px solid #fff;
+            display: none;
+        }
+        #gameOver h2 {
+            margin: 0 0 10px 0;
+        }
+        #restartBtn {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #restartBtn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>لعبة الثعبان المحسنة</h1>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+        <div id="gameOver">
+            <h2>انتهت اللعبة!</h2>
+            <p>النتيجة: <span id="finalScore">0</span></p>
+            <button id="restartBtn">إعادة اللعب</button>
+        </div>
+    </div>
+    <div id="scoreBoard">النتيجة: <span id="score">0</span> | المستوى: <span id="level">1</span></div>
+
+    <!-- صوتيات اللعبة -->
+    <audio id="eatSound" src="https://freesound.org/data/previews/341/341695_6264070-lq.mp3"></audio>
+    <audio id="gameOverSound" src="https://freesound.org/data/previews/331/331912_3248244-lq.mp3"></audio>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const levelElement = document.getElementById('level');
+        const gameOverDiv = document.getElementById('gameOver');
+        const finalScoreElement = document.getElementById('finalScore');
+        const restartBtn = document.getElementById('restartBtn');
+        const eatSound = document.getElementById('eatSound');
+        const gameOverSound = document.getElementById('gameOverSound');
+
+        const box = 30;
+        const canvasSize = 600;
+        const cols = canvasSize / box;
+        const rows = canvasSize / box;
+
+        let snake = [];
+        snake[0] = { x: Math.floor(cols / 2) * box, y: Math.floor(rows / 2) * box };
+
+        let direction = null;
+        let food = generateFood();
+        let score = 0;
+        let level = 1;
+        let speed = 150; // سرعة اللعبة بالمللي ثانية
+        let gameInterval = null;
+        let obstacles = generateObstacles(level);
+
+        // التحكم في الاتجاه باستخدام لوحة المفاتيح
+        document.addEventListener('keydown', setDirection);
+
+        // زر إعادة اللعب
+        restartBtn.addEventListener('click', restartGame);
+
+        function setDirection(event) {
+            if (event.keyCode === 37 && direction !== 'RIGHT') direction = 'LEFT';
+            if (event.keyCode === 38 && direction !== 'DOWN') direction = 'UP';
+            if (event.keyCode === 39 && direction !== 'LEFT') direction = 'RIGHT';
+            if (event.keyCode === 40 && direction !== 'UP') direction = 'DOWN';
+        }
+
+        function generateFood() {
+            let foodX, foodY;
+            do {
+                foodX = Math.floor(Math.random() * cols) * box;
+                foodY = Math.floor(Math.random() * rows) * box;
+            } while (isOccupied(foodX, foodY));
+            return { x: foodX, y: foodY };
+        }
+
+        function generateObstacles(level) {
+            let obstacles = [];
+            let numberOfObstacles = level * 5;
+            for (let i = 0; i < numberOfObstacles; i++) {
+                let obsX, obsY;
+                do {
+                    obsX = Math.floor(Math.random() * cols) * box;
+                    obsY = Math.floor(Math.random() * rows) * box;
+                } while (isOccupied(obsX, obsY) || (obsX === food.x && obsY === food.y));
+                obstacles.push({ x: obsX, y: obsY });
+            }
+            return obstacles;
+        }
+
+        function isOccupied(x, y) {
+            // التحقق من تواجد الثعبان في الموقع
+            for (let segment of snake) {
+                if (segment.x === x && segment.y === y) return true;
+            }
+            // التحقق من تواجد العقبات
+            for (let obs of obstacles) {
+                if (obs.x === x && obs.y === y) return true;
+            }
+            return false;
+        }
+
+        function collision(head, array) {
+            for (let segment of array) {
+                if (head.x === segment.x && head.y === segment.y) return true;
+            }
+            return false;
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // رسم العقبات
+            ctx.fillStyle = '#555';
+            obstacles.forEach(obs => {
+                ctx.fillRect(obs.x, obs.y, box, box);
+                ctx.strokeStyle = '#333';
+                ctx.strokeRect(obs.x, obs.y, box, box);
+            });
+
+            // رسم الثعبان
+            snake.forEach((segment, index) => {
+                ctx.fillStyle = index === 0 ? '#00FF00' : '#FFFFFF';
+                ctx.fillRect(segment.x, segment.y, box, box);
+                ctx.strokeStyle = '#000';
+                ctx.strokeRect(segment.x, segment.y, box, box);
+            });
+
+            // رسم الطعام
+            ctx.fillStyle = '#FF0000';
+            ctx.fillRect(food.x, food.y, box, box);
+
+            // تحريك الثعبان
+            if (direction) {
+                let head = { ...snake[0] };
+                if (direction === 'LEFT') head.x -= box;
+                if (direction === 'UP') head.y -= box;
+                if (direction === 'RIGHT') head.x += box;
+                if (direction === 'DOWN') head.y += box;
+
+                // التحقق من الاصطدام بالجدران أو الثعبان أو العقبات
+                if (
+                    head.x < 0 ||
+                    head.x >= canvasSize ||
+                    head.y < 0 ||
+                    head.y >= canvasSize ||
+                    collision(head, snake) ||
+                    collision(head, obstacles)
+                ) {
+                    endGame();
+                    return;
+                }
+
+                snake.unshift(head);
+
+                // التحقق من تناول الطعام
+                if (head.x === food.x && head.y === food.y) {
+                    score++;
+                    eatSound.play();
+                    document.getElementById('score').innerText = score;
+                    // زيادة المستوى كل 5 نقاط
+                    if (score % 5 === 0) {
+                        level++;
+                        document.getElementById('level').innerText = level;
+                        // زيادة صعوبة اللعبة بتقليل سرعة الفريمز
+                        speed = Math.max(50, speed - 10);
+                        clearInterval(gameInterval);
+                        obstacles = generateObstacles(level);
+                        gameInterval = setInterval(draw, speed);
+                    }
+                    food = generateFood();
+                } else {
+                    snake.pop();
+                }
+            }
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            gameOverSound.play();
+            finalScoreElement.innerText = score;
+            gameOverDiv.style.display = 'block';
+        }
+
+        function restartGame() {
+            snake = [];
+            snake[0] = { x: Math.floor(cols / 2) * box, y: Math.floor(rows / 2) * box };
+            direction = null;
+            food = generateFood();
+            score = 0;
+            level = 1;
+            speed = 150;
+            document.getElementById('score').innerText = score;
+            document.getElementById('level').innerText = level;
+            obstacles = generateObstacles(level);
+            gameOverDiv.style.display = 'none';
+            gameInterval = setInterval(draw, speed);
+        }
+
+        // بدء اللعبة عند تحميل الصفحة
+        window.onload = () => {
+            restartGame();
+        };
+    </script>
+</body>
+</html>
