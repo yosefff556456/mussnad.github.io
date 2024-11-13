@@ -1,49 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Leaflet + Three.js Example</title>
+    <title>Leaflet + Three.js 3D Terrain</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map { height: 100vh; }
+        #map { height: 100vh; width: 100vw; }
+        body { margin: 0; }
     </style>
 </head>
 <body>
     <div id="map"></div>
+    
+    <!-- مكتبات Leaflet و Three.js -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/three/examples/js/controls/OrbitControls.js"></script>
+    
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
+        // إنشاء خريطة Leaflet
+        var map = L.map('map').setView([37.7749, -122.4194], 13); // مثال: سان فرانسيسكو
 
+        // إضافة طبقة الخرائط الأساسية
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
-
+        
         // إعداد Three.js
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
+        var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+        renderer.domElement.style.position = 'absolute';
+        renderer.domElement.style.top = '0';
+        renderer.domElement.style.left = '0';
+        document.getElementById('map').appendChild(renderer.domElement);
 
-        // إضافة مجسم بسيط
-        var geometry = new THREE.BoxGeometry();
-        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        // إضافة عناصر تحكم الكاميرا
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enablePan = false;
+        controls.enableZoom = true;
 
-        camera.position.z = 5;
+        // إعداد الكاميرا
+        camera.position.set(0, 100, 200);
+        controls.update();
 
-        var animate = function () {
+        // تحميل نموذج التضاريس (مثال باستخدام ارتفاعات بسيطة)
+        // يمكنك استخدام بيانات DEM (Digital Elevation Model) حقيقية لتحسين التفاصيل
+        var geometry = new THREE.PlaneGeometry(1000, 1000, 100, 100);
+        geometry.rotateX(-Math.PI / 2);
+
+        // إضافة ارتفاعات عشوائية للتضاريس (يمكنك استبدالها ببيانات حقيقية)
+        for (var i = 0; i < geometry.vertices.length; i++) {
+            var vertex = geometry.vertices[i];
+            vertex.y = Math.random() * 50; // ارتفاع عشوائي
+        }
+
+        geometry.computeVertexNormals();
+
+        var material = new THREE.MeshLambertMaterial({ color: 0x556B2F, wireframe: false });
+        var terrain = new THREE.Mesh(geometry, material);
+        scene.add(terrain);
+
+        // إضافة مصدر ضوء
+        var light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(100, 100, 100).normalize();
+        scene.add(light);
+
+        // مزامنة حركة الكاميرا بين Leaflet و Three.js
+        function syncCamera() {
+            var center = map.getCenter();
+            var zoom = map.getZoom();
+            
+            // حساب الإحداثيات الجغرافية إلى إحداثيات ثلاثية الأبعاد
+            var latLng = map.getCenter();
+            var lat = latLng.lat;
+            var lng = latLng.lng;
+            // يمكن تحسين التحويل باستخدام مكتبات مثل proj4.js
+
+            // تحديث الكاميرا إذا لزم الأمر
+        }
+
+        // حلقة الرسوم المتحركة
+        function animate() {
             requestAnimationFrame(animate);
-
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-
+            controls.update();
             renderer.render(scene, camera);
-        };
-
+        }
         animate();
+
+        // تحديث حجم العرض عند تغيير حجم النافذة
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }, false);
     </script>
 </body>
 </html>
