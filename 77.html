@@ -1,196 +1,303 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-    <title>حساب السنتروايد وعرض الخريطة</title>
+    <meta charset="UTF-8">
+    <title>عرض جميع الأنساب على خريطة</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        #map { height: 600px; width: 100%; }
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        input[type="text"] { width: 80%; padding: 8px; margin: 5px 0; }
-        button { padding: 10px 20px; }
+        /* تحديد ارتفاع html و body لضمان عرض الخريطة بشكل صحيح */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl; /* لجعل النصوص تتناسب مع اللغة العربية */
+        }
+        h2 {
+            text-align: center;
+            margin: 10px 0;
+        }
+        #controls {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        #slider {
+            width: 300px;
+        }
+        .label-text {
+            background-color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 12px;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
-    <h2>تحميل ملفات CSV من روابط</h2>
-    <label for="url1">رابط الملف الأول (Ancestors وAges):</label><br>
-    <input type="text" id="url1" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vRSIfLpWfT7orzKqBamCq7XHi9NH-uzU5aqILm0BF-OSPv8znF86aaMve8hJXfAJw/pub?output=csv" /><br><br>
-    
-    <label for="url2">رابط الملف الثاني (Ancestors وLatitude وLongitude):</label><br>
-    <input type="text" id="url2" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vTg0hH5hBGLo4d83zuODbFLdF0RKFz-xKn2wFxnfWWMJPirCAf7aNgMOO35P3IwAw/pub?output=csv" /><br><br>
-    
-    <button onclick="processFiles()">حساب وعرض السنتروايد</button>
-    
-    <h2>الخريطة</h2>
+    <h2>عرض جميع الأنساب على خريطة</h2>
+    <div id="controls">
+        <label for="slider">عدد الأنساب المعروضة: <span id="sliderValue">1</span></label><br>
+        <input type="range" id="slider" min="1" max="100" value="1">
+    </div>
     <div id="map"></div>
 
-    <!-- تضمين المكتبات هنا -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-sA+e2N5pLkG4bAn+jAuPzkJlUqkf0s3bYV8mBM3B6AU="
-     crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-o9N1j6L0j2h3ReMKrIgX5hK4FJFd2VQ+J3ZbBTYI4Us="
-     crossorigin=""></script>
-
+    <!-- مكتبة Leaflet -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- مكتبة PapaParse لقراءة ملفات CSV -->
+    <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
     <script>
-        // دالة لجلب ملف CSV من رابط ومعالجته
-        async function fetchCSV(url) {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`خطأ في جلب الملف من الرابط: ${url}`);
-            }
-            const text = await response.text();
-            const data = XLSX.read(text, { type: 'string' });
-            const firstSheetName = data.SheetNames[0];
-            const worksheet = data.Sheets[firstSheetName];
-            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-            return json;
+        // تهيئة الخريطة
+        var map = L.map('map').setView([30, 30], 2); // ضبط الإحداثيات الافتراضية
+
+        // إضافة طبقة الخريطة (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // روابط ملفات CSV
+        var csvUrls = [
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vSd3p_h-602tPkzCmZFeWiSXqXHGN9glvTurS99FJGHv0vYZxkhG6n-gFlEIIurugm9FrlFQFOtgIy2/pub?output=csv', // الملف الأول
+            'https://docs.google.com/spreadsheets/d/e/2PACX-1vTg0hH5hBGLo4d83zuODbFLdF0RKFz-xKn2wFxnfWWMJPirCAf7aNgMOO35P3IwAw/pub?output=csv' // استبدل هذا بالرابط الخاص بالملف الثاني
+        ];
+
+        // دالة لتحميل ومعالجة ملف CSV
+        function loadCSV(url, callback) {
+            Papa.parse(url, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    callback(results.data);
+                },
+                error: function(error) {
+                    console.error("حدث خطأ أثناء تحميل ملف CSV:", error);
+                }
+            });
         }
 
-        // دالة لمعالجة البيانات واستخراج السلف النهائي
+        // تحميل كلا الملفين
+        loadCSV(csvUrls[0], function(data1) {
+            loadCSV(csvUrls[1], function(data2) {
+                processData(data1, data2);
+            });
+        });
+
         function processData(data1, data2) {
-            // تحويل بيانات الملف الثاني إلى خريطة للوصول السريع
-            const ancestorCoordMap = {};
-            // افترض أن الأعمدة هي: Ancestors, Latitude, Longitude
-            for (let i = 1; i < data2.length; i++) {
-                const row = data2[i];
-                const ancestor = row[0];
-                const latitude = parseFloat(row[1]);
-                const longitude = parseFloat(row[2]);
-                if (ancestor && !isNaN(latitude) && !isNaN(longitude)) {
-                    ancestorCoordMap[ancestor] = { latitude, longitude };
-                }
+            var tree = {}; // هيكل الشجرة
+            var ancestorList = []; // قائمة مرتبة من الأجداد إلى الأبن الأخير
+
+            // دالة لمعالجة بيانات كل ملف
+            // multiplier يحدد وزن البيانات من الملف الثاني
+            function processFile(data, multiplier) {
+                data.forEach(function(row) {
+                    var ancestors = row.Ancestors.split('>');
+                    var ages = row.Ages ? row.Ages.split('>') : []; // فصل الأعمار إذا كانت موجودة
+                    var currentPath = '';
+                    ancestors.forEach(function(name, index) {
+                        currentPath = index === 0 ? name : currentPath + '>' + name;
+
+                        // إذا لم يتم تسجيل السلف بعد، نقوم بإنشائه
+                        if (!tree[currentPath]) {
+                            tree[currentPath] = {
+                                name: name,
+                                children: [],
+                                parents: [], // يمكن أن يكون هناك أكثر من والد في بعض الأحيان
+                                latitudes: [], // لتخزين جميع إحداثيات خط العرض
+                                longitudes: [],  // لتخزين جميع إحداثيات خط الطول
+                                ages: [] // لتخزين أعمار السلف
+                            };
+                            ancestorList.push(currentPath);
+                        }
+
+                        // إضافة عمر السلف إذا كان موجودًا
+                        if (ages[index]) {
+                            var age = parseFloat(ages[index]);
+                            if (!isNaN(age)) {
+                                tree[currentPath].ages.push(age * multiplier); // تطبيق المضاعف على العمر
+                            }
+                        } else {
+                            // إذا لم يكن هناك عمر (من الملف الثاني)، نستخدم وزنًا ثابتًا
+                            tree[currentPath].ages.push(1 * multiplier); // الوزن الثابت يمكن تعديله حسب الحاجة
+                        }
+
+                        // إضافة إحداثيات السلف إذا كانت موجودة
+                        if (row.Latitude && row.Longitude) {
+                            tree[currentPath].latitudes.push(parseFloat(row.Latitude));
+                            tree[currentPath].longitudes.push(parseFloat(row.Longitude));
+                        }
+
+                        // ربط الأب بالأبناء
+                        if (index > 0) {
+                            var parentPath = ancestors.slice(0, index).join('>');
+                            if (!tree[parentPath].children.includes(currentPath)) {
+                                tree[parentPath].children.push(currentPath);
+                            }
+                            if (!tree[currentPath].parents.includes(parentPath)) {
+                                tree[currentPath].parents.push(parentPath);
+                            }
+                        }
+                    });
+                });
             }
 
-            const terminalClades = [];
+            // معالجة الملفين مع تعيين مضاعف لكل ملف
+            processFile(data1, 1); // الملف الأول بدون مضاعف
+            processFile(data2, 2); // الملف الثاني بمضاعف 2 (يمكنك تعديل المضاعف حسب الحاجة)
 
-            // افترض أن الأعمدة في الملف الأول هي: Ancestors, Ages
-            for (let i = 1; i < data1.length; i++) {
-                const row = data1[i];
-                const ancestors = row[0];
-                const ages = row[1];
-                if (!ancestors || !ages) continue;
+            // حساب متوسط الإحداثيات لكل سلف مع الأخذ في الاعتبار الأوزان
+            Object.keys(tree).forEach(function(path) {
+                var node = tree[path];
+                if (node.latitudes.length > 0 && node.longitudes.length > 0 && node.ages.length > 0) {
+                    // حساب المتوسط الحسابي للإحداثيات مع وزن الأعمار
+                    var sumLat = 0;
+                    var sumLng = 0;
+                    var weightTotal = 0;
+                    node.latitudes.forEach(function(lat, idx) {
+                        var age = node.ages[idx] || 1; // استخدام الوزن كوزن، إذا لم يتوفر العمر افتراضيًا كـ1
+                        sumLat += lat * age;
+                        sumLng += node.longitudes[idx] * age;
+                        weightTotal += age;
+                    });
+                    node.lat = sumLat / weightTotal;
+                    node.lng = sumLng / weightTotal;
+                } else {
+                    node.lat = null;
+                    node.lng = null;
+                }
+            });
 
-                // استخراج السلف النهائي
-                const ancestorParts = ancestors.split('>');
-                let terminalAncestor = ancestorParts[ancestorParts.length - 1].trim();
-                // إزالة العلامة '*' إن وجدت
-                terminalAncestor = terminalAncestor.replace('*', '').trim();
-
-                // استخراج العمر النهائي
-                const ageParts = ages.split('>');
-                const terminalAgeStr = ageParts[ageParts.length - 1].trim();
-                const terminalAge = parseFloat(terminalAgeStr);
-
-                if (!isNaN(terminalAge)) {
-                    // جلب الإحداثيات من الملف الثاني
-                    const coords = ancestorCoordMap[terminalAncestor];
-                    if (coords) {
-                        terminalClades.push({
-                            ancestor: terminalAncestor,
-                            latitude: coords.latitude,
-                            longitude: coords.longitude,
-                            weight: terminalAge // الوزن من الأعمار
-                        });
+            // وظيفة لتقدير إحداثيات السلف بدون إحداثيات بناءً على متوسط إحداثيات الأبناء
+            function estimateCoordinates() {
+                var updated = false;
+                Object.keys(tree).forEach(function(path) {
+                    var node = tree[path];
+                    if (node.lat === null || node.lng === null) {
+                        if (node.children.length > 0) {
+                            var sumLat = 0, sumLng = 0, weightTotal = 0;
+                            node.children.forEach(function(childPath) {
+                                var child = tree[childPath];
+                                if (child.lat !== null && child.lng !== null && child.ages.length > 0) {
+                                    // استخدام عمر السلف كمضاعف
+                                    var childAge = child.ages.reduce((a, b) => a + b, 0);
+                                    sumLat += child.lat * childAge;
+                                    sumLng += child.lng * childAge;
+                                    weightTotal += childAge;
+                                }
+                            });
+                            if (weightTotal > 0) {
+                                node.lat = sumLat / weightTotal;
+                                node.lng = sumLng / weightTotal;
+                                updated = true;
+                            }
+                        }
                     }
-                }
+                });
+                return updated;
             }
 
-            // الآن، معالجة الملف الثاني لإضافة الأوزان المزدوجة
-            for (let i = 1; i < data2.length; i++) {
-                const row = data2[i];
-                const ancestor = row[0];
-                const latitude = parseFloat(row[1]);
-                const longitude = parseFloat(row[2]);
-                if (ancestor && ancestorCoordMap[ancestor] && !terminalClades.find(c => c.ancestor === ancestor)) {
-                    // إضافة السلف النهائي من الملف الثاني بوزن مزدوج
-                    terminalClades.push({
-                        ancestor: ancestor,
-                        latitude: latitude,
-                        longitude: longitude,
-                        weight: 2 // ضعف الوزن
+            // تقدير الإحداثيات بشكل متكرر حتى لا تبقى أي سلالات بدون إحداثيات إذا كان ذلك ممكنًا
+            while (estimateCoordinates()) {}
+
+            // ترتيب الأنساب من الأجداد إلى الأبن الأخير بناءً على عمق السلسلة الأنسابية
+            ancestorList.sort(function(a, b) {
+                return a.split('>').length - b.split('>').length;
+            });
+
+            // إنشاء الماركيرات والخطوط وترتيبها
+            var markers = [];
+            var polylines = [];
+
+            ancestorList.forEach(function(path, index) {
+                var node = tree[path];
+                if (node.lat !== null && node.lng !== null) {
+                    // إنشاء ماركر نصي
+                    var marker = L.marker([node.lat, node.lng], {
+                        icon: L.divIcon({
+                            className: 'label-text',
+                            html: node.name,
+                            iconSize: [100, 40],
+                            iconAnchor: [50, 20]
+                        })
+                    });
+
+                    markers.push({
+                        marker: marker,
+                        index: index + 1 // ترتيب الأنساب يبدأ من 1
+                    });
+
+                    // إنشاء خطوط ربط بين الأبناء والآباء
+                    node.parents.forEach(function(parentPath) {
+                        if (tree[parentPath].lat !== null && tree[parentPath].lng !== null) {
+                            var polyline = L.polyline([
+                                [tree[parentPath].lat, tree[parentPath].lng],
+                                [node.lat, node.lng]
+                            ], {color: 'blue'});
+                            polylines.push({
+                                polyline: polyline,
+                                index: index + 1 // ترتيب الأنساب يبدأ من 1
+                            });
+                        }
                     });
                 }
-            }
-
-            return terminalClades;
-        }
-
-        // دالة لحساب السنتروايد الوزني
-        function computeWeightedCentroid(data) {
-            let sumLat = 0;
-            let sumLon = 0;
-            let totalWeight = 0;
-
-            data.forEach(point => {
-                sumLat += point.latitude * point.weight;
-                sumLon += point.longitude * point.weight;
-                totalWeight += point.weight;
             });
 
-            return {
-                latitude: sumLat / totalWeight,
-                longitude: sumLon / totalWeight
-            };
-        }
+            // تحديد الحد الأقصى لقيمة شريط التمرير بناءً على عدد الأنساب
+            var maxSliderValue = markers.length;
+            document.getElementById('slider').max = maxSliderValue;
 
-        // دالة لعرض النقاط والسنتروايد على خريطة Leaflet
-        function displayMap(data, centroid) {
-            // تهيئة الخريطة
-            const map = L.map('map').setView([centroid.latitude, centroid.longitude], 5);
+            // وظيفة لتحديث الخريطة بناءً على قيمة شريط التمرير
+            function updateMap(value) {
+                // إزالة جميع الماركيرات والخطوط الحالية
+                markers.forEach(function(m) {
+                    map.removeLayer(m.marker);
+                });
+                polylines.forEach(function(p) {
+                    map.removeLayer(p.polyline);
+                });
 
-            // إضافة طبقة الخرائط الأساسية
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-
-            // إضافة النقاط
-            data.forEach(point => {
-                L.circleMarker([point.latitude, point.longitude], {
-                    radius: 5,
-                    fillColor: '#3388ff',
-                    color: '#fff',
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).bindPopup(`سلف: ${point.ancestor}<br>وزن: ${point.weight}`).addTo(map);
-            });
-
-            // إضافة السنتروايد
-            L.marker([centroid.latitude, centroid.longitude], {
-                icon: L.icon({
-                    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                    popupAnchor: [1, -34],
-                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-                    shadowSize: [41, 41]
-                })
-            }).addTo(map).bindPopup(`سنتروايد: (${centroid.latitude.toFixed(5)}, ${centroid.longitude.toFixed(5)})`).openPopup();
-        }
-
-        // دالة لمعالجة الملفات من إدخال المستخدم (URLs)
-        async function processFiles() {
-            const url1 = document.getElementById('url1').value.trim();
-            const url2 = document.getElementById('url2').value.trim();
-
-            if (!url1 || !url2) {
-                alert('يرجى إدخال روابط كلا الملفين.');
-                return;
+                // إضافة الماركيرات والخطوط حتى القيمة المحددة
+                markers.forEach(function(m) {
+                    if (m.index <= value) {
+                        m.marker.addTo(map);
+                    }
+                });
+                polylines.forEach(function(p) {
+                    if (p.index <= value) {
+                        p.polyline.addTo(map);
+                    }
+                });
             }
 
-            try {
-                const data1 = await fetchCSV(url1);
-                const data2 = await fetchCSV(url2);
-                const processedData = processData(data1, data2);
-                if (processedData.length === 0) {
-                    alert('لم يتم العثور على بيانات بعد المعالجة.');
-                    return;
-                }
-                const centroid = computeWeightedCentroid(processedData);
-                displayMap(processedData, centroid);
-            } catch (error) {
-                console.error('خطأ في تحميل أو معالجة الملفات:', error);
-                alert('حدث خطأ أثناء تحميل أو معالجة الملفات. تحقق من الروابط وحاول مرة أخرى.');
+            // ضبط الشريط التمرير ليبدأ من القيمة 1
+            document.getElementById('slider').value = 1;
+            document.getElementById('sliderValue').innerText = 1;
+            updateMap(1);
+
+            // إضافة مستمع لحدث تغيير قيمة الشريط التمرير
+            document.getElementById('slider').addEventListener('input', function(e) {
+                var value = parseInt(e.target.value);
+                document.getElementById('sliderValue').innerText = value;
+                updateMap(value);
+            });
+
+            // ضبط عرض الخريطة لتشمل جميع الماركيرات عند القيمة القصوى
+            var allMarkers = markers.map(function(m) { return m.marker; });
+            if (allMarkers.length > 0) {
+                var group = new L.featureGroup(allMarkers.map(function(m) { return m.marker; }));
+                map.fitBounds(group.getBounds().pad(0.5));
             }
         }
     </script>
