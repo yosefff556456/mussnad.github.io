@@ -3,42 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>خريطة العينات الجينية</title>
+    <!-- تضمين Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- مكتبة Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <!-- مكتبة MarkerCluster -->
+    <!-- مكتبة MarkerCluster CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
-    <!-- تنسيقات إضافية -->
-    <style>
-        #map { height: 100vh; }
-        .popup-content {
-            width: 300px;
-        }
-        .search-container {
-            position: absolute;
-            top: 10px;
-            left: 50px;
-            z-index: 1000;
-            background: white;
-            padding: 5px;
-            border-radius: 5px;
-        }
-        .search-container input {
-            width: 200px;
-        }
-    </style>
+    <!-- ملف CSS الخاص -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="map"></div>
+
+<!-- حاوية البحث -->
 <div class="search-container">
-    <input type="text" id="search-input" placeholder="ابحث عن عينة...">
+    <input type="text" id="search-input" class="form-control" placeholder="ابحث عن عينة...">
+    <div id="search-results" class="list-group"></div>
 </div>
 
-<!-- مكتبة Leaflet -->
+<!-- مكتبة Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- مكتبة MarkerCluster -->
+<!-- مكتبة MarkerCluster JS -->
 <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
-<!-- مكتبة PapaParse -->
+<!-- مكتبة PapaParse JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 <!-- ملف JavaScript الخاص -->
 <script src="script.js"></script>
