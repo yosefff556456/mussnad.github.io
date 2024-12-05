@@ -1,5 +1,5 @@
 // رابط CSV من Google Sheets (استبدل هذا بالرابط الخاص بك)
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgOli4qYAt6WymTXxI-5g3GF1b_3OamTIYxXkkjgzZ_JJC_xZfiE1xE0sOMr18hl7qww_YRH3dJpS7/pub?output=csv';
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PofkmS3WNppu0IPU7aYpSFhIOcXuxoa8d2TK9KEo5DfiYQaH9BNeUJHfNJ-V0gy0HpRlVBGn12H5/pub?output=csv';
 
 // إنشاء الخريطة
 const map = L.map('map').setView([30, 0], 2);
