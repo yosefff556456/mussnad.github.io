@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>خريطة العينات</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; }
+        .popup-content {
+            width: 200px;
+        }
+        .nav-buttons {
+            margin-top: 10px;
+            text-align: center;
+        }
+        .nav-buttons button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- تضمين مكتبة Leaflet -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- تضمين مكتبة PapaParse لقراءة CSV -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+<!-- تضمين ملف JavaScript الخاص بنا -->
+<script src="script.js"></script>
+
+</body>
+</html>
