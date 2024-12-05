@@ -1,5 +1,5 @@
 // رابط CSV من Google Sheets
-const csvUrl = 'رابط_CSV_الخاص_بك';
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PofkmS3WNppu0IPU7aYpSFhIOcXuxoa8d2TK9KEo5DfiYQaH9BNeUJHfNJ-V0gy0HpRlVBGn12H5/pub?output=csv';
 
 // إنشاء الخريطة
 const map = L.map('map').setView([30, 0], 2);
@@ -11,7 +11,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // أيقونة الجمجمة
 const skullIcon = L.icon({
-    iconUrl: 'skull_icon.png', // تأكد من أن لديك ملف أيقونة الجمجمة
+    iconUrl: 'skull_icon.png', // تأكد من وجود ملف أيقونة الجمجمة
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32]
@@ -26,9 +26,11 @@ Papa.parse(csvUrl, {
     header: true,
     complete: function(results) {
         const data = results.data;
-        data.forEach((item, index) => {
+        data.forEach((item) => {
             const lat = parseFloat(item.Latitude);
             const lon = parseFloat(item.Longitude);
+            if (isNaN(lat) || isNaN(lon)) return; // تجاهل البيانات بدون إحداثيات صحيحة
+
             const key = `${lat},${lon}`;
 
             if (!locations[key]) {
@@ -86,8 +88,11 @@ Papa.parse(csvUrl, {
                 const sample = samples[currentIndex];
                 contentDiv.innerHTML = `
                     <b>معرف الكائن:</b> ${sample['Object-ID']}<br>
-                    <b>الجنس:</b> ${sample.Sex}<br>
-                    <b>العمر:</b> ${sample.Age}<br>
+                    <b>الجنس:</b> ${sample.Sex || 'غير معروف'}<br>
+                    <b>العمر:</b> ${sample.Age || 'غير متوفر'}<br>
+                    <b>الثقافة:</b> ${sample['Simplified_Culture'] || 'غير متوفر'}<br>
+                    <b>الموقع:</b> ${sample.Location || 'غير متوفر'}<br>
+                    <b>الدولة:</b> ${sample.Country || 'غير متوفر'}<br>
                     <!-- أضف المزيد من البيانات المهمة هنا -->
                 `;
                 counter.textContent = ` (${currentIndex + 1}/${samples.length}) `;
