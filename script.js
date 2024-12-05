@@ -1,26 +1,44 @@
-// رابط CSV من Google Sheets
-
-// رابط CSV من Google Sheets
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PofkmS3WNppu0IPU7aYpSFhIOcXuxoa8d2TK9KEo5DfiYQaH9BNeUJHfNJ-V0gy0HpRlVBGn12H5/pub?output=csv';
+// رابط CSV من Google Sheets (استبدل هذا بالرابط الخاص بك)
+const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQgOli4qYAt6WymTXxI-5g3GF1b_3OamTIYxXkkjgzZ_JJC_xZfiE1xE0sOMr18hl7qww_YRH3dJpS7/pub?output=csv';
 
 // إنشاء الخريطة
 const map = L.map('map').setView([30, 0], 2);
 
-// إضافة طبقة الخريطة
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; مساهمة OpenStreetMap'
-}).addTo(map);
+// خيارات طبقات الخريطة
+const baseMaps = {
+    "خريطة الشوارع": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; مساهمة OpenStreetMap'
+    }).addTo(map),
+    "القمر الصناعي": L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        subdomains:['mt0','mt1','mt2','mt3'],
+        attribution: '&copy; Google Maps'
+    })
+};
 
-// أيقونة الجمجمة
-const skullIcon = L.icon({
-    iconUrl: 'skull_icon.png', // تأكد من وجود ملف أيقونة الجمجمة
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
-});
+// إضافة التحكم في الطبقات
+L.control.layers(baseMaps).addTo(map);
 
-// تخزين المواقع
-const locations = {};
+// أيقونات مخصصة بناءً على المجموعة الوراثية
+const icons = {};
+
+// وظيفة للحصول على أيقونة بناءً على المجموعة الوراثية
+function getIcon(yGroup) {
+    if (!icons[yGroup]) {
+        icons[yGroup] = L.icon({
+            iconUrl: `icons/${yGroup}.png`, // يجب أن يكون لديك مجلد 'icons' يحتوي على الأيقونات
+            iconSize: [32, 37],
+            iconAnchor: [16, 37],
+            popupAnchor: [0, -37]
+        });
+    }
+    return icons[yGroup];
+}
+
+// مجموعة لتجميع العلامات
+const markers = L.markerClusterGroup();
+
+// تخزين العلامات للبحث
+const allMarkers = [];
 
 // جلب البيانات من CSV
 Papa.parse(csvUrl, {
@@ -33,82 +51,39 @@ Papa.parse(csvUrl, {
             const lon = parseFloat(item.Longitude.replace(',', '.'));
             if (isNaN(lat) || isNaN(lon)) return; // تجاهل البيانات بدون إحداثيات صحيحة
 
-            const key = `${lat},${lon}`;
+            const yFull = item.y || 'غير متوفر';
+            const yGroup = yFull.split('>').pop(); // الحصول على آخر مجموعة وراثية
 
-            if (!locations[key]) {
-                locations[key] = [];
-            }
+            const marker = L.marker([lat, lon], { icon: getIcon(yGroup) });
 
-            locations[key].push(item);
-        });
-
-        // إضافة العلامات إلى الخريطة
-        for (const key in locations) {
-            const samples = locations[key];
-            const [lat, lon] = key.split(',').map(Number);
-
-            const marker = L.marker([lat, lon], { icon: skullIcon }).addTo(map);
-
-            // إنشاء محتوى النافذة المنبثقة
-            let currentIndex = 0;
-
-            const popupContent = document.createElement('div');
-            popupContent.className = 'popup-content';
-
-            const contentDiv = document.createElement('div');
-            popupContent.appendChild(contentDiv);
-
-            const navDiv = document.createElement('div');
-            navDiv.className = 'nav-buttons';
-
-            const prevButton = document.createElement('button');
-            prevButton.textContent = 'السابق';
-            prevButton.onclick = () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateContent();
-                }
-            };
-            navDiv.appendChild(prevButton);
-
-            const counter = document.createElement('span');
-            navDiv.appendChild(counter);
-
-            const nextButton = document.createElement('button');
-            nextButton.textContent = 'التالي';
-            nextButton.onclick = () => {
-                if (currentIndex < samples.length - 1) {
-                    currentIndex++;
-                    updateContent();
-                }
-            };
-            navDiv.appendChild(nextButton);
-
-            popupContent.appendChild(navDiv);
-
-            function updateContent() {
-                const sample = samples[currentIndex];
-                contentDiv.innerHTML = `
-                    <b>معرف الكائن:</b> ${sample['Object-ID']}<br>
-                    <b>الاسم الشائع:</b> ${sample['Colloquial-Skeletal'] || 'غير متوفر'}<br>
-                    <b>الجنس:</b> ${sample.Sex || 'غير معروف'}<br>
-                    <b>العمر:</b> ${sample.Age || 'غير متوفر'}<br>
-                    <b>الثقافة المبسطة:</b> ${sample['Simplified_Culture'] || 'غير متوفر'}<br>
-                    <b>المجموعة الثقافية:</b> ${sample['Culture_Grouping'] || 'غير متوفر'}<br>
-                    <b>الموقع:</b> ${sample.Location || 'غير متوفر'}<br>
-                    <b>الدولة:</b> ${sample.Country || 'غير متوفر'}<br>
-                    <b>العينة:</b> ${sample.Label || 'غير متوفر'}<br>
-                    <b>تاريخ الكربون المشع:</b> ${sample.Date || 'غير متوفر'}<br>
-                    <b>المجموعة الوراثية Y-DNA:</b> ${sample['Y-Simple'] || 'غير متوفر'}<br>
-                    <b>المجموعة الوراثية mtDNA:</b> ${sample['mt-Simple'] || 'غير متوفر'}<br>
-                `;
-                counter.textContent = ` (${currentIndex + 1}/${samples.length}) `;
-            }
-
-            updateContent();
+            // محتوى النافذة المنبثقة
+            const popupContent = `
+                <div class="popup-content">
+                    <b>معرف العينة:</b> ${item['o']}<br>
+                    <b>الجنس:</b> ${item.Sex || 'غير معروف'}<br>
+                    <b>المجموعة الوراثية Y-DNA:</b> ${yFull}<br>
+                    <!-- يمكنك إضافة المزيد من المعلومات هنا -->
+                </div>
+            `;
 
             marker.bindPopup(popupContent);
-        }
+
+            markers.addLayer(marker);
+            allMarkers.push({ marker, sampleId: item['o'] });
+        });
+
+        map.addLayer(markers);
     }
+});
+
+// وظيفة البحث
+document.getElementById('search-input').addEventListener('keyup', function(e) {
+    const query = e.target.value.toLowerCase();
+    markers.clearLayers();
+    allMarkers.forEach(({ marker, sampleId }) => {
+        if (sampleId && sampleId.toLowerCase().includes(query)) {
+            markers.addLayer(marker);
+        }
+    });
 });
 
