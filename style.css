@@ -19,3 +19,18 @@
     justify-content: space-between;
     margin-top: 10px;
 }
+
+.marker-icon {
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+/* تخصيص Tooltip */
+.leaflet-tooltip {
+    background-color: #333;
+    color: #fff;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 12px;
+}
+
