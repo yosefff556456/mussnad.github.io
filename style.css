@@ -1,0 +1,19 @@
+/* تصميم الخريطة */
+#map {
+    height: 100vh;
+}
+
+/* حاوية البحث */
+.search-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    width: 250px;
+}
+
+#search-results {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
