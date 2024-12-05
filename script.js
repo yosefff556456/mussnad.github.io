@@ -48,9 +48,9 @@ Papa.parse(csvUrl, {
 function processData(data) {
     data.forEach(item => {
         // استبدال الفاصلة بالعقدة العشرية
+        const sampleName = item['o'];
         const lat = parseFloat(item.Latitude.replace('٫', '.'));
         const lng = parseFloat(item.Longitude.replace('٫', '.'));
-        const sampleName = item['o'];
         const sex = item['Sex'];
         const yGroup = item['y'];
 
