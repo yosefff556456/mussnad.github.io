@@ -2,31 +2,45 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>خريطة العينات</title>
+    <title>خريطة العينات الجينية</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- مكتبة MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <!-- تنسيقات إضافية -->
     <style>
-        #map { height: 600px; }
+        #map { height: 100vh; }
         .popup-content {
-            width: 400px;
+            width: 300px;
         }
-        .nav-buttons {
-            margin-top: 10px;
-            text-align: center;
+        .search-container {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 1000;
+            background: white;
+            padding: 5px;
+            border-radius: 5px;
         }
-        .nav-buttons button {
-            margin: 0 5px;
+        .search-container input {
+            width: 200px;
         }
     </style>
 </head>
 <body>
 
 <div id="map"></div>
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="ابحث عن عينة...">
+</div>
 
-<!-- تضمين مكتبة Leaflet -->
+<!-- مكتبة Leaflet -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- تضمين مكتبة PapaParse لقراءة CSV -->
+<!-- مكتبة MarkerCluster -->
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<!-- مكتبة PapaParse -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-<!-- تضمين ملف JavaScript الخاص بنا -->
+<!-- ملف JavaScript الخاص -->
 <script src="script.js"></script>
 
 </body>
