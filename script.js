@@ -1,4 +1,6 @@
 // رابط CSV من Google Sheets
+
+// رابط CSV من Google Sheets
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR6PofkmS3WNppu0IPU7aYpSFhIOcXuxoa8d2TK9KEo5DfiYQaH9BNeUJHfNJ-V0gy0HpRlVBGn12H5/pub?output=csv';
 
 // إنشاء الخريطة
@@ -27,8 +29,8 @@ Papa.parse(csvUrl, {
     complete: function(results) {
         const data = results.data;
         data.forEach((item) => {
-            const lat = parseFloat(item.Latitude);
-            const lon = parseFloat(item.Longitude);
+            const lat = parseFloat(item.Latitude.replace(',', '.'));
+            const lon = parseFloat(item.Longitude.replace(',', '.'));
             if (isNaN(lat) || isNaN(lon)) return; // تجاهل البيانات بدون إحداثيات صحيحة
 
             const key = `${lat},${lon}`;
@@ -88,12 +90,17 @@ Papa.parse(csvUrl, {
                 const sample = samples[currentIndex];
                 contentDiv.innerHTML = `
                     <b>معرف الكائن:</b> ${sample['Object-ID']}<br>
+                    <b>الاسم الشائع:</b> ${sample['Colloquial-Skeletal'] || 'غير متوفر'}<br>
                     <b>الجنس:</b> ${sample.Sex || 'غير معروف'}<br>
                     <b>العمر:</b> ${sample.Age || 'غير متوفر'}<br>
-                    <b>الثقافة:</b> ${sample['Simplified_Culture'] || 'غير متوفر'}<br>
+                    <b>الثقافة المبسطة:</b> ${sample['Simplified_Culture'] || 'غير متوفر'}<br>
+                    <b>المجموعة الثقافية:</b> ${sample['Culture_Grouping'] || 'غير متوفر'}<br>
                     <b>الموقع:</b> ${sample.Location || 'غير متوفر'}<br>
                     <b>الدولة:</b> ${sample.Country || 'غير متوفر'}<br>
-                    <!-- أضف المزيد من البيانات المهمة هنا -->
+                    <b>العينة:</b> ${sample.Label || 'غير متوفر'}<br>
+                    <b>تاريخ الكربون المشع:</b> ${sample.Date || 'غير متوفر'}<br>
+                    <b>المجموعة الوراثية Y-DNA:</b> ${sample['Y-Simple'] || 'غير متوفر'}<br>
+                    <b>المجموعة الوراثية mtDNA:</b> ${sample['mt-Simple'] || 'غير متوفر'}<br>
                 `;
                 counter.textContent = ` (${currentIndex + 1}/${samples.length}) `;
             }
@@ -104,3 +111,4 @@ Papa.parse(csvUrl, {
         }
     }
 });
+
