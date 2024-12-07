@@ -2,11 +2,68 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>تطبيقي باستخدام Flask و HTML</title>
+    <title>جلب بيانات YFull</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 <body>
-    <h1>مرحبًا بكم في تطبيقي!</h1>
-    <p>هذا تطبيق بسيط يستخدم بايثون مع HTML.</p>
-    <p style="color: green;">{{ message }}</p> <!-- عرض الرسالة هنا -->
+    <h1>جلب بيانات YFull</h1>
+    <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-FT33726)" />
+    <button id="fetchButton">جلب البيانات</button>
+
+    <h2>البيانات المستخرجة:</h2>
+    <pre id="output">البيانات ستظهر هنا...</pre>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', () => {
+            const treeId = document.getElementById('treeId').value.trim();
+            const output = document.getElementById('output');
+
+            if (!treeId) {
+                alert('يرجى إدخال معرف الشجرة.');
+                return;
+            }
+
+            // إظهار رسالة تحميل
+            output.textContent = 'جاري جلب البيانات...';
+
+            // إرسال طلب إلى الخادم الوسيط
+            fetch(`http://localhost:3000/fetch-tree/${treeId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('خطأ في جلب البيانات من الخادم.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.length === 0) {
+                        output.textContent = 'لم يتم العثور على بيانات.';
+                        return;
+                    }
+
+                    // عرض البيانات بشكل منسق
+                    output.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error(error);
+                    output.textContent = `حدث خطأ: ${error.message}`;
+                });
+        });
+    </script>
 </body>
 </html>
