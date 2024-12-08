@@ -63,7 +63,7 @@ document.getElementById('searchBtn').addEventListener('click', function() {
     return;
   }
 
-  var fullUrl = "https://www.yfull.com/tree/" + part + "/";
+  var fullUrl = "https://www.yfull.com/tree/J-" + part + "/";
 
   // جلب ملف المواقع (countries.json)
   fetch('countries.json')
@@ -119,11 +119,22 @@ document.getElementById('searchBtn').addEventListener('click', function() {
               var locationEl = liParent.querySelector('b[class*="yf-geo"]');
               var sampleNameEl = liParent.querySelector('span.yf-s-name');
               if(locationEl && sampleNameEl) {
-                var locCode = locationEl.textContent.trim();
-                if(locationData[locCode]) {
-                  var coord = locationData[locCode];
-                  L.marker([coord.lat, coord.lng]).addTo(map)
-                    .bindPopup("طفرة: J-" + part + "<br>عينة: " + sampleNameEl.textContent + "<br>الموقع: " + coord.country);
+                // text might be "GEO [GE-IM] age" أو "GEO [GE-IM]"
+                var locationText = locationEl.textContent.trim();
+                
+                // استخراج الرمز بين [ ... ]
+                var match = locationText.match(/\[(.*?)\]/); // يطابق أي نص بين []
+                if(match && match[1]) {
+                  var code = match[1].trim(); // هذا الرمز مثلا "GE-IM"
+                  if(locationData[code]) {
+                    var coord = locationData[code];
+                    L.marker([coord.lat, coord.lng]).addTo(map)
+                      .bindPopup("طفرة: J-" + part + "<br>عينة: " + sampleNameEl.textContent + "<br>الموقع: " + code);
+                  } else {
+                    console.warn("لم يتم العثور على إحداثيات للموقع: " + code);
+                  }
+                } else {
+                  console.warn("لم يتم العثور على رمز بين معقوفتين في النص: " + locationText);
                 }
               }
             }
