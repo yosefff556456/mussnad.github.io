@@ -49,83 +49,98 @@ button {
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-Mn0I7sEl0coz8riNso4ImWYns9WdCssLFhKZitHraAw=" crossorigin=""></script>
 <script>
-  // إنشاء الخريطة
-  var map = L.map('map').setView([30, 40], 5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 10,
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
+// إنشاء الخريطة
+var map = L.map('map').setView([30, 40], 5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 10,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-  document.getElementById('searchBtn').addEventListener('click', function() {
-    var part = document.getElementById('mutationInput').value.trim();
-    if(!part) {
-      alert("الرجاء إدخال الجزء الأخير من اسم الطفرة");
-      return;
-    }
+document.getElementById('searchBtn').addEventListener('click', function() {
+  var part = document.getElementById('mutationInput').value.trim();
+  if(!part) {
+    alert("الرجاء إدخال الجزء الأخير من اسم الطفرة");
+    return;
+  }
 
-    var fullUrl = "https://www.yfull.com/tree/J-" + part + "/";
+  var fullUrl = "https://www.yfull.com/tree/" + part + "/";
 
-    // جلب ملف المواقع (countries.json)
-    fetch('countries.json')
-      .then(res => res.json())
-      .then(locationData => {
-        
-        // جلب الصفحة من الرابط (قد يواجه CORS)
-        fetch(fullUrl)
-          .then(response => {
-            if(!response.ok) {
-              throw new Error("تعذر جلب الصفحة، تحقق من CORS أو صحة الرابط");
-            }
-            return response.text();
-          })
-          .then(htmlText => {
-            // تحليل الـHTML المستورد
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(htmlText, 'text/html');
-            
-            // نبحث عن li التي تحوي Ancient DNA
-            // عادةً تظهر عينات بنفس الشكل في السورس القادم من YFull
-            // سنبحث عن أي span بعنوان "Ancient DNA"
-            var ancientDNAElements = doc.querySelectorAll('span[title="Ancient DNA"]');
+  // جلب ملف المواقع (countries.json)
+  fetch('countries.json')
+    .then(res => res.json())
+    .then(locationData => {
+      
+      // تحويل القيم النصية "lat,lng" إلى كائنات lat,lng
+      const parsedLocations = {};
+      for (const key in locationData) {
+        if (locationData.hasOwnProperty(key)) {
+          const value = locationData[key]; // مثال: "32.40330000,67.1401000"
+          const [latStr, lngStr] = value.split(',');
+          const lat = parseFloat(latStr.trim());
+          const lng = parseFloat(lngStr.trim());
+          parsedLocations[key] = {
+            lat: lat,
+            lng: lng,
+            country: key
+          };
+        }
+      }
 
-            if(ancientDNAElements.length === 0) {
-              alert("لا توجد عينات Ancient DNA لهذه الطفرة.");
-              return;
-            }
+      locationData = parsedLocations;
 
-            // إخلاء الخريطة من أي علامات سابقة (في هذا المثال فقط نعيد التمركز)
-            map.setView([30,40],5);
+      // جلب الصفحة من الرابط (قد يواجه CORS)
+      fetch(fullUrl)
+        .then(response => {
+          if(!response.ok) {
+            throw new Error("تعذر جلب الصفحة، تحقق من CORS أو صحة الرابط");
+          }
+          return response.text();
+        })
+        .then(htmlText => {
+          // تحليل الـHTML المستورد
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(htmlText, 'text/html');
+          
+          // نبحث عن li التي تحوي Ancient DNA
+          var ancientDNAElements = doc.querySelectorAll('span[title="Ancient DNA"]');
 
-            // عرض العينات على الخريطة
-            ancientDNAElements.forEach(function(spanEl) {
-              var liParent = spanEl.closest('li');
-              if(liParent) {
-                // الموقع
-                var locationEl = liParent.querySelector('b[class*="yf-geo"]');
-                var sampleNameEl = liParent.querySelector('span.yf-s-name');
-                if(locationEl && sampleNameEl) {
-                  var locCode = locationEl.textContent.trim();
-                  if(locationData[locCode]) {
-                    var coord = locationData[locCode];
-                    L.marker([coord.lat, coord.lng]).addTo(map)
-                      .bindPopup("طفرة: J-" + part + "<br>عينة: " + sampleNameEl.textContent + "<br>الموقع: " + coord.country);
-                  }
+          if(ancientDNAElements.length === 0) {
+            alert("لا توجد عينات Ancient DNA لهذه الطفرة.");
+            return;
+          }
+
+          // إعادة تمركز الخريطة
+          map.setView([30,40],5);
+
+          // عرض العينات على الخريطة
+          ancientDNAElements.forEach(function(spanEl) {
+            var liParent = spanEl.closest('li');
+            if(liParent) {
+              var locationEl = liParent.querySelector('b[class*="yf-geo"]');
+              var sampleNameEl = liParent.querySelector('span.yf-s-name');
+              if(locationEl && sampleNameEl) {
+                var locCode = locationEl.textContent.trim();
+                if(locationData[locCode]) {
+                  var coord = locationData[locCode];
+                  L.marker([coord.lat, coord.lng]).addTo(map)
+                    .bindPopup("طفرة: J-" + part + "<br>عينة: " + sampleNameEl.textContent + "<br>الموقع: " + coord.country);
                 }
               }
-            });
-
-          })
-          .catch(err => {
-            console.error(err);
-            alert("حدث خطأ أثناء جلب أو تحليل الصفحة: " + err.message);
+            }
           });
 
-      })
-      .catch(err => {
-        console.error(err);
-        alert("حدث خطأ أثناء جلب ملف المواقع (countries.json): " + err.message);
-      });
-  });
+        })
+        .catch(err => {
+          console.error(err);
+          alert("حدث خطأ أثناء جلب أو تحليل الصفحة: " + err.message);
+        });
+
+    })
+    .catch(err => {
+      console.error(err);
+      alert("حدث خطأ أثناء جلب ملف المواقع (countries.json): " + err.message);
+    });
+});
 </script>
 
 </body>
