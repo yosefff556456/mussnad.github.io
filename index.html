@@ -2,64 +2,35 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>جلب بيانات YFull</title>
+    <title>جلب بيانات YFull وعرض الشجرة</title>
+    <!-- تحميل مكتبة jsTree -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            padding: 20px;
+        }
+        #output {
             margin-top: 20px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        /* تنسيق الشجرة */
-        .tree ul {
-            list-style-type: none;
-            position: relative;
-            padding-left: 1em;
-        }
-        .tree ul ul {
-            margin-left: 1em;
-        }
-        .tree li {
-            margin: 0;
-            padding: 0.5em 0;
-            position: relative;
-        }
-        .tree li::before, .tree li::after {
-            content: '';
-            position: absolute;
-            left: -1em;
-        }
-        .tree li::before {
-            border-left: 1px solid #000;
-            bottom: 50%;
-            height: 100%;
-            width: 1px;
-            top: 0;
-        }
-        .tree li::after {
-            border-top: 1px solid #000;
-            height: 1em;
-            width: 1em;
-            top: 1em;
-        }
-        .tree li:last-child::before {
-            height: 50%;
+        #jstree {
+            max-width: 100%;
+            overflow-x: auto;
         }
     </style>
 </head>
 <body>
-    <h1>جلب بيانات YFull</h1>
+    <h1>جلب بيانات YFull وعرض الشجرة</h1>
     <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-Y196305)" />
     <button id="fetchButton">جلب البيانات</button>
 
     <h2>البيانات المستخرجة:</h2>
     <div id="output">البيانات ستظهر هنا...</div>
+
+    <!-- تحميل مكتبة jQuery و jsTree -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
 
     <script>
         document.getElementById('fetchButton').addEventListener('click', () => {
@@ -92,7 +63,6 @@
 
                     // تعريف الشرط: TMRCA < 15000 ybp
                     const condition = (tmrca) => {
-                        // تحويل النص مثل "TMRCA 16100 ybp" إلى رقم
                         const match = tmrca.match(/TMRCA\s+(\d+)\s+ybp/i);
                         if (match && match[1]) {
                             return parseInt(match[1], 10) < 15000;
@@ -100,19 +70,29 @@
                         return false;
                     };
 
+                    // تخزين العلاقات الأصلية بين العقد
+                    const parentMap = new Map();
+
+                    // بناء خريطة الوالدين
+                    const allLiElements = doc.querySelectorAll('li[id^="lJ-"], li[id^="lJ-Y"]');
+                    allLiElements.forEach(li => {
+                        const parentLi = li.closest('ul').parentElement.closest('li');
+                        if (parentLi) {
+                            parentMap.set(li, parentLi);
+                        }
+                    });
+
+                    // العثور على جميع العناصر التي تلبي الشرط وجمع أسلافها
                     ageSpans.forEach(span => {
                         const ageText = span.textContent.trim();
-                        // استخراج قيمة TMRCA
                         const tmrcaMatch = ageText.match(/TMRCA\s+(\d+)\s+ybp/i);
                         if (tmrcaMatch && tmrcaMatch[1]) {
                             const tmrcaValue = parseInt(tmrcaMatch[1], 10);
-                            if (tmrcaValue < 15000) { // الشرط هنا
-                                // إضافة هذا العنصر وأسلافه إلى المجموعة
+                            if (condition(tmrcaValue)) { // الشرط هنا
                                 let currentLi = span.closest('li');
                                 while (currentLi) {
                                     extractedNodes.add(currentLi);
-                                    const parentUl = currentLi.parentElement.closest('li');
-                                    currentLi = parentUl;
+                                    currentLi = parentMap.get(currentLi);
                                 }
                             }
                         }
@@ -123,44 +103,71 @@
                         return;
                     }
 
-                    // بناء شجرة جديدة
-                    const tree = document.createElement('div');
-                    tree.classList.add('tree');
-                    const ul = document.createElement('ul');
+                    // تحويل مجموعة العناصر المستخرجة إلى شجرة منظمة
+                    const buildTreeData = () => {
+                        const treeData = [];
 
-                    // دالة لإضافة عقدة إلى الشجرة الجديدة
-                    const addNodeToTree = (li, parentUl) => {
-                        const clonedLi = li.cloneNode(false);
-                        // إزالة العناصر غير الضرورية
-                        clonedLi.querySelectorAll('ul').forEach(childUl => childUl.remove());
-                        parentUl.appendChild(clonedLi);
-
-                        // إذا كان للعقدة أطفال موجودين في المجموعة، أضفهم
-                        const children = li.querySelectorAll(':scope > ul > li');
-                        const filteredChildren = Array.from(children).filter(child => extractedNodes.has(child));
-                        if (filteredChildren.length > 0) {
-                            const newUl = document.createElement('ul');
-                            clonedLi.appendChild(newUl);
-                            filteredChildren.forEach(child => addNodeToTree(child, newUl));
+                        // إيجاد الجذر الأساسي (يفترض أن هناك عنصر يحتوي على a.yf-root)
+                        const rootLi = Array.from(extractedNodes).find(li => li.querySelector('a.yf-root'));
+                        if (!rootLi) {
+                            throw new Error('لم يتم العثور على الجذر الأساسي في البيانات.');
                         }
+
+                        // دالة بناء الشجرة بشكل تكراري
+                        const buildNode = (li) => {
+                            const aTag = li.querySelector('a');
+                            const nodeText = aTag ? aTag.textContent.trim() : 'بدون عنوان';
+                            const nodeId = li.id; // استخدام id كمعرف فريد
+
+                            // استخراج بيانات AGE
+                            const ageSpan = li.querySelector('span.yf-age');
+                            const ageText = ageSpan ? ageSpan.textContent.trim() : '';
+
+                            const node = {
+                                id: nodeId,
+                                text: `${nodeText} (${ageText})`,
+                                children: []
+                            };
+
+                            // العثور على الأطفال الذين هم في مجموعة extractedNodes
+                            const childLis = li.querySelectorAll(':scope > ul > li');
+                            childLis.forEach(childLi => {
+                                if (extractedNodes.has(childLi)) {
+                                    node.children.push(buildNode(childLi));
+                                }
+                            });
+
+                            return node;
+                        };
+
+                        treeData.push(buildNode(rootLi));
+                        return treeData;
                     };
 
-                    // العثور على الجذر الأساسي (J-FT33726)
-                    const rootLi = Array.from(extractedNodes).find(li => {
-                        const aTag = li.querySelector('a.yf-root');
-                        return aTag && aTag.textContent.trim() === treeId;
-                    });
-
-                    if (!rootLi) {
-                        output.textContent = 'لم يتم العثور على الجذر الأساسي في البيانات.';
+                    // بناء هيكل بيانات الشجرة
+                    let treeData;
+                    try {
+                        treeData = buildTreeData();
+                    } catch (error) {
+                        output.textContent = error.message;
                         return;
                     }
 
-                    addNodeToTree(rootLi, ul);
-                    tree.appendChild(ul);
-
+                    // تهيئة jsTree
                     output.innerHTML = '';
-                    output.appendChild(tree);
+                    const treeContainer = document.createElement('div');
+                    treeContainer.id = 'jstree';
+                    output.appendChild(treeContainer);
+
+                    $('#jstree').jstree({
+                        'core': {
+                            'data': treeData,
+                            'themes': {
+                                'responsive': false
+                            }
+                        },
+                        'plugins': ["wholerow"]
+                    });
                 })
                 .catch(error => {
                     console.error(error);
@@ -170,4 +177,3 @@
     </script>
 </body>
 </html>
-
