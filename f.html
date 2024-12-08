@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>جلب بيانات YFull باستخدام jsTree</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+    <style>
+        #output {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>جلب بيانات YFull باستخدام jsTree</h1>
+    <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-Y196305)" />
+    <button id="fetchButton">جلب البيانات</button>
+
+    <h2>البيانات المستخرجة:</h2>
+    <div id="output">البيانات ستظهر هنا...</div>
+
+    <!-- تحميل مكتبة jQuery و jsTree -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', () => {
+            const treeId = document.getElementById('treeId').value.trim();
+            const output = document.getElementById('output');
+
+            if (!treeId) {
+                alert('يرجى إدخال معرف الشجرة.');
+                return;
+            }
+
+            output.textContent = 'جاري جلب البيانات...';
+
+            const proxyUrl = 'https://api.allorigins.win/get?url=';
+            const targetUrl = encodeURIComponent(`https://www.yfull.com/tree/${treeId}/`);
+
+            fetch(proxyUrl + targetUrl)
+                .then(response => {
+                    if (response.status !== 200) {
+                        throw new Error('فشل في جلب البيانات من الوكيل.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const html = data.contents;
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const ageSpans = doc.querySelectorAll('span.yf-age');
+                    const extractedNodes = new Set();
+
+                    // تعريف الشرط: TMRCA < 15000 ybp
+                    const condition = (tmrca) => {
+                        const match = tmrca.match(/TMRCA\s+(\d+)\s+ybp/i);
+                        if (match && match[1]) {
+                            return parseInt(match[1], 10) < 15000;
+                        }
+                        return false;
+                    };
+
+                    ageSpans.forEach(span => {
+                        const ageText = span.textContent.trim();
+                        const tmrcaMatch = ageText.match(/TMRCA\s+(\d+)\s+ybp/i);
+                        if (tmrcaMatch && tmrcaMatch[1]) {
+                            const tmrcaValue = parseInt(tmrcaMatch[1], 10);
+                            if (tmrcaValue < 15000) { // الشرط هنا
+                                let currentLi = span.closest('li');
+                                while (currentLi) {
+                                    extractedNodes.add(currentLi);
+                                    const parentUl = currentLi.parentElement.closest('li');
+                                    currentLi = parentUl;
+                                }
+                            }
+                        }
+                    });
+
+                    if (extractedNodes.size === 0) {
+                        output.textContent = 'لم يتم العثور على بيانات متاحة بناءً على الشرط المحدد.';
+                        return;
+                    }
+
+                    // بناء هيكل بيانات لـ jsTree
+                    const treeData = [];
+
+                    // العثور على الجذر الأساسي (J-FT33726)
+                    const rootLi = Array.from(extractedNodes).find(li => {
+                        const aTag = li.querySelector('a.yf-root');
+                        return aTag && aTag.textContent.trim() === treeId;
+                    });
+
+                    if (!rootLi) {
+                        output.textContent = 'لم يتم العثور على الجذر الأساسي في البيانات.';
+                        return;
+                    }
+
+                    const buildTree = (li) => {
+                        const node = {
+                            text: li.querySelector('a').textContent.trim(),
+                            children: []
+                        };
+                        const children = li.querySelectorAll(':scope > ul > li');
+                        children.forEach(childLi => {
+                            if (extractedNodes.has(childLi)) {
+                                node.children.push(buildTree(childLi));
+                            }
+                        });
+                        return node;
+                    };
+
+                    treeData.push(buildTree(rootLi));
+
+                    // تهيئة jsTree
+                    output.innerHTML = '';
+                    const treeContainer = document.createElement('div');
+                    treeContainer.id = 'jstree';
+                    output.appendChild(treeContainer);
+
+                    $('#jstree').jstree({
+                        'core': {
+                            'data': treeData
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    output.textContent = `حدث خطأ أثناء جلب البيانات: ${error.message}`;
+                });
+        });
+    </script>
+</body>
+</html>
