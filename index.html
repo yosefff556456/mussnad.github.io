@@ -3,27 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>جلب بيانات YFull</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-        }
-        #output {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            white-space: pre-wrap;
-        }
-    </style>
 </head>
 <body>
     <h1>جلب بيانات YFull</h1>
-    <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-FT33726)" />
+    <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-Y196305)" />
     <button id="fetchButton">جلب البيانات</button>
 
     <h2>البيانات المستخرجة:</h2>
@@ -39,25 +22,32 @@
                 return;
             }
 
-            // إظهار رسالة تحميل
             output.textContent = 'جاري جلب البيانات...';
 
-            // إرسال طلب إلى الخادم الوسيط
-            fetch(`http://localhost:3000/fetch-tree/${treeId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطأ في جلب البيانات من الخادم.');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.length === 0) {
-                        output.textContent = 'لم يتم العثور على بيانات.';
-                        return;
-                    }
+            const proxyUrl = 'https://api.allorigins.win/get?url=';
+            const targetUrl = encodeURIComponent(`https://www.yfull.com/tree/${treeId}/`);
 
-                    // عرض البيانات بشكل منسق
-                    output.textContent = JSON.stringify(data, null, 2);
+            fetch(proxyUrl + targetUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const html = data.contents;
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const ageSpans = doc.querySelectorAll('span.yf-age');
+                    const extractedData = [];
+
+                    ageSpans.forEach(span => {
+                        const ageText = span.textContent.trim();
+                        const li = span.closest('li');
+                        const bElements = li.querySelectorAll('b');
+                        const bData = Array.from(bElements).map(b => b.textContent.trim());
+                        extractedData.push({
+                            age: ageText,
+                            bData: bData
+                        });
+                    });
+
+                    output.textContent = JSON.stringify(extractedData, null, 2);
                 })
                 .catch(error => {
                     console.error(error);
