@@ -1,154 +1,132 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <title>جلب بيانات YFull وعرضها في جدول</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            padding: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: right;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>عرض عينات Ancient DNA على الخريطة من رابط</title>
+
+<!-- CSS Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+1yQKNi8+YeqKLYyOXSE7RVEASkZ6lZt7B2G3eVKQ=" crossorigin=""/>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  padding: 10px;
+}
+input[type="text"] {
+  width: 200px;
+  padding: 5px;
+}
+button {
+  padding: 5px 10px;
+}
+#map {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+  border: 1px solid #ccc;
+}
+</style>
 </head>
 <body>
-    <h1>جلب بيانات YFull وعرضها في جدول</h1>
-    <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-Y196305)" />
-    <button id="fetchButton">جلب البيانات</button>
 
-    <h2>البيانات المستخرجة:</h2>
-    <div id="output">البيانات ستظهر هنا...</div>
+<div class="container">
+  <h1>بحث عن طفرة وعرض عينات الـAncient DNA على الخريطة</h1>
+  <p>أدخل الجزء الأخير من اسم الطفرة مثلاً (FT33726) سيتم تكوين الرابط https://www.yfull.com/tree/J-FT33726/ </p>
+  <div>
+    <input type="text" id="mutationInput" placeholder="أدخل الجزء الأخير من اسم الطفرة">
+    <button id="searchBtn">بحث</button>
+  </div>
+  <div id="map"></div>
+</div>
 
-    <script>
-        document.getElementById('fetchButton').addEventListener('click', () => {
-            const treeId = document.getElementById('treeId').value.trim();
-            const output = document.getElementById('output');
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-Mn0I7sEl0coz8riNso4ImWYns9WdCssLFhKZitHraAw=" crossorigin=""></script>
+<script>
+  // إنشاء الخريطة
+  var map = L.map('map').setView([30, 40], 5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 10,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
-            if (!treeId) {
-                alert('يرجى إدخال معرف الشجرة.');
-                return;
+  document.getElementById('searchBtn').addEventListener('click', function() {
+    var part = document.getElementById('mutationInput').value.trim();
+    if(!part) {
+      alert("الرجاء إدخال الجزء الأخير من اسم الطفرة");
+      return;
+    }
+
+    var fullUrl = "https://www.yfull.com/tree/J-" + part + "/";
+
+    // جلب ملف المواقع (countries.json)
+    fetch('countries.json')
+      .then(res => res.json())
+      .then(locationData => {
+        
+        // جلب الصفحة من الرابط (قد يواجه CORS)
+        fetch(fullUrl)
+          .then(response => {
+            if(!response.ok) {
+              throw new Error("تعذر جلب الصفحة، تحقق من CORS أو صحة الرابط");
+            }
+            return response.text();
+          })
+          .then(htmlText => {
+            // تحليل الـHTML المستورد
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(htmlText, 'text/html');
+            
+            // نبحث عن li التي تحوي Ancient DNA
+            // عادةً تظهر عينات بنفس الشكل في السورس القادم من YFull
+            // سنبحث عن أي span بعنوان "Ancient DNA"
+            var ancientDNAElements = doc.querySelectorAll('span[title="Ancient DNA"]');
+
+            if(ancientDNAElements.length === 0) {
+              alert("لا توجد عينات Ancient DNA لهذه الطفرة.");
+              return;
             }
 
-            output.innerHTML = 'جاري جلب البيانات...';
+            // إخلاء الخريطة من أي علامات سابقة (في هذا المثال فقط نعيد التمركز)
+            map.setView([30,40],5);
 
-            const proxyUrl = 'https://api.allorigins.win/get?url=';
-            const targetUrl = encodeURIComponent(`https://www.yfull.com/tree/${treeId}/`);
+            // عرض العينات على الخريطة
+            ancientDNAElements.forEach(function(spanEl) {
+              var liParent = spanEl.closest('li');
+              if(liParent) {
+                // الموقع
+                var locationEl = liParent.querySelector('b[class*="yf-geo"]');
+                var sampleNameEl = liParent.querySelector('span.yf-s-name');
+                if(locationEl && sampleNameEl) {
+                  var locCode = locationEl.textContent.trim();
+                  if(locationData[locCode]) {
+                    var coord = locationData[locCode];
+                    L.marker([coord.lat, coord.lng]).addTo(map)
+                      .bindPopup("طفرة: J-" + part + "<br>عينة: " + sampleNameEl.textContent + "<br>الموقع: " + coord.country);
+                  }
+                }
+              }
+            });
 
-            fetch(proxyUrl + targetUrl)
-                .then(response => {
-                    if (response.status !== 200) {
-                        throw new Error('فشل في جلب البيانات من الوكيل.');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const html = data.contents;
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const ageSpans = doc.querySelectorAll('span.yf-age');
-                    const extractedData = [];
+          })
+          .catch(err => {
+            console.error(err);
+            alert("حدث خطأ أثناء جلب أو تحليل الصفحة: " + err.message);
+          });
 
-                    // تخزين العلاقات الأصلية بين العقد
-                    const parentMap = new Map();
+      })
+      .catch(err => {
+        console.error(err);
+        alert("حدث خطأ أثناء جلب ملف المواقع (countries.json): " + err.message);
+      });
+  });
+</script>
 
-                    // بناء خريطة الوالدين
-                    const allLiElements = doc.querySelectorAll('li[id^="lJ-"], li[id^="lJ-Y"]');
-                    allLiElements.forEach(li => {
-                        const parentLi = li.closest('ul').parentElement.closest('li');
-                        if (parentLi) {
-                            parentMap.set(li, parentLi);
-                        }
-                    });
-
-                    // تعريف الشرط: TMRCA < 15000 ybp
-                    const condition = (tmrca) => {
-                        return tmrca < 15000;
-                    };
-
-                    ageSpans.forEach(span => {
-                        const ageText = span.textContent.trim();
-                        // استخراج قيمة TMRCA
-                        const tmrcaMatch = ageText.match(/TMRCA\s+(\d+)\s+ybp/i);
-                        if (tmrcaMatch && tmrcaMatch[1]) {
-                            const tmrcaValue = parseInt(tmrcaMatch[1], 10);
-                            if (condition(tmrcaValue)) { // الشرط هنا
-                                // استخراج بيانات AGE
-                                const ageData = ageText;
-
-                                // بناء سلسلة الأسلاف
-                                let currentLi = span.closest('li');
-                                const ancestorChain = [];
-                                while (currentLi) {
-                                    const aTag = currentLi.querySelector('a');
-                                    if (aTag) {
-                                        ancestorChain.unshift(aTag.textContent.trim());
-                                    }
-                                    currentLi = parentMap.get(currentLi);
-                                }
-                                const ancestorString = ancestorChain.join(' > ');
-
-                                // إضافة البيانات المستخرجة إلى المصفوفة
-                                extractedData.push({
-                                    age: ageData,
-                                    ancestors: ancestorString
-                                });
-                            }
-                        }
-                    });
-
-                    if (extractedData.length === 0) {
-                        output.textContent = 'لم يتم العثور على بيانات متاحة بناءً على الشرط المحدد.';
-                        return;
-                    }
-
-                    // بناء الجدول
-                    const table = document.createElement('table');
-                    const thead = document.createElement('thead');
-                    const headerRow = document.createElement('tr');
-                    const th1 = document.createElement('th');
-                    th1.textContent = 'الAGE';
-                    const th2 = document.createElement('th');
-                    th2.textContent = 'الأسلاف';
-                    headerRow.appendChild(th1);
-                    headerRow.appendChild(th2);
-                    thead.appendChild(headerRow);
-                    table.appendChild(thead);
-
-                    const tbody = document.createElement('tbody');
-
-                    extractedData.forEach(item => {
-                        const row = document.createElement('tr');
-                        const tdAge = document.createElement('td');
-                        tdAge.textContent = item.age;
-                        const tdAncestors = document.createElement('td');
-                        tdAncestors.textContent = item.ancestors;
-                        row.appendChild(tdAge);
-                        row.appendChild(tdAncestors);
-                        tbody.appendChild(row);
-                    });
-
-                    table.appendChild(tbody);
-                    output.innerHTML = '';
-                    output.appendChild(table);
-                })
-                .catch(error => {
-                    console.error(error);
-                    output.textContent = `حدث خطأ أثناء جلب البيانات: ${error.message}`;
-                });
-        });
-    </script>
 </body>
 </html>
