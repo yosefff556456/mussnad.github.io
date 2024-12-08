@@ -2,35 +2,35 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>جلب بيانات YFull وعرض الشجرة</title>
-    <!-- تحميل مكتبة jsTree -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/themes/default/style.min.css" />
+    <title>جلب بيانات YFull وعرضها في جدول</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             direction: rtl;
             padding: 20px;
         }
-        #output {
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
         }
-        #jstree {
-            max-width: 100%;
-            overflow-x: auto;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <h1>جلب بيانات YFull وعرض الشجرة</h1>
+    <h1>جلب بيانات YFull وعرضها في جدول</h1>
     <input type="text" id="treeId" placeholder="أدخل معرف الشجرة (مثال: J-Y196305)" />
     <button id="fetchButton">جلب البيانات</button>
 
     <h2>البيانات المستخرجة:</h2>
     <div id="output">البيانات ستظهر هنا...</div>
-
-    <!-- تحميل مكتبة jQuery و jsTree -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.12/jstree.min.js"></script>
 
     <script>
         document.getElementById('fetchButton').addEventListener('click', () => {
@@ -42,7 +42,7 @@
                 return;
             }
 
-            output.textContent = 'جاري جلب البيانات...';
+            output.innerHTML = 'جاري جلب البيانات...';
 
             const proxyUrl = 'https://api.allorigins.win/get?url=';
             const targetUrl = encodeURIComponent(`https://www.yfull.com/tree/${treeId}/`);
@@ -59,16 +59,7 @@
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, 'text/html');
                     const ageSpans = doc.querySelectorAll('span.yf-age');
-                    const extractedNodes = new Set();
-
-                    // تعريف الشرط: TMRCA < 15000 ybp
-                    const condition = (tmrca) => {
-                        const match = tmrca.match(/TMRCA\s+(\d+)\s+ybp/i);
-                        if (match && match[1]) {
-                            return parseInt(match[1], 10) < 15000;
-                        }
-                        return false;
-                    };
+                    const extractedData = [];
 
                     // تخزين العلاقات الأصلية بين العقد
                     const parentMap = new Map();
@@ -82,92 +73,76 @@
                         }
                     });
 
-                    // العثور على جميع العناصر التي تلبي الشرط وجمع أسلافها
+                    // تعريف الشرط: TMRCA < 15000 ybp
+                    const condition = (tmrca) => {
+                        return tmrca < 15000;
+                    };
+
                     ageSpans.forEach(span => {
                         const ageText = span.textContent.trim();
+                        // استخراج قيمة TMRCA
                         const tmrcaMatch = ageText.match(/TMRCA\s+(\d+)\s+ybp/i);
                         if (tmrcaMatch && tmrcaMatch[1]) {
                             const tmrcaValue = parseInt(tmrcaMatch[1], 10);
                             if (condition(tmrcaValue)) { // الشرط هنا
+                                // استخراج بيانات AGE
+                                const ageData = ageText;
+
+                                // بناء سلسلة الأسلاف
                                 let currentLi = span.closest('li');
+                                const ancestorChain = [];
                                 while (currentLi) {
-                                    extractedNodes.add(currentLi);
+                                    const aTag = currentLi.querySelector('a');
+                                    if (aTag) {
+                                        ancestorChain.unshift(aTag.textContent.trim());
+                                    }
                                     currentLi = parentMap.get(currentLi);
                                 }
+                                const ancestorString = ancestorChain.join(' > ');
+
+                                // إضافة البيانات المستخرجة إلى المصفوفة
+                                extractedData.push({
+                                    age: ageData,
+                                    ancestors: ancestorString
+                                });
                             }
                         }
                     });
 
-                    if (extractedNodes.size === 0) {
+                    if (extractedData.length === 0) {
                         output.textContent = 'لم يتم العثور على بيانات متاحة بناءً على الشرط المحدد.';
                         return;
                     }
 
-                    // تحويل مجموعة العناصر المستخرجة إلى شجرة منظمة
-                    const buildTreeData = () => {
-                        const treeData = [];
+                    // بناء الجدول
+                    const table = document.createElement('table');
+                    const thead = document.createElement('thead');
+                    const headerRow = document.createElement('tr');
+                    const th1 = document.createElement('th');
+                    th1.textContent = 'الAGE';
+                    const th2 = document.createElement('th');
+                    th2.textContent = 'الأسلاف';
+                    headerRow.appendChild(th1);
+                    headerRow.appendChild(th2);
+                    thead.appendChild(headerRow);
+                    table.appendChild(thead);
 
-                        // إيجاد الجذر الأساسي (يفترض أن هناك عنصر يحتوي على a.yf-root)
-                        const rootLi = Array.from(extractedNodes).find(li => li.querySelector('a.yf-root'));
-                        if (!rootLi) {
-                            throw new Error('لم يتم العثور على الجذر الأساسي في البيانات.');
-                        }
+                    const tbody = document.createElement('tbody');
 
-                        // دالة بناء الشجرة بشكل تكراري
-                        const buildNode = (li) => {
-                            const aTag = li.querySelector('a');
-                            const nodeText = aTag ? aTag.textContent.trim() : 'بدون عنوان';
-                            const nodeId = li.id; // استخدام id كمعرف فريد
-
-                            // استخراج بيانات AGE
-                            const ageSpan = li.querySelector('span.yf-age');
-                            const ageText = ageSpan ? ageSpan.textContent.trim() : '';
-
-                            const node = {
-                                id: nodeId,
-                                text: `${nodeText} (${ageText})`,
-                                children: []
-                            };
-
-                            // العثور على الأطفال الذين هم في مجموعة extractedNodes
-                            const childLis = li.querySelectorAll(':scope > ul > li');
-                            childLis.forEach(childLi => {
-                                if (extractedNodes.has(childLi)) {
-                                    node.children.push(buildNode(childLi));
-                                }
-                            });
-
-                            return node;
-                        };
-
-                        treeData.push(buildNode(rootLi));
-                        return treeData;
-                    };
-
-                    // بناء هيكل بيانات الشجرة
-                    let treeData;
-                    try {
-                        treeData = buildTreeData();
-                    } catch (error) {
-                        output.textContent = error.message;
-                        return;
-                    }
-
-                    // تهيئة jsTree
-                    output.innerHTML = '';
-                    const treeContainer = document.createElement('div');
-                    treeContainer.id = 'jstree';
-                    output.appendChild(treeContainer);
-
-                    $('#jstree').jstree({
-                        'core': {
-                            'data': treeData,
-                            'themes': {
-                                'responsive': false
-                            }
-                        },
-                        'plugins': ["wholerow"]
+                    extractedData.forEach(item => {
+                        const row = document.createElement('tr');
+                        const tdAge = document.createElement('td');
+                        tdAge.textContent = item.age;
+                        const tdAncestors = document.createElement('td');
+                        tdAncestors.textContent = item.ancestors;
+                        row.appendChild(tdAge);
+                        row.appendChild(tdAncestors);
+                        tbody.appendChild(row);
                     });
+
+                    table.appendChild(tbody);
+                    output.innerHTML = '';
+                    output.appendChild(table);
                 })
                 .catch(error => {
                     console.error(error);
