@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة مع أقاليم وحدود خطية</title>
+    <title>خريطة مع أقاليم وحدود</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         html, body {
@@ -53,35 +53,41 @@
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // تهيئة الخريطة
-        var map = L.map('map').setView([20, 20], 2);
+        // تحديد حدود الشرق الأوسط التقريبية
+        var bounds = L.latLngBounds([[12, 25], [44, 60]]);
+        var minZoomLevel = 4;
+        var maxZoomLevel = 10;
 
-        // طبقة الصور
+        // تهيئة الخريطة مع تحديد maxBounds، minZoom، maxZoom
+        var map = L.map('map', {
+            center: [30, 45], 
+            zoom: 5,
+            minZoom: minZoomLevel,
+            maxZoom: maxZoomLevel,
+            maxBounds: bounds,
+            maxBoundsViscosity: 1.0
+        });
+
+        // طبقة الصور - مع منع الالتفاف
         var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri'
+            attribution: 'Tiles &copy; Esri',
+            noWrap: true
         }).addTo(map);
 
-        // متغيرات لتخزين البيانات (ستملأ لاحقاً بعد جلب JSON)
-        var regions = [];
-        var cities = [];
         var regionMarkers = [];
         var regionLines = [];
         var cityMarkers = [];
-
-        // مستويات التقريب
-        var regionZoomLevel = 6; // مستوى التقريب لإظهار الأقاليم
-        var cityZoomLevel = 9;   // مستوى التقريب لإظهار المدن
 
         // جلب البيانات من ملف JSON
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
-                regions = data.regions;
-                cities = data.cities;
+                var regions = data.regions;
+                var cities = data.cities;
 
-                // إضافة الأقاليم مع الحدود الخطية
+                // إضافة الأقاليم مع الحدود
                 regions.forEach(function(region) {
-                    var line = L.polyline(region.coords, { color: 'black', dashArray: '5, 5' }).addTo(map); // حدود متقطعة
+                    var line = L.polyline(region.coords, { color: 'black', dashArray: '5, 5' }).addTo(map);
                     var divIcon = L.divIcon({ className: 'region-label', html: region.name });
                     var marker = L.marker(region.labelCoords, { icon: divIcon }).addTo(map);
                     regionMarkers.push(marker);
@@ -95,7 +101,7 @@
                     cityMarkers.push(marker);
                 });
 
-                // إخفاء أسماء الأقاليم والمدن والحدود في البداية
+                // إخفاء العناصر في البداية
                 regionMarkers.forEach(marker => map.removeLayer(marker));
                 cityMarkers.forEach(marker => map.removeLayer(marker));
                 regionLines.forEach(line => map.removeLayer(line));
@@ -103,11 +109,11 @@
                 // التحكم في الإظهار والإخفاء عند تغيير مستوى التقريب
                 map.on('zoomend', function() {
                     var zoomLevel = map.getZoom();
-                    if (zoomLevel >= cityZoomLevel) {
+                    if (zoomLevel >= 9) {
                         cityMarkers.forEach(marker => map.addLayer(marker));    // إظهار المدن
                         regionMarkers.forEach(marker => map.removeLayer(marker)); // إخفاء أسماء الأقاليم
                         regionLines.forEach(line => map.removeLayer(line));       // إخفاء الحدود
-                    } else if (zoomLevel >= regionZoomLevel) {
+                    } else if (zoomLevel >= 6) {
                         cityMarkers.forEach(marker => map.removeLayer(marker));  // إخفاء المدن
                         regionMarkers.forEach(marker => map.addLayer(marker));    // إظهار أسماء الأقاليم
                         regionLines.forEach(line => map.addLayer(line));          // إظهار الحدود
@@ -117,7 +123,6 @@
                         regionLines.forEach(line => map.removeLayer(line));       // إخفاء الحدود
                     }
                 });
-
             })
             .catch(error => console.error('Error loading JSON data:', error));
     </script>
