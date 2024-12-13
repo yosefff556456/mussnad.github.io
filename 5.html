@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة مع أقاليم وحدود خطية</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* إخفاء أي شريط تمرير */
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        .region-label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .city-label {
+            margin: 50px auto;
+            padding: 10px;
+            font-size: 25px;
+            display: inline-block;
+            position: absolute;
+            font-weight: bold;
+            text-align: center; 
+            color: black; 
+            white-space: nowrap; 
+            border-radius: 5px; 
+            text-shadow: 
+                -1px -1px 0 white,
+                1px -1px 0 white,
+                -1px 1px 0 white,
+                1px 1px 0 white;
+        }
+        .city-label::before {
+            content: '';
+            display: block;
+            width: 20px; 
+            height: 20px; 
+            background-color: red; 
+            border-radius: 50%; 
+            margin: 10px auto 5px auto; 
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // تحديد حدود الشرق الأوسط لمنع التحريك خارجها
+        var bounds = L.latLngBounds([[12, 25], [44, 60]]);
+
+        // تهيئة الخريطة مع تحديد مركز ومستوى تقريب مبدئي وحدود للتقريب
+        var map = L.map('map', {
+            center: [30, 45],
+            zoom: 5,
+            minZoom: 4,
+            maxZoom: 10,
+            maxBounds: bounds,
+            maxBoundsViscosity: 1.0
+        });
+
+        // طبقة الصور مع منع الالتفاف حول العالم
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri',
+            noWrap: true
+        }).addTo(map);
+
+        // تخزين الماركرز للأقاليم والمدن
+        var regionMarkers = [];
+        var regionLines = [];
+        var cityMarkers = [];
+        var importantCityMarkers = [];
+
+        // مستويات التقريب
+        var regionZoomLevel = 6; // مستوى التقريب لإظهار الأقاليم
+        var cityZoomLevel = 9;   // مستوى التقريب لإظهار المدن
+
+        // جلب البيانات من ملف JSON
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                var regions = data.regions;
+                var cities = data.cities;
+                var importantCities = data.importantCities;
+
+                // إضافة الأقاليم مع الحدود الخطية
+                regions.forEach(function(region) {
+                    var line = L.polyline(region.coords, { color: 'black', dashArray: '5, 5' }).addTo(map);
+                    var divIcon = L.divIcon({ className: 'region-label', html: region.name });
+                    var marker = L.marker(region.labelCoords, { icon: divIcon }).addTo(map);
+                    regionMarkers.push(marker);
+                    regionLines.push(line);
+                });
+
+                // إضافة المدن العادية
+                cities.forEach(function(city) {
+                    var divIcon = L.divIcon({ className: 'city-label', html: city.name });
+                    var marker = L.marker(city.coords, { icon: divIcon }).addTo(map);
+                    cityMarkers.push(marker);
+                });
+
+                // إضافة المدن المهمة كنقاط سوداء
+                importantCities.forEach(function(city) {
+                    var marker = L.circleMarker(city.coords, {
+                        radius: 6,
+                        fillColor: 'black',
+                        color: 'black',
+                        fillOpacity: 1,
+                        opacity: 1
+                    }).bindTooltip(city.name, {permanent: false, direction:"top"}).addTo(map);
+                    importantCityMarkers.push(marker);
+                });
+
+                // إخفاء أسماء الأقاليم والمدن والمدن المهمة والحدود في البداية
+                regionMarkers.forEach(marker => map.removeLayer(marker));
+                cityMarkers.forEach(marker => map.removeLayer(marker));
+                importantCityMarkers.forEach(marker => map.removeLayer(marker));
+                regionLines.forEach(line => map.removeLayer(line));
+
+                // التحكم في إظهار النصوص والحدود بناءً على مستوى التقريب
+                map.on('zoomend', function() {
+                    var zoomLevel = map.getZoom();
+                    if (zoomLevel >= cityZoomLevel) {
+                        // إظهار المدن العادية والمدن المهمة
+                        cityMarkers.forEach(marker => map.addLayer(marker));
+                        importantCityMarkers.forEach(marker => map.addLayer(marker));
+                        // إخفاء الأقاليم والحدود
+                        regionMarkers.forEach(marker => map.removeLayer(marker));
+                        regionLines.forEach(line => map.removeLayer(line));
+                    } else if (zoomLevel >= regionZoomLevel) {
+                        // إخفاء المدن العادية والمدن المهمة
+                        cityMarkers.forEach(marker => map.removeLayer(marker));
+                        importantCityMarkers.forEach(marker => map.removeLayer(marker));
+                        // إظهار الأقاليم والحدود
+                        regionMarkers.forEach(marker => map.addLayer(marker));
+                        regionLines.forEach(line => map.addLayer(line));
+                    } else {
+                        // إخفاء الجميع في مستويات تقريب أقل من regionZoomLevel
+                        cityMarkers.forEach(marker => map.removeLayer(marker));
+                        importantCityMarkers.forEach(marker => map.removeLayer(marker));
+                        regionMarkers.forEach(marker => map.removeLayer(marker));
+                        regionLines.forEach(line => map.removeLayer(line));
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading JSON data:', error));
+    </script>
+</body>
+</html>
