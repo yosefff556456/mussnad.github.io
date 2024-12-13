@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة مع أقاليم ومدن من Google Sheets</title>
+    <title>خريطة مع أقاليم وحدود خطية</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         html, body {
@@ -17,7 +17,7 @@
         .region-label {
             font-size: 20px;
             font-weight: bold;
-            color: #000;
+            color: rgb(0, 0, 0);
             text-align: center;
             white-space: nowrap;
         }
@@ -28,10 +28,10 @@
             display: inline-block;
             position: absolute;
             font-weight: bold;
-            text-align: center;
-            color: black;
-            white-space: nowrap;
-            border-radius: 5px;
+            text-align: center; 
+            color: black; 
+            white-space: nowrap; 
+            border-radius: 5px; 
             text-shadow: 
                 -1px -1px 0 white,
                 1px -1px 0 white,
@@ -41,11 +41,11 @@
         .city-label::before {
             content: '';
             display: block;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            border-radius: 50%;
-            margin: 10px auto 5px auto;
+            width: 20px; 
+            height: 20px; 
+            background-color: red; 
+            border-radius: 50%; 
+            margin: 10px auto 5px auto; 
         }
     </style>
 </head>
@@ -53,109 +53,73 @@
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([20, 20], 2);
-        const Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        // تهيئة الخريطة
+        var map = L.map('map').setView([20, 20], 2);
+
+        // طبقة الصور
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri'
         }).addTo(map);
 
-        // روابط البيانات من Google Sheets (كمثال، يجب استبدالها بروابطك الخاصة)
-        const regionsDataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTD0QxyKvkvIBoQBGhpX5yLUMKNYts-5C5DVRfBskx2_urh62PyAHcqFBqBFiqTLlEDMd4u0BNlL7Js/pub?output=csv'; 
-        const citiesDataUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRNraLdm25mb_I8vhtA9FdJ-wBmFAI9NROpmnkwCk1mNz0mDFgRb0iOhRgHDCvn-coXBdXzKeEKNMr/pub?output=csv';
+        // متغيرات لتخزين البيانات (ستملأ لاحقاً بعد جلب JSON)
+        var regions = [];
+        var cities = [];
+        var regionMarkers = [];
+        var regionLines = [];
+        var cityMarkers = [];
 
-        const regionMarkers = L.layerGroup();
-        const regionLines = L.layerGroup();
-        const cityMarkers = L.layerGroup();
+        // مستويات التقريب
+        var regionZoomLevel = 6; // مستوى التقريب لإظهار الأقاليم
+        var cityZoomLevel = 9;   // مستوى التقريب لإظهار المدن
 
-        const regionZoomLevel = 6;
-        const cityZoomLevel = 9;
+        // جلب البيانات من ملف JSON
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                regions = data.regions;
+                cities = data.cities;
 
-        // دالة لتحويل CSV إلى مصفوفة كائنات
-        function csvToArray(str, delimiter = ",") {
-            const rows = str.trim().split("\n");
-            const headers = rows.shift().split(delimiter);
-            return rows.map(row => {
-                const values = row.split(delimiter);
-                let obj = {};
-                headers.forEach((header, i) => {
-                    obj[header.trim()] = values[i] ? values[i].trim() : '';
+                // إضافة الأقاليم مع الحدود الخطية
+                regions.forEach(function(region) {
+                    var line = L.polyline(region.coords, { color: 'black', dashArray: '5, 5' }).addTo(map); // حدود متقطعة
+                    var divIcon = L.divIcon({ className: 'region-label', html: region.name });
+                    var marker = L.marker(region.labelCoords, { icon: divIcon }).addTo(map);
+                    regionMarkers.push(marker);
+                    regionLines.push(line);
                 });
-                return obj;
-            });
-        }
 
-        async function loadData() {
-            try {
-                const [regionsRes, citiesRes] = await Promise.all([
-                    fetch(regionsDataUrl),
-                    fetch(citiesDataUrl)
-                ]);
+                // إضافة المدن
+                cities.forEach(function(city) {
+                    var divIcon = L.divIcon({ className: 'city-label', html: city.name });
+                    var marker = L.marker(city.coords, { icon: divIcon }).addTo(map);
+                    cityMarkers.push(marker);
+                });
 
-                const regionsCsv = await regionsRes.text();
-                const citiesCsv = await citiesRes.text();
+                // إخفاء أسماء الأقاليم والمدن والحدود في البداية
+                regionMarkers.forEach(marker => map.removeLayer(marker));
+                cityMarkers.forEach(marker => map.removeLayer(marker));
+                regionLines.forEach(line => map.removeLayer(line));
 
-                const regionsData = csvToArray(regionsCsv);
-                const citiesData = csvToArray(citiesCsv);
-
-                // شكل بيانات الأقاليم في الجدول:
-                // name, coords, labelLat, labelLng
-                // coords يمكن أن تكون بشكل [ [lat1, lng1], [lat2, lng2], ... ] كـ JSON string 
-                regionsData.forEach(region => {
-                    let coords;
-                    try {
-                        coords = JSON.parse(region.coords); 
-                    } catch(e) {
-                        console.error("Error parsing region coords:", region.coords, e);
-                        return;
+                // التحكم في الإظهار والإخفاء عند تغيير مستوى التقريب
+                map.on('zoomend', function() {
+                    var zoomLevel = map.getZoom();
+                    if (zoomLevel >= cityZoomLevel) {
+                        cityMarkers.forEach(marker => map.addLayer(marker));    // إظهار المدن
+                        regionMarkers.forEach(marker => map.removeLayer(marker)); // إخفاء أسماء الأقاليم
+                        regionLines.forEach(line => map.removeLayer(line));       // إخفاء الحدود
+                    } else if (zoomLevel >= regionZoomLevel) {
+                        cityMarkers.forEach(marker => map.removeLayer(marker));  // إخفاء المدن
+                        regionMarkers.forEach(marker => map.addLayer(marker));    // إظهار أسماء الأقاليم
+                        regionLines.forEach(line => map.addLayer(line));          // إظهار الحدود
+                    } else {
+                        cityMarkers.forEach(marker => map.removeLayer(marker));   // إخفاء المدن
+                        regionMarkers.forEach(marker => map.removeLayer(marker)); // إخفاء أسماء الأقاليم
+                        regionLines.forEach(line => map.removeLayer(line));       // إخفاء الحدود
                     }
-                    const line = L.polyline(coords, { color: 'black', dashArray: '5, 5' });
-                    const divIcon = L.divIcon({ className: 'region-label', html: region.name });
-                    const marker = L.marker([parseFloat(region.labelLat), parseFloat(region.labelLng)], { icon: divIcon });
-
-                    regionLines.addLayer(line);
-                    regionMarkers.addLayer(marker);
                 });
 
-                // شكل بيانات المدن:
-                // name, lat, lng, region
-                citiesData.forEach(city => {
-                    const divIcon = L.divIcon({ className: 'city-label', html: city.name });
-                    const marker = L.marker([parseFloat(city.lat), parseFloat(city.lng)], { icon: divIcon });
-                    cityMarkers.addLayer(marker);
-                });
-
-                // مبدئياً لا نظهر شيئاً
-                regionMarkers.clearLayers();
-                regionLines.clearLayers();
-                cityMarkers.clearLayers();
-
-                map.on('zoomend', updateLayersVisibility);
-                updateLayersVisibility();
-
-            } catch(e) {
-                console.error("Error loading data:", e);
-                alert("حدث خطأ في جلب البيانات من Google Sheets");
-            }
-        }
-
-        function updateLayersVisibility() {
-            const zoomLevel = map.getZoom();
-
-            // إزالة كل الطبقات أولاً
-            map.removeLayer(cityMarkers);
-            map.removeLayer(regionMarkers);
-            map.removeLayer(regionLines);
-
-            if (zoomLevel >= cityZoomLevel) {
-                // إظهار المدن
-                map.addLayer(cityMarkers);
-            } else if (zoomLevel >= regionZoomLevel) {
-                // إظهار الأقاليم وحدودها
-                map.addLayer(regionMarkers);
-                map.addLayer(regionLines);
-            }
-        }
-
-        loadData();
+            })
+            .catch(error => console.error('Error loading JSON data:', error));
     </script>
 </body>
 </html>
