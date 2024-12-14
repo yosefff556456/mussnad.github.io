@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة المناطق والمدن</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --region-color: #2c3e50;
+            --city-dot-color: #e74c3c;
+            --important-city-dot-color: #2c3e50;
+            --label-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #bdc3c7;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .region-label {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--region-color);
+            text-align: center;
+            white-space: nowrap;
+            background: var(--label-bg);
+            padding: 0.5em 1em;
+            border-radius: 1em;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .city-label, .important-city-label {
+            display: inline-block;
+            position: absolute;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            border-radius: 0.8em;
+            background: var(--label-bg);
+            padding: 0.6em 1em;
+            font-size: 1.2em;
+            border: 1.5px solid var(--border-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .city-label:hover, .important-city-label:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .city-label::before {
+            content: '';
+            display: block;
+            width: 1.2em;
+            height: 1.2em;
+            background-color: var(--city-dot-color);
+            border-radius: 50%;
+            margin: 0.4em auto;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .important-city-label::before {
+            content: '';
+            display: block;
+            width: 1.4em;
+            height: 1.4em;
+            background-color: var(--important-city-dot-color);
+            border-radius: 50%;
+            margin: 0.4em auto;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        /* تحسينات للشاشات المختلفة */
+        @media (max-width: 1200px) {
+            .region-label {
+                font-size: 1.4em;
+                padding: 0.4em 0.8em;
+            }
+            .city-label, .important-city-label {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .region-label {
+                font-size: 1.2em;
+                padding: 0.3em 0.6em;
+            }
+            .city-label, .important-city-label {
+                font-size: 1em;
+                padding: 0.4em 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .region-label {
+                font-size: 1em;
+                padding: 0.2em 0.5em;
+            }
+            .city-label, .important-city-label {
+                font-size: 0.9em;
+                padding: 0.3em 0.6em;
+            }
+            .city-label::before,
+            .important-city-label::before {
+                width: 1em;
+                height: 1em;
+                margin: 0.3em auto;
+            }
+        }
+
+        /* تحسين مظهر الخريطة */
+        .leaflet-container {
+            background: #f0f0f0;
+        }
+
+        .leaflet-control-zoom {
+            border: none !important;
+            box-shadow: 0 2px 4px var(--shadow-color) !important;
+        }
+
+        .leaflet-control-zoom a {
+            background: var(--label-bg) !important;
+            color: var(--region-color) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+
+        .leaflet-control-zoom a:hover {
+            background: #f8f9fa !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // تحديد حدود الشرق الأوسط
+        const bounds = L.latLngBounds([[12, 25], [44, 60]]);
+
+        const map = L.map('map', {
+            center: [27, 45],
+            zoom: 5,
+            minZoom: 4,
+            maxZoom: 10,
+            maxBounds: bounds,
+            maxBoundsViscosity: 1.0,
+            zoomControl: true,
+            zoomAnimation: true
+        });
+
+        // إضافة طبقة الخريطة مع تحسين الجودة
+        const baseMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            subdomains: 'abcd',
+            maxZoom: 10,
+            noWrap: true
+        }).addTo(map);
+
+        const markers = {
+            regions: [],
+            lines: [],
+            cities: [],
+            importantCities: []
+        };
+
+        const zoomLevels = {
+            region: 6,
+            city: 8
+        };
+
+        // تحسين أداء التحديث
+        let updateTimeout;
+        
+        function updateMarkerVisibility() {
+            const currentZoom = map.getZoom();
+            
+            if (currentZoom >= zoomLevels.city) {
+                markers.cities.forEach(marker => map.addLayer(marker));
+                markers.importantCities.forEach(marker => map.addLayer(marker));
+                markers.regions.forEach(marker => map.removeLayer(marker));
+                markers.lines.forEach(line => map.removeLayer(line));
+            } else if (currentZoom >= zoomLevels.region) {
+                markers.cities.forEach(marker => map.removeLayer(marker));
+                markers.importantCities.forEach(marker => map.removeLayer(marker));
+                markers.regions.forEach(marker => map.addLayer(marker));
+                markers.lines.forEach(line => map.addLayer(line));
+            } else {
+                Object.values(markers).flat().forEach(marker => {
+                    if (map.hasLayer(marker)) map.removeLayer(marker);
+                });
+            }
+        }
+
+        map.on('zoomend', () => {
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(updateMarkerVisibility, 100);
+        });
+
+        // جلب وتحميل البيانات
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // إضافة الأقاليم
+                data.regions.forEach(region => {
+                    const line = L.polyline(region.coords, {
+                        color: '#2c3e50',
+                        weight: 2.5,
+                        opacity: 0.8,
+                        dashArray: '5, 8',
+                        smoothFactor: 1.5
+                    }).addTo(map);
+                    
+                    const divIcon = L.divIcon({
+                        className: 'region-label',
+                        html: region.name
+                    });
+                    
+                    const marker = L.marker(region.labelCoords, {
+                        icon: divIcon,
+                        zIndexOffset: 1000
+                    }).addTo(map);
+                    
+                    markers.regions.push(marker);
+                    markers.lines.push(line);
+                });
+
+                // إضافة المدن العادية
+                data.cities.forEach(city => {
+                    const divIcon = L.divIcon({
+                        className: 'city-label',
+                        html: city.name
+                    });
+                    
+                    const marker = L.marker(city.coords, {
+                        icon: divIcon,
+                        zIndexOffset: 500
+                    }).addTo(map);
+                    
+                    markers.cities.push(marker);
+                });
+
+                // إضافة المدن المهمة
+                data.importantCities.forEach(city => {
+                    const divIcon = L.divIcon({
+                        className: 'important-city-label',
+                        html: city.name
+                    });
+                    
+                    const marker = L.marker(city.coords, {
+                        icon: divIcon,
+                        zIndexOffset: 750
+                    }).addTo(map);
+                    
+                    markers.importantCities.push(marker);
+                });
+
+                // تحديث مبدئي للعرض
+                updateMarkerVisibility();
+            })
+            .catch(error => console.error('خطأ في تحميل البيانات:', error));
+
+        // تحسين الأداء عند تغيير حجم النافذة
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                map.invalidateSize();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
